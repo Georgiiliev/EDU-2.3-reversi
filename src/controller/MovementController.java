@@ -14,7 +14,7 @@ public class MovementController {
 
     public void start() {
         connect.receive();
-        while (true){
+        while (connect.hasNext()){
             String receive = connect.receive();
             if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
 

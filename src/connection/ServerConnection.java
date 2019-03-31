@@ -44,6 +44,10 @@ public class ServerConnection {
         return response;
     }
 
+    public boolean hasNext(){
+        return in.hasNextLine();
+    }
+
     public void close() {
         try {
             socket.close();
