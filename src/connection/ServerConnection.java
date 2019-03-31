@@ -13,6 +13,7 @@ public class ServerConnection {
     private Scanner in;
     private PrintWriter out;
 
+    // constructor ServerConnection verwacht een host naam/ip van de remote server
     public ServerConnection(String host) {
         this.host = host;
         connect();
@@ -27,9 +28,10 @@ public class ServerConnection {
             System.out.println(receive());
         }
         catch (IOException e){
-            System.out.println("Kan geen verbinding maken met de server! \nControleer de host naam.");
+            System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
         }
     }
+
     public void send(String action, String value){
         String command = action + " " + value;
 
@@ -42,6 +44,15 @@ public class ServerConnection {
         return response;
     }
 
+    public void close() {
+        try {
+            socket.close();
+        }
+        catch (IOException e){
+            System.out.println("Er is iets mis gegaam met afsluiten van het spel.");
+        }
+    }
+
     // TEST MAIN METHODE!
     public static void main(String[] args){
         ServerConnection connect = new ServerConnection("localhost");
@@ -52,7 +63,11 @@ public class ServerConnection {
 //
 //            }
             connect.send("login", "klaas");
-            System.out.println(connect.receive());
+            System.out.println(connect.receive()); // return ok
+            connect.send("subscribe", "Reversi");
+            System.out.println(connect.receive()); // return ok
+            String gameStatus = connect.receive(); // wacht op een game die start met informatie
+            System.out.println(gameStatus);
             startGame = false;
             // Wil je nog een spelletje doen?
             // nee? startGame = false. Ja? Start x game.
