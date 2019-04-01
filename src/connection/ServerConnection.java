@@ -36,7 +36,7 @@ public class ServerConnection {
     public void send(String action, String value){
         String command = action + " " + value;
 
-        System.out.println(command);
+//        System.out.println("!"+command+"!");
         out.println(command);
     }
 

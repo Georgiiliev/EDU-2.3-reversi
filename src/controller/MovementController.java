@@ -3,12 +3,16 @@ package controller;
 import connection.ServerConnection;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class MovementController {
     ServerConnection connect;
+    String host;
 
     public MovementController(String host) {
-        connect = new ServerConnection(host);
+        this.host = host;
         startGame();
     }
 
@@ -18,7 +22,7 @@ public class MovementController {
         String name = reader.next();
 
         System.out.println("Kies een spel dat je wilt spelen: ");
-        System.out.println("    - Reversie");
+        System.out.println("    - Reversi");
         String game = reader.next();
 
         game = game.toLowerCase();
@@ -26,9 +30,12 @@ public class MovementController {
 
         reader.close();
 
-        System.out.println("hallo " + name + ". Welkom bij het spel: " + game +".");
-        connect.send("name", name);
+        connect = new ServerConnection(host); //zet connectie op
+
+//        System.out.println("hallo " + name + ". Welkom bij het spel: " + game +".");
+        connect.send("login", name);
         connect.send("subscribe", game);
+//        connect.receive();
     }
 
     public void start() {
