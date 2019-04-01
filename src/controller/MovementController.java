@@ -2,14 +2,33 @@ package controller;
 
 import connection.ServerConnection;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class MovementController {
     ServerConnection connect;
 
-    public MovementController(ServerConnection connect) {
-        this.connect = connect;
+    public MovementController(String host) {
+        connect = new ServerConnection(host);
+        startGame();
+    }
+
+    public void startGame(){
+        System.out.println("Voer je naam in: ");
+        Scanner reader = new Scanner(System.in);
+        String name = reader.next();
+
+        System.out.println("Kies een spel dat je wilt spelen: ");
+        System.out.println("    - Reversie");
+        String game = reader.next();
+
+        game = game.toLowerCase();
+        game = game.substring(0, 1).toUpperCase() + game.substring(1);
+
+        reader.close();
+
+        System.out.println("hallo " + name + ". Welkom bij het spel: " + game +".");
+        connect.send("name", name);
+        connect.send("subscribe", game);
     }
 
     public void start() {
@@ -17,11 +36,11 @@ public class MovementController {
         while (connect.hasNext()){
             String receive = connect.receive();
             if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
-
+                //Doe niets. Goed!
             }
-            else if (receive.startsWith("SVR GAMELIST")){
-
-            }
+//            else if (receive.startsWith("SVR GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
+//                System.out.println(receive);
+//            }
             else if (receive.startsWith("SVR GAME")){
                 receive = receive.substring(9);
                 if (receive.startsWith("MATCH")){ // Er is een match gestart
