@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 
@@ -24,7 +25,8 @@ public class BoardView extends JPanel {
                 b.setPreferredSize(dims);
                 b.setMinimumSize(dims);
                 b.setBorder(BorderFactory.createLineBorder(Color.black));
-                b.setBackground(Color.red);
+                b.setBackground(Color.green);
+                b.setOpaque(true);
                 button[i][j] = b;
                 button[i][j].putClientProperty("column", i);
                 button[i][j].putClientProperty("row", j);
@@ -33,7 +35,6 @@ public class BoardView extends JPanel {
             }
         }
         add(tiles);
-
     }
 
     public void paint(BoardView b){
@@ -51,18 +52,24 @@ public class BoardView extends JPanel {
         public void actionPerformed(ActionEvent e) {
             JButton btn = (JButton) e.getSource();
             CircleIcon c = new CircleIcon();
+            btn.setOpaque(false);
+            btn.setBackground(Color.black);
             btn.setIcon(c);
+            System.out.println(c);
             System.out.println("column " + btn.getClientProperty("column")
                     + ", row " + btn.getClientProperty("row"));
         }
     }
 }
 
+
 class CircleIcon implements Icon {
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
         Graphics2D g2 = (Graphics2D) g.create();
+        g2.setColor(Color.BLACK);
         g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
+        g2.setBackground(Color.black);
         g2.dispose();
     }
 
@@ -75,5 +82,6 @@ class CircleIcon implements Icon {
     public int getIconHeight() {
         return 60;
     }
-}
 
+
+}
