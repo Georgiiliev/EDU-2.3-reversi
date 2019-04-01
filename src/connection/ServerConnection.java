@@ -29,6 +29,7 @@ public class ServerConnection {
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
+            return;
         }
     }
 
@@ -58,24 +59,24 @@ public class ServerConnection {
     }
 
     // TEST MAIN METHODE!
-    public static void main(String[] args){
-        ServerConnection connect = new ServerConnection("localhost");
-        boolean startGame = true;
-
-        if (startGame == true){
-//            while(true){ // je hebt nog niet gewonnen of verloren?
+//    public static void main(String[] args){
+//        ServerConnection connect = new ServerConnection("localhost");
+//        boolean startGame = true;
 //
-//            }
-            connect.send("login", "klaas");
-            System.out.println(connect.receive()); // return ok
-            connect.send("subscribe", "Reversi");
-            System.out.println(connect.receive()); // return ok
-            String gameStatus = connect.receive(); // wacht op een game die start met informatie
-            System.out.println(gameStatus);
-            startGame = false;
-            // Wil je nog een spelletje doen?
-            // nee? startGame = false. Ja? Start x game.
-        }
-        //uitloggen etc.
-    }
+//        if (startGame == true){
+////            while(true){ // je hebt nog niet gewonnen of verloren?
+////
+////            }
+//            connect.send("login", "klaas");
+//            System.out.println(connect.receive()); // return ok
+//            connect.send("subscribe", "Reversi");
+//            System.out.println(connect.receive()); // return ok
+//            String gameStatus = connect.receive(); // wacht op een game die start met informatie
+//            System.out.println(gameStatus);
+//            startGame = false;
+//            // Wil je nog een spelletje doen?
+//            // nee? startGame = false. Ja? Start x game.
+//        }
+//        //uitloggen etc.
+//    }
 }
