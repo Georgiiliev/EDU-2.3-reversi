@@ -20,7 +20,7 @@ public class BoardView extends JPanel {
         JButton[][] button = new JButton[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                JButton b = new JButton(new CircleIcon());
+                JButton b = new JButton();
                 b.setPreferredSize(dims);
                 b.setMinimumSize(dims);
                 b.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -50,6 +50,8 @@ public class BoardView extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton btn = (JButton) e.getSource();
+            CircleIcon c = new CircleIcon();
+            btn.setIcon(c);
             System.out.println("column " + btn.getClientProperty("column")
                     + ", row " + btn.getClientProperty("row"));
         }
