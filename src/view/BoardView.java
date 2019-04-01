@@ -1,8 +1,13 @@
 package view;
 
+//import javafx.scene.shape.Circle;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+import javax.swing.JPanel;
 
 public class BoardView extends JPanel {
 
@@ -15,11 +20,11 @@ public class BoardView extends JPanel {
         JButton[][] button = new JButton[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                JButton b = new JButton();
+                JButton b = new JButton(new CircleIcon());
                 b.setPreferredSize(dims);
                 b.setMinimumSize(dims);
                 b.setBorder(BorderFactory.createLineBorder(Color.black));
-                b.setBackground(Color.GREEN);
+                b.setBackground(Color.red);
                 button[i][j] = b;
                 button[i][j].putClientProperty("column", i);
                 button[i][j].putClientProperty("row", j);
@@ -28,6 +33,7 @@ public class BoardView extends JPanel {
             }
         }
         add(tiles);
+
     }
 
     public void paint(BoardView b){
@@ -36,6 +42,7 @@ public class BoardView extends JPanel {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
 
     public class MyActionListener implements ActionListener {
@@ -46,6 +53,25 @@ public class BoardView extends JPanel {
             System.out.println("column " + btn.getClientProperty("column")
                     + ", row " + btn.getClientProperty("row"));
         }
+    }
+}
+
+class CircleIcon implements Icon {
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
+        g2.dispose();
+    }
+
+    @Override
+    public int getIconWidth() {
+        return 60;
+    }
+
+    @Override
+    public int getIconHeight() {
+        return 60;
     }
 }
 
