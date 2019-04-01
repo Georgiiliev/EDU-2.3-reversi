@@ -56,22 +56,22 @@ public class BoardView extends JPanel {
     }
 }
 
-class CircleIcon implements Icon {
-    @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
-        g2.dispose();
-    }
-
-    @Override
-    public int getIconWidth() {
-        return 60;
-    }
-
-    @Override
-    public int getIconHeight() {
-        return 60;
-    }
-}
+//class CircleIcon implements Icon {
+//    @Override
+//    public void paintIcon(Component c, Graphics g, int x, int y) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
+//        g2.dispose();
+//    }
+//
+//    @Override
+//    public int getIconWidth() {
+//        return 60;
+//    }
+//
+//    @Override
+//    public int getIconHeight() {
+//        return 60;
+//    }
+//}
 
