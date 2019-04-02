@@ -116,10 +116,13 @@ public class BoardView extends JPanel {
     }
 
     public void printIcon(int x, int y, String i) {
-        System.out.println(button[x][y]);
         JButton button = this.button[x][y];
         if (i.equals("O")) {
             CircleIcon o = new CircleIcon();
+            button.setIcon(o);
+        } else if (i.equals("X")) {
+            CrossIcon n = new CrossIcon();
+            button.setIcon(n);
         }
     }
 }
@@ -128,11 +131,17 @@ public class BoardView extends JPanel {
 class CrossIcon implements Icon {
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
+        Graphics2D g1 = (Graphics2D) g.create();
+        g1.setPaint(Color.BLACK);
+        g1.drawLine(1,1,64,64);
+        g1.setBackground(Color.black);
+        g1.dispose();
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setPaint(Color.BLACK);
-        g2.drawRect(x, y, getIconWidth() - 1, getIconHeight() - 1);
+        g2.drawLine(64, 1, 1,64);
         g2.setBackground(Color.black);
         g2.dispose();
+
     }
 
     @Override
