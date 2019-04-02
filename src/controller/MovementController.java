@@ -27,7 +27,8 @@ public class MovementController {
 
         int game = 0;
         int error = 0;
-        while (game != 1 || game != 2 ){
+        while (game != 1 && game != 2 ){
+            System.out.println(game);
             if (error == 1){
                 System.out.println("Voer getal 1 of 2 in.");
             }
@@ -39,17 +40,16 @@ public class MovementController {
 
         connect = new ServerConnection(host); //zet connectie op
 
-//        System.out.println("hallo " + name + ". Welkom bij het spel: " + game +".");
-        connect.send("login", name);
+        connect.send("login", name); //login op de server
         if (game == 1){
             connect.send("subscribe", "Reversi");
         }
-        if (game == 2){
+        else if (game == 2){
             connect.send("subscribe", "Tic-tac-toe");
         }
+        GameController gameController = new GameController(connect);
+        Thread thread = new Thread(gameController);
+        thread.start();
 //        connect.receive();
-    }
-
-    public static void main(String[] args){
     }
 }
