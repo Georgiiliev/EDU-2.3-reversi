@@ -12,7 +12,7 @@ public class Main extends Application {
 //        primaryStage.setTitle("Hello World");
 //        primaryStage.setScene(new Scene(root, 300, 275));
 //        primaryStage.show();
-        BoardView boardView = new BoardView();
+        BoardView boardView = new BoardView(3);
         boardView.paint(boardView);
         boardView.printIcon(0,0,"X");
 
