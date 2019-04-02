@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 
 import controller.GameController;
+import controller.MoveController;
 
 public class BoardView extends JPanel {
 
@@ -26,6 +27,7 @@ public class BoardView extends JPanel {
     public JButton stop = new JButton("Stop");
     public JTextField input = new JTextField("input field");
     public DefaultListModel modelConsole = new DefaultListModel();
+    private MoveController moveController;
 
 
     public int boardSize; // 8*8
@@ -33,8 +35,8 @@ public class BoardView extends JPanel {
 
     public BoardView( int newBoardSize) {
         boardSize = newBoardSize;
+        this.moveController = new MoveController(boardSize);
         this.button = new JButton[boardSize][boardSize];
-        System.out.println(boardSize);
         Dimension dims = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
         for (int i = 0; i < boardSize; i++) {
@@ -57,13 +59,9 @@ public class BoardView extends JPanel {
 //                    b.setOpaque(false);
 //                }
             }
-
         }
-
-
-            add(tiles);
-            add(UI);
-
+        add(tiles);
+        add(UI);
     }
 
     public void paint(BoardView b){
@@ -123,14 +121,21 @@ public class BoardView extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             JButton btn = (JButton) e.getSource();
             CircleIcon c = new CircleIcon();
             btn.setOpaque(false);
             btn.setBackground(Color.black);
             btn.setIcon(c);
+            int collum = (int)btn.getClientProperty("column");
+            int row = (int)btn.getClientProperty("row");
+
+            if (moveController.isMoveLegit(row, collum)){
+                // plaats putton
+            }
+
             System.out.println(c);
-            System.out.println("column " + btn.getClientProperty("column")
-                    + ", row " + btn.getClientProperty("row"));
+            System.out.println("column: " + collum + ", row: " + row);
         }
     }
 
@@ -160,7 +165,6 @@ class CrossIcon implements Icon {
         g2.drawLine(64, 1, 1,64);
         g2.setBackground(Color.black);
         g2.dispose();
-
     }
 
     @Override
