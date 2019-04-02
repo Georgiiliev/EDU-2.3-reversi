@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class BoardView extends JPanel {
 
     private final JPanel tiles = new JPanel();
-    public int boardSize = 8; // 8*8
+    public int boardSize = 3; // 8*8
 
     public BoardView() {
         Dimension dims = new Dimension(64, 64);
@@ -44,6 +44,14 @@ public class BoardView extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+    }
+
+    public int getBoardSize(){
+        return boardSize;
+    }
+
+    public void setBoardSize(int size){
+        boardSize = size;
     }
 
     public class MyActionListener implements ActionListener {
@@ -82,6 +90,7 @@ class CircleIcon implements Icon {
     public int getIconHeight() {
         return 60;
     }
+
 
 
 }
