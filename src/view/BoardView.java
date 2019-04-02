@@ -1,6 +1,5 @@
 package view;
 
-import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -118,6 +117,7 @@ public class BoardView extends JPanel {
 
     public void printIcon(int x, int y, String i) {
         System.out.println(button[x][y]);
+        JButton button = this.button[x][y];
         if (i.equals("O")) {
             CircleIcon o = new CircleIcon();
         }
