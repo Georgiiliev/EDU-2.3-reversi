@@ -1,5 +1,7 @@
 package view;
 
+import sun.jvm.hotspot.debugger.cdbg.Sym;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.*;
@@ -21,11 +23,11 @@ public class BoardView extends JPanel {
 
 
     public int boardSize = 3; // 8*8
+    public JButton[][] button = new JButton[boardSize][boardSize];
 
     public BoardView() {
         Dimension dims = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
-        JButton[][] button = new JButton[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 JButton b = new JButton();
@@ -113,11 +115,35 @@ public class BoardView extends JPanel {
                     + ", row " + btn.getClientProperty("row"));
         }
     }
+
+    public void printIcon(int x, int y, String i) {
+        System.out.println(button[x][y]);
+        if (i.equals("O")) {
+            CircleIcon o = new CircleIcon();
+        }
+    }
 }
 
 
+class CrossIcon implements Icon {
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setPaint(Color.BLACK);
+        g2.drawRect(x, y, getIconWidth() - 1, getIconHeight() - 1);
+        g2.setBackground(Color.black);
+        g2.dispose();
+    }
 
+    @Override
+    public int getIconWidth() {
+        return 60;
+    }
 
+    @Override
+    public int getIconHeight() {
+        return 60;
+    }}
 
 class CircleIcon implements Icon {
 
