@@ -1,8 +1,5 @@
-import controller.MovementController;
+import controller.StartController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import view.BoardView;
 
@@ -20,7 +17,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        new MovementController("localhost");
+        new StartController("localhost");
         launch(args);
     }
 }

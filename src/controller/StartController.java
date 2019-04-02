@@ -7,11 +7,11 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
-public class MovementController {
+public class StartController {
     ServerConnection connect;
     String host;
 
-    public MovementController(String host) {
+    public StartController(String host) {
         this.host = host;
         startGame();
     }
