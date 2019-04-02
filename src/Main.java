@@ -1,6 +1,7 @@
 import controller.StartController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Board;
 import view.BoardView;
 
 public class Main extends Application {
@@ -13,6 +14,8 @@ public class Main extends Application {
 //        primaryStage.show();
         BoardView boardView = new BoardView();
         boardView.paint(boardView);
+        boardView.printIcon(0,0,"X");
+
     }
 
 
