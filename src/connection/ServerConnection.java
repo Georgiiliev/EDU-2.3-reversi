@@ -24,7 +24,8 @@ public class ServerConnection {
             socket = new Socket(host, port);
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println(receive());
+            receive();
+//            System.out.println(receive());
             System.out.println(receive());
         }
         catch (IOException e){

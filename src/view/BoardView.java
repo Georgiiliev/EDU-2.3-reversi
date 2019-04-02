@@ -91,6 +91,14 @@ public class BoardView extends JPanel {
 
     }
 
+    public int getBoardSize(){
+        return boardSize;
+    }
+
+    public void setBoardSize(int size){
+        boardSize = size;
+    }
+
     public class MyActionListener implements ActionListener {
 
         @Override
