@@ -19,4 +19,7 @@ public class MoveController {
         return true;
     }
 
+    public void fillCharBoard(int row, int column){
+        board[column][row] = 'O';
+    }
 }
