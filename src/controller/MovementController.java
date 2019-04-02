@@ -28,7 +28,7 @@ public class MovementController {
         int game = 0;
         int error = 0;
         while (game != 1 && game != 2 ){
-            System.out.println(game);
+//            System.out.println(game);
             if (error == 1){
                 System.out.println("Voer getal 1 of 2 in.");
             }
