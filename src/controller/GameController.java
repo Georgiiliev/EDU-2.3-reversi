@@ -28,7 +28,13 @@ public class GameController implements Runnable{
                     if (receive.startsWith("MATCH")){ // Er is een match gestart
                         receive = receive.substring(6);
                         HashMap hashMap = convertToHashMap(receive);
-                        hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
+
+                        if (hashMap.get("GAMETYPE") == "Reversi"){
+                            
+                        }
+                        else if (hashMap.get("GAMETYPE") == "Tic-tac-toe"){
+
+                        }
                         // State is gamestarted
                     }
                     else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
