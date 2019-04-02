@@ -1,5 +1,6 @@
 package view;
 
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.*;
@@ -23,11 +24,11 @@ public class BoardView extends JPanel {
 
 
     public int boardSize = 3; // 8*8
+    public JButton[][] button = new JButton[boardSize][boardSize];
 
     public BoardView() {
         Dimension dims = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
-        JButton[][] button = new JButton[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 JButton b = new JButton();
@@ -115,11 +116,45 @@ public class BoardView extends JPanel {
                     + ", row " + btn.getClientProperty("row"));
         }
     }
+
+    public void printIcon(int x, int y, String i) {
+        JButton button = this.button[x][y];
+        if (i.equals("O")) {
+            CircleIcon o = new CircleIcon();
+            button.setIcon(o);
+        } else if (i.equals("X")) {
+            CrossIcon n = new CrossIcon();
+            button.setIcon(n);
+        }
+    }
 }
 
 
+class CrossIcon implements Icon {
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        Graphics2D g1 = (Graphics2D) g.create();
+        g1.setPaint(Color.BLACK);
+        g1.drawLine(1,1,64,64);
+        g1.setBackground(Color.black);
+        g1.dispose();
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setPaint(Color.BLACK);
+        g2.drawLine(64, 1, 1,64);
+        g2.setBackground(Color.black);
+        g2.dispose();
 
+    }
 
+    @Override
+    public int getIconWidth() {
+        return 60;
+    }
+
+    @Override
+    public int getIconHeight() {
+        return 60;
+    }}
 
 class CircleIcon implements Icon {
 
