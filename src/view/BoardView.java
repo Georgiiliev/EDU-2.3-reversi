@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import java.awt.Component;
 import javax.swing.Icon;
 
+import controller.GameController;
+
 public class BoardView extends JPanel {
 
     private final JPanel tiles = new JPanel();
