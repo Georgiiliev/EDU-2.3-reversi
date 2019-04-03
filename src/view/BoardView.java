@@ -18,6 +18,9 @@ import controller.MoveController;
 
 public class BoardView extends JPanel {
 
+    public JFrame frame = new JFrame("Board");
+
+
     private final JPanel tiles = new JPanel();
     private final JPanel UI = new JPanel();
     private final JPanel console = new JPanel();
@@ -27,6 +30,10 @@ public class BoardView extends JPanel {
     public JButton stop = new JButton("Stop");
     public JTextField input = new JTextField("input field");
     public DefaultListModel modelConsole = new DefaultListModel();
+
+    public JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
+    public JRadioButton gameTwo = new JRadioButton("Reversi");
+
     private MoveController moveController;
 
 
@@ -65,7 +72,6 @@ public class BoardView extends JPanel {
     }
 
     public void paint(BoardView b){
-        JFrame frame = new JFrame("Board");
 
         //console
         JPanel console = new JPanel();
@@ -83,6 +89,8 @@ public class BoardView extends JPanel {
         });
         UI.add(start);
         UI.add(stop);
+        UI.add(gameOne);
+        UI.add(gameTwo);
         UI.add(input);
         UI.setMaximumSize(new Dimension(300,600));
         frame.add(UI, BorderLayout.WEST);
@@ -95,7 +103,7 @@ public class BoardView extends JPanel {
         frame.add(b);
 
         frame.pack();
-        UI.setLayout(new FlowLayout());
+        UI.setLayout(new GridLayout(3,2));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -123,19 +131,17 @@ public class BoardView extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             JButton btn = (JButton) e.getSource();
-            CircleIcon c = new CircleIcon();
-            btn.setOpaque(false);
-            btn.setBackground(Color.black);
-            btn.setIcon(c);
-            int collum = (int)btn.getClientProperty("column");
+            int column = (int)btn.getClientProperty("column");
             int row = (int)btn.getClientProperty("row");
 
-            if (moveController.isMoveLegit(row, collum)){
-                // plaats putton
-            }
 
-            System.out.println(c);
-            System.out.println("column: " + collum + ", row: " + row);
+            if (moveController.isMoveLegit(row, column)){
+                CircleIcon c = new CircleIcon();
+                btn.setOpaque(false);
+                btn.setBackground(Color.black);
+                btn.setIcon(c);
+            }
+            System.out.println("column: " + column + ", row: " + row);
         }
     }
 
@@ -148,6 +154,10 @@ public class BoardView extends JPanel {
             CrossIcon n = new CrossIcon();
             button.setIcon(n);
         }
+    }
+
+    public void checkIfIconIsMade() {
+        if ()
     }
 }
 
