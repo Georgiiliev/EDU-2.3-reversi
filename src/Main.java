@@ -2,6 +2,7 @@ import controller.StartController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.BoardView;
+import view.GameView;
 
 public class Main extends Application {
 
@@ -11,8 +12,7 @@ public class Main extends Application {
 //        primaryStage.setTitle("Hello World");
 //        primaryStage.setScene(new Scene(root, 300, 275));
 //        primaryStage.show();
-        BoardView boardView = new BoardView(3);
-        boardView.paint(boardView);
+        GameView gameView = new GameView();
     }
 
 
