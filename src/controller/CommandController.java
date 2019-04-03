@@ -5,10 +5,10 @@ import connection.ServerConnection;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class GameController implements Runnable{
+public class CommandController implements Runnable{
     ServerConnection connect;
 
-    public GameController(ServerConnection connect) {
+    public CommandController(ServerConnection connect) {
         this.connect = connect;
     }
 

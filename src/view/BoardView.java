@@ -1,19 +1,13 @@
 package view;
 
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.Color;
 
 import javax.swing.JPanel;
-import java.awt.Component;
-import java.util.ArrayList;
-import javax.swing.Icon;
 
-import controller.GameController;
 import controller.MoveController;
 
 public class BoardView extends JPanel {

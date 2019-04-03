@@ -3,7 +3,6 @@ package controller;
 import connection.ServerConnection;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -47,8 +46,8 @@ public class StartController {
             connect.send("subscribe", "Tic-tac-toe");
         }
 
-        GameController gameController = new GameController(connect);
-        Thread thread = new Thread(gameController);
+        CommandController commandController = new CommandController(connect);
+        Thread thread = new Thread(commandController);
         thread.start();
     }
 }
