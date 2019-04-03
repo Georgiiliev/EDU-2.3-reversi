@@ -109,7 +109,6 @@ public class GameView {
     private void submitAction() {
         // You can do some validation here before assign the text to the variable
         String text = input.getText();
-        System.out.println(serverConnection);
         serverConnection.send("login", text);
         modelConsole.addElement(text);
 
