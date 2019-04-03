@@ -14,7 +14,6 @@ public class GameController implements Runnable{
 
     public void start() {
         while (true){
-            connect.receive();
             while (connect.hasNext()){
                 String receive = connect.receive();
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
