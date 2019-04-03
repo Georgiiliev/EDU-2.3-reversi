@@ -1,7 +1,4 @@
 package view;
-
-import controller.MoveController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +9,7 @@ public class GameView {
     private final JPanel UI = new JPanel();
     public JButton start = new JButton("Start");
     public JButton stop = new JButton("Stop");
-    public JTextField input = new JTextField("input field");
+    public JTextField input = new JTextField("");
     public DefaultListModel modelConsole = new DefaultListModel();
 
     public JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
@@ -36,6 +33,7 @@ public class GameView {
         drawPlayerList();
         drawTextInput();
         frameProperties();
+
         //buttons
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -75,19 +73,15 @@ public class GameView {
 
     private void buttonActionListener() {
         stop.addActionListener( (e)-> {
-            System.out.println("Start");
-        });
-
-        stop.addActionListener( (e)-> {
             System.out.println("Stop");
         });
 
         gameOne.addActionListener( (e)-> {
-            System.out.println("radio 1");
+            System.out.println("Tic-Tac-Toe");
         });
 
         gameTwo.addActionListener( (e)-> {
-            System.out.println("radio 2");
+            System.out.println("Reversi");
         });
     }
 
