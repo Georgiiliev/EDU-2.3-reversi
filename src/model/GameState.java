@@ -17,6 +17,9 @@ public interface GameState {
 
 class GameEndedDraw implements GameState{
 
+    public GameEndedDraw(StateHandler stateHandler) {
+
+    }
     @Override
     public boolean action() {
         return false;
@@ -63,7 +66,9 @@ class GameEndedDraw implements GameState{
     }
 }
 class GameEndedWin implements GameState{
+    public GameEndedWin(StateHandler stateHandler) {
 
+    }
     @Override
     public boolean action() {
         return false;
@@ -110,7 +115,9 @@ class GameEndedWin implements GameState{
     }
 }
 class GameEndedLoss implements GameState{
+    public GameEndedLoss(StateHandler stateHandler) {
 
+    }
     @Override
     public boolean action() {
         return false;
@@ -158,6 +165,9 @@ class GameEndedLoss implements GameState{
 }
 class GameStarted implements GameState{
 
+    public GameStarted(StateHandler stateHandler) {
+
+    }
     @Override
     public boolean action() {
         return false;
@@ -204,6 +214,10 @@ class GameStarted implements GameState{
     }
 }
 class ClientMove implements GameState{
+
+    public ClientMove(StateHandler stateHandler) {
+
+    }
 
     @Override
     public boolean action() {
@@ -252,6 +266,9 @@ class ClientMove implements GameState{
 }
 class ServerMove implements GameState{
 
+    public ServerMove(StateHandler stateHandler) {
+
+    }
     @Override
     public boolean action() {
         return false;
@@ -299,6 +316,9 @@ class ServerMove implements GameState{
 }
 class Idle implements GameState{
 
+    public Idle(StateHandler stateHandler) {
+
+    }
     @Override
     public boolean action() {
 
@@ -345,9 +365,11 @@ class Idle implements GameState{
 
     }
 }
-
 class ConnectingToServer implements GameState{
 
+    public ConnectingToServer(StateHandler stateHandler) {
+
+    }
     @Override
     public boolean action() {
         return false;
