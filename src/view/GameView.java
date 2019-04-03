@@ -41,7 +41,7 @@ public class GameView {
 
         //adds boardview to frame
         frame.setSize(1000, 1000);
-        frame.add(b, BorderLayout.EAST);
+//        frame.add(b);
     }
 
     private void drawConsole() {
@@ -68,7 +68,27 @@ public class GameView {
             submitAction();
         });
 
+        buttonActionListener();
+
         input.setPreferredSize(new Dimension(100, 20));
+    }
+
+    private void buttonActionListener() {
+        stop.addActionListener( (e)-> {
+            System.out.println("Start");
+        });
+
+        stop.addActionListener( (e)-> {
+            System.out.println("Stop");
+        });
+
+        gameOne.addActionListener( (e)-> {
+            System.out.println("radio 1");
+        });
+
+        gameTwo.addActionListener( (e)-> {
+            System.out.println("radio 2");
+        });
     }
 
     private void drawRadioButtons() {
