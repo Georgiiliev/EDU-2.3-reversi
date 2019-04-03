@@ -1,12 +1,14 @@
 package controller;
 
 import connection.ServerConnection;
+import model.StateHandler;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommandController implements Runnable{
     ServerConnection connect;
+    StateHandler stateHandler;
 
     public CommandController(ServerConnection connect) {
         this.connect = connect;
@@ -22,11 +24,7 @@ public class CommandController implements Runnable{
                 else if (receive.startsWith("SVR")){
                     receive = receive.substring(4);
 
-                    if (receive.startsWith("GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
-                        receive = receive.substring(9);
-                    }
-
-                    else if (receive.startsWith("GAME")){
+                    if (receive.startsWith("GAME")){
                         receive = receive.substring(5);
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
@@ -34,6 +32,12 @@ public class CommandController implements Runnable{
                             HashMap hashMap = convertToHashMap(receive);
 
                             hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
+                            if (hashMap.get("GAMETYPE") == "Reversi"){
+//                                stateHandler.setGameState();
+                            }
+                            if (hashMap.get("GAMETYPE") == "Tic-tac-toe"){
+//                                stateHandler.setGameState();
+                            }
                             // State is gamestarted
                         }
 
@@ -71,6 +75,10 @@ public class CommandController implements Runnable{
                         HashMap hashMap = convertToHashMap(receive); // werkt wss niet.
 
                         // stuur naar gui.
+                    }
+
+                    else if (receive.startsWith("GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
+                        receive = receive.substring(9);
                     }
                 }
 
