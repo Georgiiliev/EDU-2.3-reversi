@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 
 public class ServerConnection implements Runnable{
+    private static ServerConnection serverConnection;
+
     private static final int port = 7789;
     private static String host;
 
@@ -15,6 +17,7 @@ public class ServerConnection implements Runnable{
     private PrintWriter out;
 
     public ServerConnection(String host) {
+        serverConnection = this;
         this.host = host;
         connect();
     }
@@ -57,6 +60,10 @@ public class ServerConnection implements Runnable{
     }
     public void fetchData(){
         send("get", "playerlist");
+    }
+
+    public static ServerConnection getServerConnection(){
+        return serverConnection;
     }
 
     @Override

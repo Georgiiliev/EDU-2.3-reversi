@@ -79,7 +79,7 @@ public class BoardView extends JPanel {
             int row = (int)btn.getClientProperty("row");
 
 
-            if (moveController.isMoveLegit(row, column)){
+            if (moveController.clientmove(row, column)){
                 MovableObjectCircle c = new MovableObjectCircle();
                 btn.setOpaque(false);
                 btn.setBackground(Color.black);

@@ -1,10 +1,16 @@
 package controller;
 
+import model.GameState;
+import model.StateHandler;
+
 public class MoveController {
+    public static MoveController moveController;
 
     private char[][] board;
+    private StateHandler stateHandler;
 
     public MoveController(int size){
+        moveController = this;
         board = new char[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
@@ -13,13 +19,15 @@ public class MoveController {
         }
     }
 
-    public boolean isMoveLegit(int row, int column){
+    public boolean clientmove(int row, int column){
         if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
 //        reversieCheck(row, column);
         // TODO check if game = reversi
-        // TODO check if state = yourturn
+        if (!stateHandler.getState().equals(stateHandler.getClientMove())){
+            return false;
+        }
         fillCharBoard(row, column);
         // TODO state = new state(ServerMove);
         return true;
@@ -41,5 +49,8 @@ public class MoveController {
 
     public void fillCharBoard(int row, int column){
         board[column][row] = 'O';
+    }
+    public static MoveController getMoveController (){
+        return moveController;
     }
 }
