@@ -19,7 +19,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         StateHandler stateHandler = new StateHandler();
-        stateHandler.setGameState(stateHandler.getGameStarted());
+        stateHandler.setGameState(stateHandler.getConnectingToServer());
+
+        System.out.println(stateHandler.getState());
 //        new StartController("localhost");
         launch(args);
     }

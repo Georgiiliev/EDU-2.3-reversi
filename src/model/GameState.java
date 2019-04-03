@@ -47,7 +47,7 @@ class GameEndedDraw implements GameState{
 
     @Override
     public void gameIdle() {
-        stateHandler.setGameState(stateHandler.idle);
+        stateHandler.setGameState(stateHandler.getIdle());
     }
 
     @Override
@@ -99,7 +99,7 @@ class GameEndedWin implements GameState{
 
     @Override
     public void gameIdle() {
-        stateHandler.setGameState(stateHandler.idle);
+        stateHandler.setGameState(stateHandler.getIdle());
     }
 
     @Override
@@ -151,7 +151,7 @@ class GameEndedLoss implements GameState{
 
     @Override
     public void gameIdle() {
-        stateHandler.setGameState(stateHandler.idle);
+        stateHandler.setGameState(stateHandler.getIdle());
     }
 
     @Override
@@ -203,7 +203,7 @@ class GameStarted implements GameState{
 
     @Override
     public void gameIdle() {
-        stateHandler.setGameState(stateHandler.idle);
+        stateHandler.setGameState(stateHandler.getIdle());
     }
 
     @Override
@@ -236,17 +236,17 @@ class ClientMove implements GameState{
 
     @Override
     public void endGameDraw() {
-        stateHandler.setGameState(stateHandler.gameEndedDraw);
+        stateHandler.setGameState(stateHandler.getGameEndedDraw());
     }
 
     @Override
     public void endGameLoss() {
-        stateHandler.setGameState(stateHandler.gameEndedLoss);
+        stateHandler.setGameState(stateHandler.getGameEndedLoss());
     }
 
     @Override
     public void endGameWin() {
-        stateHandler.setGameState(stateHandler.gameEndedWin);
+        stateHandler.setGameState(stateHandler.getGameEndedWin());
     }
 
     @Override
@@ -261,7 +261,7 @@ class ClientMove implements GameState{
 
     @Override
     public void waitForMoveServer() {
-        stateHandler.setGameState(stateHandler.serverMove);
+        stateHandler.setGameState(stateHandler.getServerMove());
     }
 
     @Override
@@ -288,17 +288,17 @@ class ServerMove implements GameState{
 
     @Override
     public void endGameDraw() {
-        stateHandler.setGameState(stateHandler.gameEndedDraw);
+        stateHandler.setGameState(stateHandler.getGameEndedDraw());
     }
 
     @Override
     public void endGameLoss() {
-        stateHandler.setGameState(stateHandler.gameEndedLoss);
+        stateHandler.setGameState(stateHandler.getGameEndedLoss());
     }
 
     @Override
     public void endGameWin() {
-        stateHandler.setGameState(stateHandler.gameEndedWin);
+        stateHandler.setGameState(stateHandler.getGameEndedWin());
     }
 
     @Override
@@ -318,7 +318,7 @@ class ServerMove implements GameState{
 
     @Override
     public void waitForMoveClient() {
-        stateHandler.setGameState(stateHandler.clientMove);
+        stateHandler.setGameState(stateHandler.getClientMove());
     }
 
     @Override
@@ -366,12 +366,12 @@ class Idle implements GameState{
 
     @Override
     public void waitForMoveServer() {
-        stateHandler.setGameState(stateHandler.serverMove);
+        stateHandler.setGameState(stateHandler.getServerMove());
     }
 
     @Override
     public void waitForMoveClient() {
-        stateHandler.setGameState(stateHandler.clientMove);
+        stateHandler.setGameState(stateHandler.getClientMove());
     }
 
     @Override
@@ -408,7 +408,7 @@ class ConnectingToServer implements GameState{
 
     @Override
     public void gameStart() {
-        stateHandler.setGameState(stateHandler.gameStarted);
+        stateHandler.setGameState(stateHandler.getGameStarted());
     }
 
     @Override
