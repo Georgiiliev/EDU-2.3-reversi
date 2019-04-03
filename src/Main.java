@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Board;
 import view.BoardView;
+import view.GameView;
 
 public class Main extends Application {
 
@@ -12,9 +13,7 @@ public class Main extends Application {
 //        primaryStage.setTitle("Hello World");
 //        primaryStage.setScene(new Scene(root, 300, 275));
 //        primaryStage.show();
-        BoardView boardView = new BoardView(3);
-        boardView.paint(boardView);
-        boardView.printIcon(0,0,"X");
+        GameView gameView = new GameView();
 
     }
 
