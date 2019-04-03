@@ -9,12 +9,7 @@ import java.awt.*;
 public class GameView {
     public JFrame frame = new JFrame("Board");
 
-
-    private final JPanel tiles = new JPanel();
     private final JPanel UI = new JPanel();
-    private final JPanel console = new JPanel();
-    //    public String[] playerList = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
-//    public String[] consoleListData = {"Item 1", "Item 2", "ItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItem 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
     public JButton start = new JButton("Start");
     public JButton stop = new JButton("Stop");
     public JTextField input = new JTextField("input field");
@@ -23,12 +18,14 @@ public class GameView {
     public JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     public JRadioButton gameTwo = new JRadioButton("Reversi");
 
-    private MoveController moveController;
-
-
     public GameView() {
         BoardView boardView = new BoardView(3);
+        setFrameHeight();
         paint(boardView);
+    }
+
+    public void setFrameHeight() {
+
     }
 
     public void paint(BoardView b){
@@ -40,9 +37,11 @@ public class GameView {
         drawTextInput();
         frameProperties();
         //buttons
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-
-        frame.add(b);
+        //adds boardview to frame
+        frame.setSize(1000, 1000);
+        frame.add(b, BorderLayout.EAST);
     }
 
     private void drawConsole() {
@@ -80,12 +79,11 @@ public class GameView {
     private void frameProperties() {
 
         UI.setMaximumSize(new Dimension(300,600));
-        UI.setLayout(new GridLayout(3,2));
+        UI.setLayout(new FlowLayout());
         UI.setVisible(true);
 
-        frame.add(UI, BorderLayout.WEST);
+        frame.add(UI);
         frame.pack();
-
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
