@@ -16,7 +16,7 @@ public interface GameState {
 }
 
 class GameEndedDraw implements GameState{
-
+    StateHandler stateHandler;
     public GameEndedDraw(StateHandler stateHandler) {
 
     }
@@ -66,6 +66,8 @@ class GameEndedDraw implements GameState{
     }
 }
 class GameEndedWin implements GameState{
+    StateHandler stateHandler;
+
     public GameEndedWin(StateHandler stateHandler) {
 
     }
@@ -115,9 +117,12 @@ class GameEndedWin implements GameState{
     }
 }
 class GameEndedLoss implements GameState{
+    StateHandler stateHandler;
+
     public GameEndedLoss(StateHandler stateHandler) {
 
     }
+
     @Override
     public boolean action() {
         return false;
@@ -164,6 +169,7 @@ class GameEndedLoss implements GameState{
     }
 }
 class GameStarted implements GameState{
+    StateHandler stateHandler;
 
     public GameStarted(StateHandler stateHandler) {
 
@@ -214,6 +220,7 @@ class GameStarted implements GameState{
     }
 }
 class ClientMove implements GameState{
+    StateHandler stateHandler;
 
     public ClientMove(StateHandler stateHandler) {
 
@@ -265,6 +272,7 @@ class ClientMove implements GameState{
     }
 }
 class ServerMove implements GameState{
+    StateHandler stateHandler;
 
     public ServerMove(StateHandler stateHandler) {
 
@@ -315,6 +323,7 @@ class ServerMove implements GameState{
     }
 }
 class Idle implements GameState{
+    StateHandler stateHandler;
 
     public Idle(StateHandler stateHandler) {
 
@@ -366,6 +375,7 @@ class Idle implements GameState{
     }
 }
 class ConnectingToServer implements GameState{
+    StateHandler stateHandler;
 
     public ConnectingToServer(StateHandler stateHandler) {
 
