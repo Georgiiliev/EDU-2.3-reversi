@@ -68,11 +68,54 @@ public class BoardView extends JPanel {
             }
         }
         add(tiles);
+        add(UI);
     }
 
+    public void paint(BoardView b){
 
+        //console
+        JPanel console = new JPanel();
+        JList consoleList = new JList(modelConsole);
+        JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
+        console.add(scrollableConsoleList);
 
+        frame.add(console, BorderLayout.SOUTH);
 
+        //buttons
+
+        input.setPreferredSize(new Dimension(100, 20));
+        start.addActionListener( (e)-> {
+            submitAction();
+        });
+        UI.add(start);
+        UI.add(stop);
+        UI.add(gameOne);
+        UI.add(gameTwo);
+        UI.add(input);
+        UI.setMaximumSize(new Dimension(300,600));
+        frame.add(UI, BorderLayout.WEST);
+
+        JList list = new JList();
+        JScrollPane scrollableList = new JScrollPane(list);
+        UI.add(scrollableList);
+
+        UI.setVisible(true);
+        frame.add(b);
+
+        frame.pack();
+        UI.setLayout(new GridLayout(3,2));
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+    }
+
+    private void submitAction() {
+        // You can do some validation here before assign the text to the variable
+        String text = input.getText();
+        System.out.println(text);
+        modelConsole.addElement(text);
+
+    }
 
     public int getBoardSize(){
         return boardSize;
