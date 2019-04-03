@@ -36,6 +36,7 @@ public class GameController implements Runnable{
                         HashMap hashMap = convertToHashMap(receive);
                         hashMap.get("PLAYER"); // Wij zelf, of tegen partij
                         Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
+
                     }
                     else if(receive.startsWith("YOURTURN")){
                         // state = doe een zet.
