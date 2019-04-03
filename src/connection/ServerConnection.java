@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-public class ServerConnection {
+public class ServerConnection implements Runnable{
     private static final int port = 7789;
     private static String host;
 
@@ -54,5 +54,13 @@ public class ServerConnection {
         catch (IOException e){
             System.out.println("Er is iets mis gegaam met afsluiten van het spel.");
         }
+    }
+    public void fetchData(){
+        send("get", "playerlist");
+    }
+
+    @Override
+    public void run() {
+        fetchData();
     }
 }
