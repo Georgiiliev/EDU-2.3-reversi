@@ -19,46 +19,65 @@ public class GameController implements Runnable{
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
                     //Doe niets. Goed!
                 }
-//            else if (receive.startsWith("SVR GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
-//                System.out.println(receive);
-//            }
-                else if (receive.startsWith("SVR GAME")){
-                    receive = receive.substring(9);
-                    if (receive.startsWith("MATCH")){ // Er is een match gestart
-                        receive = receive.substring(6);
-                        HashMap hashMap = convertToHashMap(receive);
-                        hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
-                        // State is gamestarted
+                else if (receive.startsWith("SVR")){
+                    receive = receive.substring(4);
+
+                    if (receive.startsWith("GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
+                        receive = receive.substring(9);
                     }
-                    else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
+
+                    else if (receive.startsWith("GAME")){
                         receive = receive.substring(5);
-                        HashMap hashMap = convertToHashMap(receive);
-                        hashMap.get("PLAYER"); // Wij zelf, of tegen partij
-                        Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
+
+                        if (receive.startsWith("MATCH")){ // Er is een match gestart
+                            receive = receive.substring(6);
+                            HashMap hashMap = convertToHashMap(receive);
+
+                            hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
+                            // State is gamestarted
+                        }
+
+                        else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
+                            receive = receive.substring(5);
+                            HashMap hashMap = convertToHashMap(receive);
+
+                            hashMap.get("PLAYER"); // Wij zelf, of tegen partij
+                            Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
+
+                        }
+
+                        else if(receive.startsWith("YOURTURN")){
+                            // state = doe een zet.
+
+                        }
+
+                        else if(receive.startsWith("LOSS")){
+                            // state = game ended loss
+
+                        }
+
+                        else if(receive.startsWith("WIN")){
+                            // state = game ended win
+
+                        }
+                        else if(receive.startsWith("CHALLENGE")){
+
+                        }
 
                     }
-                    else if(receive.startsWith("YOURTURN")){
-                        // state = doe een zet.
 
-                    }
-                    else if(receive.startsWith("LOSS")){
-                        // state = game ended loss
+                    else if (receive.startsWith("PLAYERLIST")){
+                        receive = receive.substring(11);
+                        HashMap hashMap = convertToHashMap(receive); // werkt wss niet.
 
-                    }
-                    else if(receive.startsWith("WIN")){
-                        // state = game ended win
-
-                    }
-                    else if(receive.startsWith("CHALLENGE")){
-
+                        // stuur naar gui.
                     }
                 }
-                else if (receive.startsWith("SVR PLAYERLIST")){
 
-                }
-                else if (receive.startsWith("ERR")){ // heeft GEEN gevolgen
+                else if (receive.startsWith("ERR")){ // heeft GEEN gevolgen op het spel
                     System.out.println("Error gevonden: " + receive.substring(4));
                 }
+
                 else{
                     System.out.println("Dit is een nieuwe commando: " + receive);
                 }
