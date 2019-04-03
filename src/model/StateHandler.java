@@ -58,6 +58,29 @@ public class StateHandler{
         gameState.establishConnection();
     }
 
+    public GameState getGameEndedDraw() {
+        return gameEndedDraw;
+    }
+    public GameState getGameEndedLoss() {
+        return gameEndedLoss;
+    }
+    public GameState getGameEndedWin() {
+        return gameEndedWin;
+    }
+
+    public GameState getClientMove() {
+        return clientMove;
+    }
+    public GameState getServerMove() {
+        return serverMove;
+    }
+
+    public GameState getConnectingToServer(){ return connectingToServer; }
+    public GameState getGameStarted(){ return gameStarted; }
+
+    public GameState getIdle(){return idle; }
+
+
     public void setGameState(GameState gameState){
         this.gameState = gameState;
     }

@@ -1,6 +1,7 @@
 import controller.StartController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.StateHandler;
 import view.BoardView;
 import view.GameView;
 
@@ -17,6 +18,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        StateHandler stateHandler = new StateHandler();
+        stateHandler.setGameState(stateHandler.getGameStarted());
 //        new StartController("localhost");
         launch(args);
     }
