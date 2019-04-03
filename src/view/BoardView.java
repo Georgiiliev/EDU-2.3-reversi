@@ -136,7 +136,7 @@ public class BoardView extends JPanel {
 
 
             if (moveController.isMoveLegit(row, column)){
-                CircleIcon c = new CircleIcon();
+                MovableObjectCircle c = new MovableObjectCircle();
                 btn.setOpaque(false);
                 btn.setBackground(Color.black);
                 btn.setIcon(c);
@@ -148,61 +148,13 @@ public class BoardView extends JPanel {
     public void printIcon(int x, int y, String i) {
         JButton button = this.button[x][y];
         if (i.equals("O")) {
-            CircleIcon o = new CircleIcon();
+            MovableObjectCircle o = new MovableObjectCircle();
             button.setIcon(o);
         } else if (i.equals("X")) {
-            CrossIcon n = new CrossIcon();
+            MovableObjectCross n = new MovableObjectCross();
             button.setIcon(n);
         }
     }
 }
 
 
-class CrossIcon implements Icon {
-    @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        Graphics2D g1 = (Graphics2D) g.create();
-        g1.setPaint(Color.BLACK);
-        g1.drawLine(1,1,64,64);
-        g1.setBackground(Color.black);
-        g1.dispose();
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setPaint(Color.BLACK);
-        g2.drawLine(64, 1, 1,64);
-        g2.setBackground(Color.black);
-        g2.dispose();
-    }
-
-    @Override
-    public int getIconWidth() {
-        return 60;
-    }
-
-    @Override
-    public int getIconHeight() {
-        return 60;
-    }
-}
-
-class CircleIcon implements Icon {
-
-    @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setPaint(Color.BLACK);
-        g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
-        g2.setBackground(Color.black);
-        g2.dispose();
-    }
-
-    @Override
-    public int getIconWidth() {
-        return 60;
-    }
-
-    @Override
-    public int getIconHeight() {
-        return 60;
-    }
-
-}

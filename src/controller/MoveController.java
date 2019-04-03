@@ -17,10 +17,18 @@ public class MoveController {
         if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
+        // TODO check if game = reversi
         // TODO check if state = yourturn
         fillCharBoard(row, column);
         // TODO state = new state(ServerMove);
         return true;
+    }
+
+    public void reversieCheck (){
+        // check die geldige zetten uitrekend
+            // zijn er stenen van tegen partij om me heen? Opslaan nieuwe array.
+            // ja? zijn er stenen die
+        // functie die de stenen aanpast.
     }
 
     public void fillCharBoard(int row, int column){
