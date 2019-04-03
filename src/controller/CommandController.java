@@ -2,6 +2,7 @@ package controller;
 
 import connection.ServerConnection;
 import model.StateHandler;
+import view.GameView;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class CommandController implements Runnable{
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
                             receive = receive.substring(6);
-                            HashMap hashMap = convertToHashMap(receive);
+                            HashMap hashMap = stringToHashMap(receive);
 
                             hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
                             if (hashMap.get("GAMETYPE") == "Reversi"){
@@ -43,9 +44,13 @@ public class CommandController implements Runnable{
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
                             receive = receive.substring(5);
-                            HashMap hashMap = convertToHashMap(receive);
+                            HashMap hashMap = stringToHashMap(receive);
 
-                            hashMap.get("PLAYER"); // Wij zelf, of tegen partij
+                            String name = "myname"; //TODO
+                            if (!hashMap.get("PLAYER").equals(name)){
+                                stateHandler.setGameState(stateHandler.getServerMove());
+                            }
+
                             Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                         }
@@ -75,18 +80,12 @@ public class CommandController implements Runnable{
                         else if(receive.startsWith("CHALLENGE")){
 
                         }
-
                     }
 
                     else if (receive.startsWith("PLAYERLIST")){
                         receive = receive.substring(11);
-                        HashMap hashMap = convertToHashMap(receive); // werkt wss niet.
-
-                        // stuur naar gui.
-                    }
-
-                    else if (receive.startsWith("GAMELIST")){ // Is niet nodig omdat we dat zelf regelen
-                        receive = receive.substring(9);
+                        String[] players = stringToArray(receive);
+                        GameView gameView;
                     }
                 }
 
@@ -100,15 +99,23 @@ public class CommandController implements Runnable{
             }
         }
     }
-    public HashMap convertToHashMap(String hashMap){
-        hashMap.replaceAll("(\\{|}|\")",""); // verwijdert rare items
-        String[] nieuwMap = hashMap.split("[,|:]");
+    public HashMap stringToHashMap(String hashMap){
+        String cleanString = hashMap.replaceAll("(\\{|}|\")",""); // verwijdert rare items
+        String[] nieuwMap = cleanString.split("[,|:]");
         Arrays.asList(nieuwMap);
         HashMap<String, String> serverGegevens = new HashMap<String, String>();
         for (int i = 0; i < nieuwMap.length; i++){
             serverGegevens.put(nieuwMap[i].replaceAll(" ",""), nieuwMap[++i].substring(1));
         }
         return serverGegevens;
+    }
+    public String[] stringToArray(String array){ // void moet array worden
+        String ok = array.replaceAll("(\\[|]|\")","");
+        String[] nieuweArray = ok.split("[,]");
+        for (int i = 1; i < nieuweArray.length; i++){
+            nieuweArray[i] = nieuweArray[i].substring(1);
+        }
+        return nieuweArray;
     }
 
     @Override
