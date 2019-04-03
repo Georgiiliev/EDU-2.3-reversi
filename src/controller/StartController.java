@@ -47,6 +47,7 @@ public class StartController {
         else if (game == 2){
             connect.send("subscribe", "Tic-tac-toe");
         }
+
         GameController gameController = new GameController(connect);
         Thread thread = new Thread(gameController);
         thread.start();
