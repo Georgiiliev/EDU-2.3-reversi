@@ -34,18 +34,21 @@ public class GameView {
         drawConsole();
         drawButtons();
         drawPlayerList();
+        FrameProperties();
 
+        //Tekent frame
+        frame.add(b);
+    }
 
-
+    private void FrameProperties() {
         UI.setVisible(true);
         UI.setLayout(new GridLayout(3,2));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.add(b);
     }
 
-    public void drawConsole() {
+    private void drawConsole() {
         //console
         JPanel console = new JPanel();
         JList consoleList = new JList(modelConsole);
@@ -54,7 +57,7 @@ public class GameView {
         frame.add(console, BorderLayout.SOUTH);
     }
 
-    public void drawButtons() {
+    private void drawButtons() {
         //buttons
         input.setPreferredSize(new Dimension(100, 20));
         start.addActionListener( (e)-> {
@@ -69,7 +72,7 @@ public class GameView {
         UI.add(input);
     }
 
-    public void drawPlayerList() {
+    private void drawPlayerList() {
         //lists
         JList list = new JList();
         JScrollPane scrollableList = new JScrollPane(list);
