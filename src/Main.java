@@ -13,14 +13,11 @@ public class Main extends Application {
 //        primaryStage.show();
         BoardView boardView = new BoardView(3);
         boardView.paint(boardView);
-        boardView.printIcon(0,0,"X");
-
     }
 
 
     public static void main(String[] args) {
 //        new StartController("localhost");
         launch(args);
-
     }
 }

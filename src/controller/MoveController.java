@@ -17,7 +17,7 @@ public class MoveController {
         if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
-        reversieCheck(row, column);
+//        reversieCheck(row, column);
         // TODO check if game = reversi
         // TODO check if state = yourturn
         fillCharBoard(row, column);
