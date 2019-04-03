@@ -47,6 +47,7 @@ public class ServerConnection {
     }
 
     public void close() {
+        send("logout","");
         try {
             socket.close();
         }
