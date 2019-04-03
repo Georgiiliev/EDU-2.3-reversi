@@ -14,7 +14,6 @@ public class GameController implements Runnable{
 
     public void start() {
         while (true){
-            connect.receive();
             while (connect.hasNext()){
                 String receive = connect.receive();
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
@@ -36,6 +35,7 @@ public class GameController implements Runnable{
                         HashMap hashMap = convertToHashMap(receive);
                         hashMap.get("PLAYER"); // Wij zelf, of tegen partij
                         Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
+
                     }
                     else if(receive.startsWith("YOURTURN")){
                         // state = doe een zet.
