@@ -6,8 +6,7 @@ public class GUIController {
 
     }
 
-    public int positieOmzetten(int size, int row,int column) {
-
+    public int positieOmzetten(int size, int row, int column) {
         int positie;
 
         int resultaat = size * column;

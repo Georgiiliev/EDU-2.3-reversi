@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommandController implements Runnable{
-    ServerConnection connect;
-    StateHandler stateHandler;
+    private ServerConnection connect;
+    private StateHandler stateHandler;
 
     public CommandController(ServerConnection connect) {
         this.connect = connect;
@@ -46,9 +46,12 @@ public class CommandController implements Runnable{
                             receive = receive.substring(5);
                             HashMap hashMap = stringToHashMap(receive);
 
-                            String name = "myname"; //TODO
+                            String name = "player"; //TODO
                             if (!hashMap.get("PLAYER").equals(name)){
                                 stateHandler.setGameState(stateHandler.getServerMove());
+                            }
+                            else{
+                                stateHandler.setGameState(stateHandler.getClientMove());
                             }
 
                             Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
@@ -74,7 +77,6 @@ public class CommandController implements Runnable{
                         else if(receive.startsWith("DRAW")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
-
                         }
 
                         else if(receive.startsWith("CHALLENGE")){

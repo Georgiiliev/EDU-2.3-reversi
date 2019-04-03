@@ -1,9 +1,13 @@
 package view;
+
+import connection.ServerConnection;
+
 import javax.swing.*;
 import java.awt.*;
 
 
 public class GameView {
+    ServerConnection serverConnection = ServerConnection.getServerConnection();
     public JFrame frame = new JFrame("Board");
 
     private final JPanel UI = new JPanel();
@@ -73,7 +77,7 @@ public class GameView {
 
     private void buttonActionListener() {
         stop.addActionListener( (e)-> {
-            System.out.println("Stop");
+            serverConnection.send("forfeit", "");
         });
 
         gameOne.addActionListener( (e)-> {
@@ -105,7 +109,8 @@ public class GameView {
     private void submitAction() {
         // You can do some validation here before assign the text to the variable
         String text = input.getText();
-        System.out.println(text);
+        System.out.println(serverConnection);
+        serverConnection.send("login", text);
         modelConsole.addElement(text);
 
     }
