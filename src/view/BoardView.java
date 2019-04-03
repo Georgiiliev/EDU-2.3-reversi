@@ -155,10 +155,6 @@ public class BoardView extends JPanel {
             button.setIcon(n);
         }
     }
-
-    public void checkIfIconIsMade() {
-        if ()
-    }
 }
 
 
