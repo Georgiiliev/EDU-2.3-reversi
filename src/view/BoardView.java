@@ -12,32 +12,12 @@ import controller.MoveController;
 
 public class BoardView extends JPanel {
 
-    public JFrame frame = new JFrame("Board");
-
-
     private final JPanel tiles = new JPanel();
-    private final JPanel UI = new JPanel();
-    private final JPanel console = new JPanel();
-    public JButton start = new JButton("Start");
-    public JButton stop = new JButton("Stop");
-    public JTextField input = new JTextField("input field");
-    public DefaultListModel modelConsole = new DefaultListModel();
-
-    public JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
-    public JRadioButton gameTwo = new JRadioButton("Reversi");
-
     private MoveController moveController;
 
 
     public int boardSize; // 8*8
     public JButton[][] button;
-
-    public int setBoardSizeX() {
-
-        int s = frame.getWidth();
-        int width = s / boardSize;
-        return width;
-    }
 
 
 
@@ -71,7 +51,6 @@ public class BoardView extends JPanel {
             }
         }
         add(tiles);
-        add(UI);
     }
 
 
@@ -82,6 +61,13 @@ public class BoardView extends JPanel {
     public void setBoardSize(int size){
         boardSize = size;
     }
+
+//    public int setBoardSizeX() {
+//
+//        int s = frame.getWidth();
+//        int width = s / boardSize;
+//        return width;
+//    }
 
     public class MyActionListener implements ActionListener {
 
@@ -114,6 +100,7 @@ public class BoardView extends JPanel {
             button.setIcon(n);
         }
     }
+
 }
 
 
