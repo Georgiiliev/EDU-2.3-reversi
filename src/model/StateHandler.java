@@ -17,6 +17,13 @@ public class StateHandler{
 
     public StateHandler(){
         clientMove = new ClientMove(this);
+        serverMove = new ServerMove(this);
+        connectingToServer = new ConnectingToServer(this);
+        gameEndedDraw = new GameEndedDraw(this);
+        gameEndedLoss = new GameEndedLoss(this);
+        gameEndedWin = new GameEndedWin(this);
+        gameStarted = new GameStarted(this);
+        idle = new Idle(this);
     }
 
     public void endGameDraw() {

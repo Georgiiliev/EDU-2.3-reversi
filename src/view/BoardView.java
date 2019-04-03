@@ -97,8 +97,9 @@ public class BoardView extends JPanel {
                 btn.setOpaque(false);
                 btn.setBackground(Color.black);
                 btn.setIcon(c);
+                System.out.println("column: " + column + ", row: " + row);
+
             }
-            System.out.println("column: " + column + ", row: " + row);
         }
     }
 

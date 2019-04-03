@@ -79,7 +79,7 @@ public class GameView {
 
     private void frameProperties() {
 
-        UI.setMaximumSize(new Dimension(300,600));
+        UI.setMaximumSize(new Dimension(900,600));
         UI.setLayout(new GridLayout(3,2));
         UI.setVisible(true);
 

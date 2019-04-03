@@ -18,7 +18,7 @@ public interface GameState {
 class GameEndedDraw implements GameState{
     StateHandler stateHandler;
     public GameEndedDraw(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
     @Override
     public boolean action() {
@@ -69,8 +69,9 @@ class GameEndedWin implements GameState{
     StateHandler stateHandler;
 
     public GameEndedWin(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
+
     @Override
     public boolean action() {
         return false;
@@ -120,7 +121,7 @@ class GameEndedLoss implements GameState{
     StateHandler stateHandler;
 
     public GameEndedLoss(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
 
     @Override
@@ -168,11 +169,12 @@ class GameEndedLoss implements GameState{
 
     }
 }
+
 class GameStarted implements GameState{
     StateHandler stateHandler;
 
     public GameStarted(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
     @Override
     public boolean action() {
@@ -219,11 +221,12 @@ class GameStarted implements GameState{
 
     }
 }
+
 class ClientMove implements GameState{
     StateHandler stateHandler;
 
     public ClientMove(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
 
     @Override
@@ -271,11 +274,12 @@ class ClientMove implements GameState{
 
     }
 }
+
 class ServerMove implements GameState{
     StateHandler stateHandler;
 
     public ServerMove(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
     @Override
     public boolean action() {
@@ -322,11 +326,12 @@ class ServerMove implements GameState{
 
     }
 }
+
 class Idle implements GameState{
     StateHandler stateHandler;
 
     public Idle(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
     @Override
     public boolean action() {
@@ -374,11 +379,12 @@ class Idle implements GameState{
 
     }
 }
+
 class ConnectingToServer implements GameState{
     StateHandler stateHandler;
 
     public ConnectingToServer(StateHandler stateHandler) {
-
+        this.stateHandler = stateHandler;
     }
     @Override
     public boolean action() {
