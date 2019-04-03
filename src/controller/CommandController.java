@@ -52,18 +52,26 @@ public class CommandController implements Runnable{
 
                         else if(receive.startsWith("YOURTURN")){
                             // state = doe een zet.
-
+                            stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
-
+                            stateHandler.setGameState(stateHandler.getGameEndedLoss());
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
+                            stateHandler.setGameState(stateHandler.getGameEndedWin());
 
                         }
+
+                        else if(receive.startsWith("DRAW")){
+                            // state = game ended win
+                            stateHandler.setGameState(stateHandler.getGameEndedDraw());
+
+                        }
+
                         else if(receive.startsWith("CHALLENGE")){
 
                         }
