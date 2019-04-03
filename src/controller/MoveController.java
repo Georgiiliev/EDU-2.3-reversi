@@ -2,20 +2,24 @@ package controller;
 
 public class MoveController {
 
-    private final char[][] board;
+    private char[][] board;
 
-    public MoveController(){
-        board = new char[][]{
-                {'_','_','_'},
-                {'_','_','_'},
-                {'_','_','_'},
-        };
+    public MoveController(int size){
+        board = new char[size][size];
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                board[i][j] = '_';
+            }
+        }
     }
 
     public boolean isMoveLegit(int row, int column){
-        if(board[column][row] != '_'){
+        if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
+        // TODO check if state = yourturn
+        fillCharBoard(row, column);
+        // TODO state = new state(ServerMove);
         return true;
     }
 

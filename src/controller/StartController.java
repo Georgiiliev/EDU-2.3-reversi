@@ -50,6 +50,5 @@ public class StartController {
         GameController gameController = new GameController(connect);
         Thread thread = new Thread(gameController);
         thread.start();
-//        connect.receive();
     }
 }

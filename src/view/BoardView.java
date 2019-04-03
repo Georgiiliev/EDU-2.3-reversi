@@ -10,17 +10,31 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import java.awt.Component;
+import java.util.ArrayList;
 import javax.swing.Icon;
 
 import controller.GameController;
+import controller.MoveController;
 
 public class BoardView extends JPanel {
+
+    public JFrame frame = new JFrame("Board");
+
 
     private final JPanel tiles = new JPanel();
     private final JPanel UI = new JPanel();
     private final JPanel console = new JPanel();
-    public String[] playerList = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
-    public String[] consoleListData = {"Item 1", "Item 2", "ItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItem 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
+//    public String[] playerList = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
+//    public String[] consoleListData = {"Item 1", "Item 2", "ItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItemItem 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5", "Item 2", "Item 3", "Item 4", "Item 5"};
+    public JButton start = new JButton("Start");
+    public JButton stop = new JButton("Stop");
+    public JTextField input = new JTextField("input field");
+    public DefaultListModel modelConsole = new DefaultListModel();
+
+    public JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
+    public JRadioButton gameTwo = new JRadioButton("Reversi");
+
+    private MoveController moveController;
 
 
     public int boardSize; // 8*8
@@ -28,8 +42,8 @@ public class BoardView extends JPanel {
 
     public BoardView( int newBoardSize) {
         boardSize = newBoardSize;
+        this.moveController = new MoveController(boardSize);
         this.button = new JButton[boardSize][boardSize];
-        System.out.println(boardSize);
         Dimension dims = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
         for (int i = 0; i < boardSize; i++) {
@@ -52,38 +66,36 @@ public class BoardView extends JPanel {
 //                    b.setOpaque(false);
 //                }
             }
-
         }
-
-
-            add(tiles);
-            add(UI);
-
+        add(tiles);
+        add(UI);
     }
 
     public void paint(BoardView b){
-        JFrame frame = new JFrame("Board");
 
         //console
         JPanel console = new JPanel();
-        JList consoleList = new JList(consoleListData);
+        JList consoleList = new JList(modelConsole);
         JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
         console.add(scrollableConsoleList);
 
         frame.add(console, BorderLayout.SOUTH);
 
         //buttons
-        JButton start = new JButton("Start");
-        JButton stop = new JButton("Stop");
-        JTextField input = new JTextField("input field");
+
         input.setPreferredSize(new Dimension(100, 20));
+        start.addActionListener( (e)-> {
+            submitAction();
+        });
         UI.add(start);
         UI.add(stop);
+        UI.add(gameOne);
+        UI.add(gameTwo);
         UI.add(input);
         UI.setMaximumSize(new Dimension(300,600));
         frame.add(UI, BorderLayout.WEST);
 
-        JList list = new JList(playerList);
+        JList list = new JList();
         JScrollPane scrollableList = new JScrollPane(list);
         UI.add(scrollableList);
 
@@ -91,9 +103,17 @@ public class BoardView extends JPanel {
         frame.add(b);
 
         frame.pack();
-        UI.setLayout(new FlowLayout());
+        UI.setLayout(new GridLayout(3,2));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+    }
+
+    private void submitAction() {
+        // You can do some validation here before assign the text to the variable
+        String text = input.getText();
+        System.out.println(text);
+        modelConsole.addElement(text);
 
     }
 
@@ -109,14 +129,19 @@ public class BoardView extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             JButton btn = (JButton) e.getSource();
-            CircleIcon c = new CircleIcon();
-            btn.setOpaque(false);
-            btn.setBackground(Color.black);
-            btn.setIcon(c);
-            System.out.println(c);
-            System.out.println("column " + btn.getClientProperty("column")
-                    + ", row " + btn.getClientProperty("row"));
+            int column = (int)btn.getClientProperty("column");
+            int row = (int)btn.getClientProperty("row");
+
+
+            if (moveController.isMoveLegit(row, column)){
+                CircleIcon c = new CircleIcon();
+                btn.setOpaque(false);
+                btn.setBackground(Color.black);
+                btn.setIcon(c);
+            }
+            System.out.println("column: " + column + ", row: " + row);
         }
     }
 
@@ -129,6 +154,10 @@ public class BoardView extends JPanel {
             CrossIcon n = new CrossIcon();
             button.setIcon(n);
         }
+    }
+
+    public void checkIfIconIsMade() {
+        if ()
     }
 }
 
@@ -146,7 +175,6 @@ class CrossIcon implements Icon {
         g2.drawLine(64, 1, 1,64);
         g2.setBackground(Color.black);
         g2.dispose();
-
     }
 
     @Override
@@ -157,7 +185,8 @@ class CrossIcon implements Icon {
     @Override
     public int getIconHeight() {
         return 60;
-    }}
+    }
+}
 
 class CircleIcon implements Icon {
 
