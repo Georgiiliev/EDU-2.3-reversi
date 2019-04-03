@@ -17,6 +17,7 @@ public class MoveController {
         if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
+        reversieCheck(row, column);
         // TODO check if game = reversi
         // TODO check if state = yourturn
         fillCharBoard(row, column);
@@ -24,7 +25,14 @@ public class MoveController {
         return true;
     }
 
-    public void reversieCheck (){
+    public void reversieCheck(int row, int column){
+        for (int i = 0; i < row; i++){
+             int newRow = row - 1;
+             for (int j = 0; j < column; i++){
+                 int newColumn = column -1;
+
+             }
+        }
         // check die geldige zetten uitrekend
             // zijn er stenen van tegen partij om me heen? Opslaan nieuwe array.
             // ja? zijn er stenen die
