@@ -1,7 +1,5 @@
 package view;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,11 +8,9 @@ public class GameView extends JFrame{
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
-    private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
-    private JRadioButton gameTwo = new JRadioButton("Reversi");
+    private JButton gameOne = new JButton("Tic-Tac-Toe");
+    private JButton gameTwo = new JButton("Reversi");
     private JTextField input = new JTextField("name",1);
-    private JLabel consoleName = new JLabel("Console");
-    private JLabel playerListName = new JLabel("Playerlist");
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView = new BoardView(1);
 
@@ -35,6 +31,7 @@ public class GameView extends JFrame{
         drawPlayerList();
         drawBox();
         drawTextInput();
+//        drawTicTacToe(boardView);
 
         this.add(GUI);
         this.setVisible(true);
@@ -51,7 +48,6 @@ public class GameView extends JFrame{
 
     private void drawConsole() {
         JPanel console = new JPanel();
-        console.add(consoleName);
         JList consoleList = new JList(modelConsole);
         JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
         console.add(scrollableConsoleList);
@@ -61,14 +57,11 @@ public class GameView extends JFrame{
     }
 
     private void drawPlayerList() {
-        Box playerBox = Box.createVerticalBox();
-        playerBox.add(playerListName);
         JList list = new JList();
         JScrollPane scrollableList = new JScrollPane(list);
-        list.setFixedCellHeight(47);
+        list.setFixedCellHeight(50);
         list.setFixedCellWidth(190);
-        playerBox.add(scrollableList);
-        addComp(GUI, playerBox, 0, 0, 1, 1, GridBagConstraints.NORTHEAST, GridBagConstraints.NONE);
+        addComp(GUI, scrollableList, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -77,11 +70,6 @@ public class GameView extends JFrame{
         box.add(input);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(submit);
-
-        ButtonGroup group = new ButtonGroup();
-        group.add(gameOne);
-        group.add(gameTwo);
-
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(gameOne);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -92,6 +80,9 @@ public class GameView extends JFrame{
 
 
     private void drawTextInput() {
+        modelConsole.addElement("Geef je naam op in het text vak hierboven.");
+        modelConsole.addElement("Klik het spel aan dat je wilt spelen.");
+        modelConsole.addElement("Klik vervolgens op de knop Submit.");
 
         submit.addActionListener( (e)-> {
             submitAction();
@@ -120,7 +111,9 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String text = input.getText();
         System.out.println(text);
-        modelConsole.addElement(text);
+        modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + text, 0);
+        modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
+        modelConsole.insertElementAt("", 2);
 
     }
 
