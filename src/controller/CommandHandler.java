@@ -13,9 +13,10 @@ public class CommandHandler implements Runnable{
     private CommandHandler commandHandler;
     private StateHandler stateHandler;
 
-    public CommandHandler(ServerConnection connect) {
+    public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
         this.connect = connect;
         this.commandHandler = this;
+        this.stateHandler = stateHandler;
     }
 
     public void start() {
@@ -66,6 +67,7 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("YOURTURN")){
                             // state = doe een zet.
+                            System.out.println(stateHandler.getState());
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
@@ -93,7 +95,6 @@ public class CommandHandler implements Runnable{
                     else if (receive.startsWith("PLAYERLIST")){
                         receive = receive.substring(11);
                         String[] players = stringToArray(receive);
-                        GameView gameView;
                     }
                 }
 
@@ -126,20 +127,34 @@ public class CommandHandler implements Runnable{
         return nieuweArray;
     }
     private int[] serverIntToLocal(int oldInt){
-        int[] newInt = new int[2];
+        int[] newInt = new int[1];
+        int gameSize = 0;
 
-        int gameSize = 3;
+        if(getGameType() == "Reversi"){
+            gameSize = 8;
+        } else if (getGameType() == "Tic-tac-toe"){
+            gameSize = 3;
+        }
+
         newInt[0] = oldInt / gameSize;
         newInt[1] = oldInt % gameSize;
         return newInt;
     }
+
+    private void placeMove(){
+
+    }
+
     public String getGameType(){
         return gameType;
     }
-    public CommandHandler commandController(){
+    public CommandHandler commandHandler(){
         return commandHandler;
     }
 
+    public StateHandler getStateHandler(){
+        return stateHandler;
+    }
     @Override
     public void run() {
         start();

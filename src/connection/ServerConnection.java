@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ServerConnection implements Runnable{
     private static ServerConnection serverConnection;
-    private StateHandler stateHandler;
+    private static StateHandler stateHandler;
 
     private static final int port = 7789;
     private static String host;
@@ -26,6 +26,10 @@ public class ServerConnection implements Runnable{
         connect();
     }
 
+    public static StateHandler getStateHandler() {
+        return stateHandler;
+    }
+
     private void connect() {
         System.out.println("Connecting to server...");
         try {
@@ -33,14 +37,17 @@ public class ServerConnection implements Runnable{
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
 
+            System.out.println("Connection established");
             receive(); // haal welkom regel 1 op
             receive(); // haal welkom regel 2 op
-
-            System.out.println("Connection established");
-            stateHandler.setGameState(stateHandler.getGameStarted());
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

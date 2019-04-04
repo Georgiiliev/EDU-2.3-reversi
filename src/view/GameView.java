@@ -1,6 +1,8 @@
 package view;
 
 import connection.ServerConnection;
+import controller.CommandController;
+import model.StateHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +17,16 @@ public class GameView extends JFrame{
     private JLabel consoleName = new JLabel();
     private JLabel playerListName = new JLabel();
     private DefaultListModel modelConsole = new DefaultListModel();
-    private BoardView boardView = new BoardView(1);
+    private BoardView boardView;
     private String gameValue;
 
-    ServerConnection serverConnection;
+    private ServerConnection serverConnection;
+    private CommandController commandController;
+    private StateHandler stateHandler;
     public GameView(){
         serverConnection = ServerConnection.getServerConnection();
+        stateHandler = ServerConnection.getStateHandler();
+        this.commandController = new CommandController(serverConnection);
         drawGui();
     }
 
@@ -102,12 +108,10 @@ public class GameView extends JFrame{
         submit.addActionListener( (e)-> {
             submitAction();
             if(gameOne.isSelected()){
-                GUI.remove(boardView);
                 drawTicTacToe(boardView = new BoardView(3));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
-                GUI.remove(boardView);
                 drawReversi(boardView = new BoardView(8));
                 GUI.revalidate();
                 GUI.repaint();
@@ -121,6 +125,15 @@ public class GameView extends JFrame{
     }
 
     private void submitAction() {
+        if(gameOne.isSelected()) {
+            System.out.println("Tic-Tac-Toe");
+            gameValue = "Tic-tac-toe";
+
+        } else if(gameTwo.isSelected()) {
+            System.out.println("Reversi");
+            gameValue = "Reversi";
+        }
+
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
         System.out.println(name);
@@ -129,13 +142,6 @@ public class GameView extends JFrame{
         modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
         modelConsole.insertElementAt("", 2);
 
-        if(gameOne.isSelected()) {
-            System.out.println("Tic-Tac-Toe");
-            gameValue = "Tic-tac-toe";
-        } else if(gameTwo.isSelected()) {
-            System.out.println("Reversi");
-            gameValue = "Reversi";
-        }
 
         sendCommand("login", name);
         sendCommand("subscribe", gameValue);
@@ -162,6 +168,8 @@ public class GameView extends JFrame{
     }
 
     private void sendCommand(String action, String value){
-        serverConnection.send(action, value);
+        commandController.sendCommand(action,value);
     }
+
+
 }

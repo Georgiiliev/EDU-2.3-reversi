@@ -3,11 +3,12 @@ package controller;
 import model.GameState;
 import model.StateHandler;
 
+import javax.swing.plaf.nimbus.State;
+
 public class MoveController {
     public static MoveController moveController;
-
+    StateHandler stateHandler;
     private char[][] board;
-    private StateHandler stateHandler;
 
     public MoveController(int size){
         moveController = this;
@@ -21,27 +22,24 @@ public class MoveController {
 
     public boolean clientmove(int row, int column){
         if(board[column][row] != '_'){ // check if vakje is leeg
+            System.out.println("You can't do this move.");
             return false;
         }
-//        reversieCheck(row, column);
-        // TODO check if game = reversi
-        if (!stateHandler.getState().equals(stateHandler.getClientMove())){
+
+        if (stateHandler.getState() != stateHandler.getClientMove()){
             return false;
         }
+
         fillCharBoard(row, column);
-        // TODO state = new state(ServerMove);
         return true;
     }
 
-    public void serverMove(int row, int column){
-//        reversieCheck(row, column);
-        // TODO check if game = reversi
-        if (stateHandler.getState().equals(stateHandler.getServerMove())){
-
+    public boolean serverMove(int row, int column){
+        if (stateHandler.getState() == stateHandler.getServerMove()){
+            fillCharBoard(row, column);
+            return true;
         }
-        fillCharBoard(row, column);
-        // TODO state = new state(ServerMove);
-
+        return false;
     }
 
     public void reversieCheck(int row, int column){
