@@ -104,6 +104,9 @@ public class GameView extends JFrame{
 
 
     private void drawTextInput() {
+        modelConsole.addElement("Geef je naam op in het text vak hierboven.");
+        modelConsole.addElement("Klik het spel aan dat je wilt spelen.");
+        modelConsole.addElement("Klik vervolgens op de knop Submit.");
 
         submit.addActionListener( (e)-> {
             submitAction();
