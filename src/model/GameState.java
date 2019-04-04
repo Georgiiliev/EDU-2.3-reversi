@@ -175,7 +175,7 @@ class GameEndedLoss implements GameState{
 
 class GameStarted implements GameState{
     StateHandler stateHandler;
-    GameView gameView = new GameView();
+    GameView gameView;
 
     public GameStarted(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
