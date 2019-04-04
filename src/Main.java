@@ -1,3 +1,4 @@
+import controller.StartController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.StateHandler;
@@ -18,9 +19,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         StateHandler stateHandler = new StateHandler();
         stateHandler.setGameState(stateHandler.getConnectingToServer());
-
         System.out.println(stateHandler.getState());
-//        new StartController("localhost");
+
         launch(args);
     }
 }
