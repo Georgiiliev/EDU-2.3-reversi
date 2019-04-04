@@ -1,6 +1,7 @@
 package model;
 
 import controller.StartController;
+import view.GameView;
 
 public interface GameState {
     boolean action();
@@ -174,10 +175,11 @@ class GameEndedLoss implements GameState{
 
 class GameStarted implements GameState{
     StateHandler stateHandler;
+    GameView gameView = new GameView();
 
     public GameStarted(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
-        //draw game screen.
+        gameView = new GameView();
     }
     @Override
     public boolean action() {
