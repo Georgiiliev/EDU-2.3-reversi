@@ -177,6 +177,7 @@ class GameStarted implements GameState{
 
     public GameStarted(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
+        //draw game screen.
     }
     @Override
     public boolean action() {
