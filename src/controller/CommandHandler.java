@@ -7,15 +7,15 @@ import view.GameView;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class CommandController implements Runnable{
+public class CommandHandler implements Runnable{
     private String gameType;
     private ServerConnection connect;
-    private CommandController commandController;
+    private CommandHandler commandHandler;
     private StateHandler stateHandler;
 
-    public CommandController(ServerConnection connect) {
+    public CommandHandler(ServerConnection connect) {
         this.connect = connect;
-        this.commandController = this;
+        this.commandHandler = this;
     }
 
     public void start() {
@@ -136,8 +136,8 @@ public class CommandController implements Runnable{
     public String getGameType(){
         return gameType;
     }
-    public CommandController commandController(){
-        return commandController;
+    public CommandHandler commandController(){
+        return commandHandler;
     }
 
     @Override

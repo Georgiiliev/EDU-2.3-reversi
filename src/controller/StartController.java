@@ -3,8 +3,6 @@ package controller;
 import connection.ServerConnection;
 import model.StateHandler;
 
-import java.util.*;
-
 import static java.lang.Thread.sleep;
 
 public class StartController {
@@ -49,8 +47,8 @@ public class StartController {
 //            connect.send("subscribe", "Tic-tac-toe");
 //        }
 
-        CommandController commandController = new CommandController(connect);
-        Thread thread = new Thread(commandController);
+        CommandHandler commandHandler = new CommandHandler(connect);
+        Thread thread = new Thread(commandHandler);
         thread.start();
     }
 }

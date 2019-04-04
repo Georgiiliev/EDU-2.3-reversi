@@ -1,22 +1,26 @@
 package view;
 
+import connection.ServerConnection;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameView extends JFrame{
 
-
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
-    private JTextField input = new JTextField("name",1);
+    private JTextField nameInput = new JTextField("name",1);
     private JLabel consoleName = new JLabel();
     private JLabel playerListName = new JLabel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView = new BoardView(1);
+    private String gameValue;
 
+    ServerConnection serverConnection;
     public GameView(){
+        serverConnection = ServerConnection.getServerConnection();
         drawGui();
     }
 
@@ -72,13 +76,13 @@ public class GameView extends JFrame{
 
     private void drawBox(){
         Box box = Box.createVerticalBox();
-        input.setPreferredSize(new Dimension(100, 20));
+        nameInput.setPreferredSize(new Dimension(100, 20));
 
         ButtonGroup group = new ButtonGroup();
         group.add(gameOne);
         group.add(gameTwo);
 
-        box.add(input);
+        box.add(nameInput);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(submit);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -98,13 +102,11 @@ public class GameView extends JFrame{
         submit.addActionListener( (e)-> {
             submitAction();
             if(gameOne.isSelected()){
-                System.out.println("Tic-Tac-Toe");
                 GUI.remove(boardView);
                 drawTicTacToe(boardView = new BoardView(3));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
-                System.out.println("Reversi");
                 GUI.remove(boardView);
                 drawReversi(boardView = new BoardView(8));
                 GUI.revalidate();
@@ -120,13 +122,23 @@ public class GameView extends JFrame{
 
     private void submitAction() {
         // You can do some validation here before assign the text to the variable
-        String text = input.getText();
-        System.out.println(text);
+        String name = nameInput.getText();
+        System.out.println(name);
         modelConsole.clear();
-        modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + text, 0);
+        modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + name, 0);
         modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
         modelConsole.insertElementAt("", 2);
 
+        if(gameOne.isSelected()) {
+            System.out.println("Tic-Tac-Toe");
+            gameValue = "Tic-tac-toe";
+        } else if(gameTwo.isSelected()) {
+            System.out.println("Reversi");
+            gameValue = "Reversi";
+        }
+
+        sendCommand("login", name);
+        sendCommand("subscribe", gameValue);
     }
 
     // Sets the rules for a component destined for a GridBagLayout
@@ -147,5 +159,9 @@ public class GameView extends JFrame{
         gridConstraints.fill = stretch;
 
         thePanel.add(comp, gridConstraints);
+    }
+
+    private void sendCommand(String action, String value){
+        serverConnection.send(action, value);
     }
 }
