@@ -1,5 +1,7 @@
 package view;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,9 +10,11 @@ public class GameView extends JFrame{
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
-    private JButton gameOne = new JButton("Tic-Tac-Toe");
-    private JButton gameTwo = new JButton("Reversi");
+    private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
+    private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JTextField input = new JTextField("name",1);
+    private JLabel consoleName = new JLabel("Console");
+    private JLabel playerListName = new JLabel("Playerlist");
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView = new BoardView(1);
 
@@ -31,7 +35,6 @@ public class GameView extends JFrame{
         drawPlayerList();
         drawBox();
         drawTextInput();
-//        drawTicTacToe(boardView);
 
         this.add(GUI);
         this.setVisible(true);
@@ -48,6 +51,7 @@ public class GameView extends JFrame{
 
     private void drawConsole() {
         JPanel console = new JPanel();
+        console.add(consoleName);
         JList consoleList = new JList(modelConsole);
         JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
         console.add(scrollableConsoleList);
@@ -57,11 +61,14 @@ public class GameView extends JFrame{
     }
 
     private void drawPlayerList() {
+        Box playerBox = Box.createVerticalBox();
+        playerBox.add(playerListName);
         JList list = new JList();
         JScrollPane scrollableList = new JScrollPane(list);
-        list.setFixedCellHeight(50);
+        list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
-        addComp(GUI, scrollableList, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        playerBox.add(scrollableList);
+        addComp(GUI, playerBox, 0, 0, 1, 1, GridBagConstraints.NORTHEAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -70,6 +77,11 @@ public class GameView extends JFrame{
         box.add(input);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(submit);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(gameOne);
+        group.add(gameTwo);
+
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(gameOne);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
