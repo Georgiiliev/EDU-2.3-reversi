@@ -19,13 +19,15 @@ public class ServerConnection implements Runnable{
     private Scanner in;
     private PrintWriter out;
 
-    public ServerConnection(String host) {
+    public ServerConnection(String host, StateHandler stateHandler) {
         serverConnection = this;
         this.host = host;
+        this.stateHandler = stateHandler;
         connect();
     }
 
     private void connect() {
+        System.out.println("Connecting to server...");
         try {
             socket = new Socket(host, port);
             in = new Scanner(socket.getInputStream());
@@ -34,6 +36,7 @@ public class ServerConnection implements Runnable{
             receive(); // haal welkom regel 1 op
             receive(); // haal welkom regel 2 op
 
+            System.out.println("Connection established");
             stateHandler.setGameState(stateHandler.getGameStarted());
         }
         catch (IOException e){

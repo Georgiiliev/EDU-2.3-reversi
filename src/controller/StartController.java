@@ -1,6 +1,7 @@
 package controller;
 
 import connection.ServerConnection;
+import model.StateHandler;
 
 import java.util.*;
 
@@ -9,9 +10,11 @@ import static java.lang.Thread.sleep;
 public class StartController {
     ServerConnection connect;
     String host;
+    StateHandler stateHandler;
 
-    public StartController(String host) {
+    public StartController(String host, StateHandler stateHandler) {
         this.host = host;
+        this.stateHandler = stateHandler;
         startGame();
     }
 
@@ -36,7 +39,7 @@ public class StartController {
 
 //        reader.close();
 
-        connect = new ServerConnection(host); //zet connectie op
+        connect = new ServerConnection(host,stateHandler); //zet connectie op
 
 //        connect.send("login", name); //login op de server
 //        if (game == 1){

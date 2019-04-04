@@ -391,7 +391,7 @@ class ConnectingToServer implements GameState{
 
     public ConnectingToServer(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
-        startController = new StartController("localhost");
+        startController = new StartController("localhost",stateHandler);
     }
     @Override
     public boolean action() {
