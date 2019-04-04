@@ -151,6 +151,5 @@ public class GameView extends JFrame{
         gridConstraints.fill = stretch;
 
         thePanel.add(comp, gridConstraints);
-
     }
 }

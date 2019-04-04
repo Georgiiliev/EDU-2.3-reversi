@@ -1,6 +1,7 @@
 package model;
 
 import controller.StartController;
+import view.GameView;
 
 public interface GameState {
     boolean action();
@@ -174,9 +175,11 @@ class GameEndedLoss implements GameState{
 
 class GameStarted implements GameState{
     StateHandler stateHandler;
+    GameView gameView;
 
     public GameStarted(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
+        gameView = new GameView();
     }
     @Override
     public boolean action() {
@@ -388,7 +391,7 @@ class ConnectingToServer implements GameState{
 
     public ConnectingToServer(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
-        startController = new StartController("localhost");
+        startController = new StartController("localhost",stateHandler);
     }
     @Override
     public boolean action() {
