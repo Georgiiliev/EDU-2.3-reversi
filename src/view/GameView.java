@@ -120,7 +120,9 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String text = input.getText();
         System.out.println(text);
-        modelConsole.addElement(text);
+        modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + text, 0);
+        modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
+        modelConsole.insertElementAt("", 2);
 
     }
 
