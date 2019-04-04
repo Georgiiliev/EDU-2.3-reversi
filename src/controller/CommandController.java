@@ -8,11 +8,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommandController implements Runnable{
+    private String gameType;
     private ServerConnection connect;
+    private CommandController commandController;
     private StateHandler stateHandler;
 
     public CommandController(ServerConnection connect) {
         this.connect = connect;
+        this.commandController = this;
     }
 
     public void start() {
@@ -34,9 +37,11 @@ public class CommandController implements Runnable{
 
                             hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
                             if (hashMap.get("GAMETYPE") == "Reversi"){
+                                gameType = "Reversie";
 //                                stateHandler.setGameState();
                             }
                             if (hashMap.get("GAMETYPE") == "Tic-tac-toe"){
+                                gameType = "Tic-tac-toe";
 //                                stateHandler.setGameState();
                             }
                             // State is gamestarted
@@ -47,15 +52,16 @@ public class CommandController implements Runnable{
                             HashMap hashMap = stringToHashMap(receive);
 
                             String name = "player"; //TODO
-                            if (!hashMap.get("PLAYER").equals(name)){
+                            if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
                                 stateHandler.setGameState(stateHandler.getServerMove());
-                            }
-                            else{
-                                stateHandler.setGameState(stateHandler.getClientMove());
-                            }
+                                int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
-                            Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
-
+                                int[] a = serverIntToLocal(move);
+                                // TODO geef het volgende aan een functie
+                                System.out.println(a[0]);
+                                System.out.println(a[1]);
+//                                printIcon(a[0], a[1]), "X");
+                            }
                         }
 
                         else if(receive.startsWith("YOURTURN")){
@@ -101,7 +107,7 @@ public class CommandController implements Runnable{
             }
         }
     }
-    public HashMap stringToHashMap(String hashMap){
+    private HashMap stringToHashMap(String hashMap){
         String cleanString = hashMap.replaceAll("(\\{|}|\")",""); // verwijdert rare items
         String[] nieuwMap = cleanString.split("[,|:]");
         Arrays.asList(nieuwMap);
@@ -111,13 +117,27 @@ public class CommandController implements Runnable{
         }
         return serverGegevens;
     }
-    public String[] stringToArray(String array){ // void moet array worden
+    private String[] stringToArray(String array){ // void moet array worden
         String ok = array.replaceAll("(\\[|]|\")","");
         String[] nieuweArray = ok.split("[,]");
         for (int i = 1; i < nieuweArray.length; i++){
             nieuweArray[i] = nieuweArray[i].substring(1);
         }
         return nieuweArray;
+    }
+    private int[] serverIntToLocal(int oldInt){
+        int[] newInt = new int[2];
+
+        int gameSize = 3;
+        newInt[0] = oldInt / gameSize;
+        newInt[1] = oldInt % gameSize;
+        return newInt;
+    }
+    public String getGameType(){
+        return gameType;
+    }
+    public CommandController commandController(){
+        return commandController;
     }
 
     @Override

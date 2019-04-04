@@ -33,6 +33,17 @@ public class MoveController {
         return true;
     }
 
+    public void serverMove(int row, int column){
+//        reversieCheck(row, column);
+        // TODO check if game = reversi
+        if (stateHandler.getState().equals(stateHandler.getServerMove())){
+
+        }
+        fillCharBoard(row, column);
+        // TODO state = new state(ServerMove);
+
+    }
+
     public void reversieCheck(int row, int column){
         for (int i = 0; i < row; i++){
              int newRow = row - 1;
