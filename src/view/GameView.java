@@ -90,38 +90,29 @@ public class GameView extends JFrame{
 
     }
 
-    private void buttonActionListener() {
-        submit.addActionListener( (e)-> {
-            System.out.println("submit");
-        });
-
-
-        gameOne.addActionListener( (e)-> {
-            System.out.println("Tic-Tac-Toe");
-            GUI.remove(boardView);
-            drawTicTacToe(boardView = new BoardView(3));
-            GUI.revalidate();
-            GUI.repaint();
-
-        });
-
-        gameTwo.addActionListener( (e)-> {
-            System.out.println("Reversi");
-            GUI.remove(boardView);
-            drawReversi(boardView = new BoardView(8));
-            GUI.revalidate();
-            GUI.repaint();
-        });
-    }
-
 
     private void drawTextInput() {
 
         submit.addActionListener( (e)-> {
             submitAction();
-        });
+            if(gameOne.isSelected()){
+                System.out.println("Tic-Tac-Toe");
+                GUI.remove(boardView);
+                drawTicTacToe(boardView = new BoardView(3));
+                GUI.revalidate();
+                GUI.repaint();
+            }else if(gameTwo.isSelected()){
+                System.out.println("Reversi");
+                GUI.remove(boardView);
+                drawReversi(boardView = new BoardView(8));
+                GUI.revalidate();
+                GUI.repaint();
+            } else{
+                String error = "Select a game";
+                modelConsole.addElement(error);
 
-        buttonActionListener();
+            }
+        });
 
     }
 
