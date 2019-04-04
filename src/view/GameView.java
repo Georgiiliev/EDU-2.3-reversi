@@ -39,10 +39,10 @@ public class GameView extends JFrame{
     }
 
     private void drawTicTacToe(BoardView b){
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
+        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
     }
 
-    private void drawReversie(BoardView b) {
+    private void drawReversi(BoardView b) {
         addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
     }
 
@@ -108,7 +108,7 @@ public class GameView extends JFrame{
         gameTwo.addActionListener( (e)-> {
             System.out.println("Reversi");
             GUI.remove(boardView);
-            drawTicTacToe(boardView = new BoardView(8));
+            drawReversi(boardView = new BoardView(8));
             GUI.revalidate();
             GUI.repaint();
         });
