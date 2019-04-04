@@ -92,7 +92,7 @@ public class GameView extends JFrame{
 
     private void drawTextInput() {
         modelConsole.addElement("Geef je naam op in het text vak hierboven.");
-        modelConsole.addElement("Klik het spel aan dat je wilt spelen.");
+        modelConsole.addElement("Selecteer het spel aan dat je wilt spelen.");
         modelConsole.addElement("Klik vervolgens op de knop Submit.");
 
         submit.addActionListener( (e)-> {
@@ -122,6 +122,7 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String text = input.getText();
         System.out.println(text);
+        modelConsole.clear();
         modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + text, 0);
         modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
         modelConsole.insertElementAt("", 2);
