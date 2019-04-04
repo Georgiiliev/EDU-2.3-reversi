@@ -78,18 +78,6 @@ public class GameView extends JFrame{
 
     }
 
-    private void drawTextInput() {
-
-//        addComp(GUI, input, 0,0,10,1,GridBagConstraints.NORTHWEST,GridBagConstraints.NONE);
-
-//        submit.addActionListener( (e)-> {
-//            submitAction();
-//        });
-
-        buttonActionListener();
-
-    }
-
     private void buttonActionListener() {
         submit.addActionListener( (e)-> {
             System.out.println("submit");
@@ -114,13 +102,24 @@ public class GameView extends JFrame{
         });
     }
 
-//    private void submitAction() {
-//        // You can do some validation here before assign the text to the variable
-//        String text = input.getText();
-//        System.out.println(text);
-//        modelConsole.addElement(text);
-//
-//    }
+
+    private void drawTextInput() {
+
+        submit.addActionListener( (e)-> {
+            submitAction();
+        });
+
+        buttonActionListener();
+
+    }
+
+    private void submitAction() {
+        // You can do some validation here before assign the text to the variable
+        String text = input.getText();
+        System.out.println(text);
+        modelConsole.addElement(text);
+
+    }
 
     // Sets the rules for a component destined for a GridBagLayout
     // and then adds it
