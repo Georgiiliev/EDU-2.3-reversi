@@ -7,19 +7,18 @@ public class GameView extends JFrame{
 
 
     private final JPanel GUI = new JPanel();
-    private JButton start = new JButton("Start");
-    private JButton stop = new JButton("Stop");
+    private JButton submit = new JButton("Submit");
     private JButton gameOne = new JButton("Tic-Tac-Toe");
     private JButton gameTwo = new JButton("Reversi");
     private JTextField input = new JTextField("name",1);
     private DefaultListModel modelConsole = new DefaultListModel();
+    private BoardView boardView = new BoardView(1);
 
     public GameView(){
-        BoardView boardView = new BoardView(3);
-        drawGui(boardView);
+        drawGui();
     }
 
-    public void drawGui(BoardView b){
+    public void drawGui(){
         this.setSize(1000, 800);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,7 +31,7 @@ public class GameView extends JFrame{
         drawPlayerList();
         drawBox();
         drawTextInput();
-        drawTicTacToe(b);
+//        drawTicTacToe(boardView);
 
         this.add(GUI);
         this.setVisible(true);
@@ -40,12 +39,10 @@ public class GameView extends JFrame{
     }
 
     private void drawTicTacToe(BoardView b){
-        b.setBoardSize(3);
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
     }
 
     private void drawReversie(BoardView b) {
-        b.setBoardSize(8);
         addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
     }
 
@@ -72,9 +69,7 @@ public class GameView extends JFrame{
         input.setPreferredSize(new Dimension(100, 20));
         box.add(input);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
-        box.add(start);
-        box.add(Box.createRigidArea(new Dimension(20, 20)));
-        box.add(stop);
+        box.add(submit);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(gameOne);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -87,7 +82,7 @@ public class GameView extends JFrame{
 
 //        addComp(GUI, input, 0,0,10,1,GridBagConstraints.NORTHWEST,GridBagConstraints.NONE);
 
-//        start.addActionListener( (e)-> {
+//        submit.addActionListener( (e)-> {
 //            submitAction();
 //        });
 
@@ -96,20 +91,26 @@ public class GameView extends JFrame{
     }
 
     private void buttonActionListener() {
-        start.addActionListener( (e)-> {
-            System.out.println("Start");
+        submit.addActionListener( (e)-> {
+            System.out.println("submit");
         });
 
-        stop.addActionListener( (e)-> {
-            System.out.println("Stop");
-        });
 
         gameOne.addActionListener( (e)-> {
             System.out.println("Tic-Tac-Toe");
+            GUI.remove(boardView);
+            drawTicTacToe(boardView = new BoardView(3));
+            GUI.revalidate();
+            GUI.repaint();
+
         });
 
         gameTwo.addActionListener( (e)-> {
             System.out.println("Reversi");
+            GUI.remove(boardView);
+            drawTicTacToe(boardView = new BoardView(8));
+            GUI.revalidate();
+            GUI.repaint();
         });
     }
 
