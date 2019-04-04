@@ -1,5 +1,7 @@
 package connection;
 
+import model.StateHandler;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -8,6 +10,7 @@ import java.util.Scanner;
 
 public class ServerConnection implements Runnable{
     private static ServerConnection serverConnection;
+    private StateHandler stateHandler;
 
     private static final int port = 7789;
     private static String host;
@@ -30,10 +33,11 @@ public class ServerConnection implements Runnable{
 
             receive(); // haal welkom regel 1 op
             receive(); // haal welkom regel 2 op
+
+            stateHandler.setGameState(stateHandler.getGameStarted());
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
-            return;
         }
     }
 
