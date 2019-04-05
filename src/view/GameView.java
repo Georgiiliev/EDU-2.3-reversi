@@ -117,10 +117,17 @@ public class GameView extends JFrame{
         submit.addActionListener( (e)-> {
             submitAction();
             if(gameOne.isSelected()){
+                if(boardView != null){
+                    GUI.remove(boardView);
+                }
                 drawTicTacToe(boardView = new BoardView(3, stateHandler, commandController, this));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
+                if(boardView != null){
+                    GUI.remove(boardView);
+                }
+                GUI.remove(boardView);
                 drawReversi(boardView = new BoardView(8, stateHandler, commandController, this));
                 GUI.revalidate();
                 GUI.repaint();
