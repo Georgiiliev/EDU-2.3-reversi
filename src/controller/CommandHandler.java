@@ -13,8 +13,10 @@ public class CommandHandler implements Runnable{
     private ServerConnection connect;
     private CommandHandler commandHandler;
     private StateHandler stateHandler;
+    private MoveController moveController;
 
     public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
+        this.moveController = MoveController.getMoveController();
         this.connect = connect;
         this.commandHandler = this;
         this.stateHandler = stateHandler;
@@ -39,23 +41,23 @@ public class CommandHandler implements Runnable{
 
                             System.out.println("Er is een match gevonden!");
                             if (gameType.equals("Reversi")){
-                                System.out.println("reversie");
+                                moveController = new MoveController(8, stateHandler);
 
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
-                                System.out.println("Tic-tac-toe");
-
+                                moveController = new MoveController(3, stateHandler);
                             }
-                            // State is gamestarted
+
+                            stateHandler.setGameState(stateHandler.getServerMove());
                         }
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
                             receive = receive.substring(5);
                             HashMap hashMap = stringToHashMap(receive);
 
-                            String name = "player"; //TODO
+                            String name = "name"; //TODO
                             if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
-                                stateHandler.setGameState(stateHandler.getServerMove());
+                                System.out.println("TEGENSTANDER");
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
@@ -63,7 +65,14 @@ public class CommandHandler implements Runnable{
                                 // TODO geef het volgende aan een functie
                                 System.out.println(a[0]);
                                 System.out.println(a[1]);
+                                moveController.serverMove(gameType, a[0], a[1]);
 //                                printIcon(a[0], a[1]), "X");
+
+                                stateHandler.setGameState(stateHandler.getClientMove());
+                            }
+                            else{
+                                System.out.println("WIJZELF");
+                                stateHandler.setGameState(stateHandler.getServerMove());
                             }
                         }
 

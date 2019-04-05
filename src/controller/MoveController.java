@@ -1,13 +1,13 @@
 package controller;
 
-import model.GameState;
 import model.StateHandler;
+import view.BoardView;
+import view.MovableObjectCircle;
+import view.MovableObjectCross;
 
 import javax.swing.*;
 import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Scanner;
 import java.util.TimerTask;
 
 public class MoveController {
@@ -17,7 +17,10 @@ public class MoveController {
     private StateHandler stateHandler;
     private char[][] board;
     private int size;
+    private BoardView boardView;
+
     public MoveController(int size, StateHandler stateHandler){
+        boardView = BoardView.getBoardView();
         moveController = this;
         this.size = size;
         this.stateHandler = stateHandler;
@@ -65,13 +68,14 @@ public class MoveController {
             return false;
         }
 
-        fillCharBoard(row, column);
+        fillCharBoard(row, column, 'O');
         return true;
     }
 
-    public boolean serverMove(int row, int column){
+    public boolean serverMove(String gametype, int row, int column){
         if (stateHandler.getState() == stateHandler.getServerMove()){
-            fillCharBoard(row, column);
+            boardView.printIcon(row, column, "X");
+            fillCharBoard(row, column, 'X');
             return true;
         }
         return false;
@@ -91,8 +95,8 @@ public class MoveController {
         // functie die de stenen aanpast.
     }
 
-    public void fillCharBoard(int row, int column){
-        board[column][row] = 'O';
+    public void fillCharBoard(int row, int column, char type){
+        board[column][row] = type;
     }
     public static MoveController getMoveController (){
         return moveController;
