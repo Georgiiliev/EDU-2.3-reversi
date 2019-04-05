@@ -1,7 +1,6 @@
 package view;
 
 import connection.ServerConnection;
-import controller.CommandController;
 import model.StateHandler;
 
 import javax.swing.*;
@@ -21,13 +20,14 @@ public class GameView extends JFrame{
     private String gameValue;
 
     private ServerConnection serverConnection;
-    private CommandController commandController;
+
     private StateHandler stateHandler;
-    public GameView(){
+    public GameView(StateHandler stateHandler){
+        this.stateHandler = stateHandler;
         serverConnection = ServerConnection.getServerConnection();
-        stateHandler = ServerConnection.getStateHandler();
-        this.commandController = new CommandController(serverConnection);
         drawGui();
+        stateHandler.setGameState(stateHandler.getIdle());
+        stateHandler.gameIdle();
     }
 
     public void drawGui(){
@@ -168,7 +168,7 @@ public class GameView extends JFrame{
     }
 
     private void sendCommand(String action, String value){
-        commandController.sendCommand(action,value);
+        serverConnection.send(action,value);
     }
 
 

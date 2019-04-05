@@ -18,7 +18,9 @@ public class StartController {
 
     public void startGame(){
         connect = new ServerConnection(host,stateHandler); //zet connectie op
-        CommandHandler commandHandler = new CommandHandler(connect,stateHandler);
+
+        CommandHandler commandHandler = new CommandHandler(connect);
+
         Thread thread = new Thread(commandHandler);
         thread.start();
     }

@@ -11,6 +11,7 @@ public class StateHandler{
     GameState idle;
 
     GameState gameState;
+    GameState establishConnection;
 
     public StateHandler(){
         clientMove = new ClientMove(this);
@@ -30,6 +31,7 @@ public class StateHandler{
     public void gameIdle() { gameState.gameIdle(); }
     public void waitForMoveServer() { gameState.waitForMoveServer(); }
     public void waitForMoveClient() { gameState.waitForMoveClient(); }
+    public void establishConnection() { gameState.establishConnection(); }
 
     public GameState getGameEndedDraw() { return gameEndedDraw; }
     public GameState getGameEndedLoss() { return gameEndedLoss; }
