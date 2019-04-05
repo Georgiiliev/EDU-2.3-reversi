@@ -1,13 +1,6 @@
 package controller;
-
-import model.GameState;
 import model.StateHandler;
-
-import javax.swing.*;
-import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Scanner;
 import java.util.TimerTask;
 
 public class MoveController {
@@ -43,7 +36,6 @@ public class MoveController {
                 System.out.println(setInterval());
             }
         }, delay, period);
-
     }
 
     private static final int setInterval() {
