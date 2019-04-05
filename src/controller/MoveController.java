@@ -2,11 +2,7 @@ package controller;
 
 import model.StateHandler;
 import view.BoardView;
-import view.MovableObjectCircle;
-import view.MovableObjectCross;
 
-import javax.swing.*;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,15 +32,11 @@ public class MoveController {
         }
     }
 
-    public static void getTimer() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Input seconds => : ");
-        String secs = sc.nextLine();
+    public static void setTimer(int time) {
         int delay = 1000;
         int period = 1000;
         timer = new Timer();
-        interval = Integer.parseInt(secs);
-        System.out.println(secs);
+        interval = time;
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 System.out.println(setInterval());
@@ -53,8 +45,10 @@ public class MoveController {
     }
 
     private static final int setInterval() {
-        if (interval == 1)
+        if (interval == 1) {
             timer.cancel();
+            System.out.println("TIME RAN OUT");
+        }
         return --interval;
     }
 
