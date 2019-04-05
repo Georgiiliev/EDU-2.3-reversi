@@ -13,9 +13,10 @@ public class CommandHandler implements Runnable{
     private CommandHandler commandHandler;
     private StateHandler stateHandler;
 
-    public CommandHandler(ServerConnection connect) {
+    public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
         this.connect = connect;
         this.commandHandler = this;
+        this.stateHandler = stateHandler;
     }
 
     public void start() {

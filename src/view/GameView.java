@@ -26,8 +26,10 @@ public class GameView extends JFrame{
         this.stateHandler = stateHandler;
         serverConnection = ServerConnection.getServerConnection();
         drawGui();
-        stateHandler.setGameState(stateHandler.getIdle());
-        stateHandler.gameIdle();
+
+        this.stateHandler.setGameState(this.stateHandler.getIdle());
+        this.stateHandler.gameIdle();
+        System.out.println(this.stateHandler.getState());
     }
 
     public void drawGui(){
@@ -108,11 +110,11 @@ public class GameView extends JFrame{
         submit.addActionListener( (e)-> {
             submitAction();
             if(gameOne.isSelected()){
-                drawTicTacToe(boardView = new BoardView(3));
+                drawTicTacToe(boardView = new BoardView(3, stateHandler));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
-                drawReversi(boardView = new BoardView(8));
+                drawReversi(boardView = new BoardView(8, stateHandler));
                 GUI.revalidate();
                 GUI.repaint();
             } else{

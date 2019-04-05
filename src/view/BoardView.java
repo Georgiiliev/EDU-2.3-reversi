@@ -9,22 +9,28 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import controller.MoveController;
+import model.StateHandler;
 
 public class BoardView extends JPanel {
 
     private final JPanel tiles = new JPanel();
     private MoveController moveController;
+    private StateHandler stateHandler;
 
 
     public int boardSize; // 8*8
     public JButton[][] button;
 
 
+    public BoardView( int newBoardSize, StateHandler stateHandler) {
 
-    public BoardView( int newBoardSize) {
         boardSize = newBoardSize;
+        this.stateHandler = stateHandler;
+        this.moveController = new MoveController(boardSize,stateHandler);
+        drawBoardView();
+    }
 
-        this.moveController = new MoveController(boardSize);
+    public void drawBoardView(){
         this.button = new JButton[boardSize][boardSize];
         Dimension dims = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
@@ -42,12 +48,6 @@ public class BoardView extends JPanel {
                 button[i][j].putClientProperty("row", j);
                 button[i][j].addActionListener(new MyActionListener());
                 tiles.add(button[i][j]);
-//                if (button[i][j] == button[3][3] || button[i][j] == button[3][4] || button[i][j] == button[4][3] || button[i][j] == button[4][4]) {
-//                    CircleIcon c = new CircleIcon();
-//                    b.setBackground(Color.green);
-//                    b.setIcon(c);
-//                    b.setOpaque(false);
-//                }
             }
         }
         add(tiles);
@@ -85,6 +85,7 @@ public class BoardView extends JPanel {
                 btn.setBackground(Color.black);
                 btn.setIcon(c);
                 System.out.println("column: " + column + ", row: " + row);
+
             }
         }
     }

@@ -365,7 +365,7 @@ class Idle implements GameState{
 
     @Override
     public void gameIdle() {
-        System.out.print("Already idle");
+        System.out.print("Waiting for a command.");
     }
 
     @Override
@@ -437,6 +437,3 @@ class ConnectingToServer implements GameState{
         startController = new StartController("localhost",stateHandler);
     }
 }
-//class MatchFound implements GameState{
-//
-//}

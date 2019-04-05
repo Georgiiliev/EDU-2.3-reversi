@@ -9,9 +9,16 @@ public class MoveController {
     public static MoveController moveController;
     StateHandler stateHandler;
     private char[][] board;
+    private int size;
 
-    public MoveController(int size){
+    public MoveController(int size, StateHandler stateHandler){
         moveController = this;
+        this.size = size;
+        this.stateHandler = stateHandler;
+        drawBoard();
+    }
+
+   public void drawBoard(){
         board = new char[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){

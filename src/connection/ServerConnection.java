@@ -31,7 +31,6 @@ public class ServerConnection implements Runnable{
     }
 
     private void connect() {
-        System.out.println("Connecting to server...");
         try {
             socket = new Socket(host, port);
             in = new Scanner(socket.getInputStream());
@@ -42,6 +41,7 @@ public class ServerConnection implements Runnable{
 
             stateHandler.setGameState(stateHandler.getGameStarted());
             stateHandler.gameStart();
+            System.out.println(stateHandler.getState());
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
