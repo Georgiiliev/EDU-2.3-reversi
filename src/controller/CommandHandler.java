@@ -6,6 +6,7 @@ import view.GameView;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class CommandHandler implements Runnable{
     private String gameType;
@@ -34,16 +35,16 @@ public class CommandHandler implements Runnable{
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
                             receive = receive.substring(6);
-                            HashMap hashMap = stringToHashMap(receive);
+                            gameType = (String) stringToHashMap(receive).get("GAMETYPE");
 
-                            hashMap.get("GAMETYPE"); // reversi of tic-tac-toe
-                            if (hashMap.get("GAMETYPE") == "Reversi"){
-                                gameType = "Reversie";
-//                                stateHandler.setGameState();
+                            System.out.println("Er is een match gevonden!");
+                            if (gameType.equals("Reversi")){
+                                System.out.println("reversie");
+
                             }
-                            if (hashMap.get("GAMETYPE") == "Tic-tac-toe"){
-                                gameType = "Tic-tac-toe";
-//                                stateHandler.setGameState();
+                            else if ( gameType.equals("Tic-tac-toe")){
+                                System.out.println("Tic-tac-toe");
+
                             }
                             // State is gamestarted
                         }
@@ -57,7 +58,8 @@ public class CommandHandler implements Runnable{
                                 stateHandler.setGameState(stateHandler.getServerMove());
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
-                                int[] a = serverIntToLocal(move);
+                                int[] a = serverIntToLocal(move); // zet move naar onze spel
+
                                 // TODO geef het volgende aan een functie
                                 System.out.println(a[0]);
                                 System.out.println(a[1]);
@@ -112,7 +114,7 @@ public class CommandHandler implements Runnable{
         String cleanString = hashMap.replaceAll("(\\{|}|\")",""); // verwijdert rare items
         String[] nieuwMap = cleanString.split("[,|:]");
         Arrays.asList(nieuwMap);
-        HashMap<String, String> serverGegevens = new HashMap<String, String>();
+        HashMap<String, String> serverGegevens = new HashMap<>();
         for (int i = 0; i < nieuwMap.length; i++){
             serverGegevens.put(nieuwMap[i].replaceAll(" ",""), nieuwMap[++i].substring(1));
         }
@@ -127,15 +129,14 @@ public class CommandHandler implements Runnable{
         return nieuweArray;
     }
     private int[] serverIntToLocal(int oldInt){
-        int[] newInt = new int[1];
+        int[] newInt = new int[2];
         int gameSize = 0;
 
-        if(getGameType() == "Reversi"){
+        if(getGameType().equals("Reversi")){
             gameSize = 8;
-        } else if (getGameType() == "Tic-tac-toe"){
+        } else if (getGameType().equals("Tic-tac-toe")){
             gameSize = 3;
         }
-
         newInt[0] = oldInt / gameSize;
         newInt[1] = oldInt % gameSize;
         return newInt;
