@@ -7,7 +7,7 @@ import javax.swing.plaf.nimbus.State;
 
 public class MoveController {
     public static MoveController moveController;
-    StateHandler stateHandler;
+    private StateHandler stateHandler;
     private char[][] board;
     private int size;
 

@@ -27,8 +27,8 @@ public class StateHandler{
     public void endGameWin() { gameState.endGameWin(); }
     public void gameStart() { gameState.gameStart(); }
     public void gameIdle() { gameState.gameIdle(); }
-    public void waitForMoveServer() { gameState.waitForMoveServer(); }
-    public void waitForMoveClient() { gameState.waitForMoveClient(); }
+    public void waitForMoveServer() { gameState.moveServer(); }
+    public void waitForMoveClient() { gameState.moveClient(); }
     public void establishConnection() { gameState.establishConnection(); }
 
     public GameState getGameEndedDraw() { return gameEndedDraw; }

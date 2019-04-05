@@ -1,6 +1,7 @@
 package view;
 
 import connection.ServerConnection;
+import controller.CommandController;
 import model.StateHandler;
 
 import javax.swing.*;
@@ -20,11 +21,17 @@ public class GameView extends JFrame{
     private String gameValue;
 
     private ServerConnection serverConnection;
-
     private StateHandler stateHandler;
+    private CommandController commandController;
+
+    public String getGameValue(){
+        return gameValue;
+    }
+
     public GameView(StateHandler stateHandler){
-        this.stateHandler = stateHandler;
         serverConnection = ServerConnection.getServerConnection();
+        commandController = new CommandController(serverConnection);
+        this.stateHandler = stateHandler;
         drawGui();
 
         this.stateHandler.setGameState(this.stateHandler.getIdle());
@@ -110,11 +117,11 @@ public class GameView extends JFrame{
         submit.addActionListener( (e)-> {
             submitAction();
             if(gameOne.isSelected()){
-                drawTicTacToe(boardView = new BoardView(3, stateHandler));
+                drawTicTacToe(boardView = new BoardView(3, stateHandler, commandController, this));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
-                drawReversi(boardView = new BoardView(8, stateHandler));
+                drawReversi(boardView = new BoardView(8, stateHandler, commandController, this));
                 GUI.revalidate();
                 GUI.repaint();
             } else{

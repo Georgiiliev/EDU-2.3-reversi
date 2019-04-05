@@ -12,8 +12,8 @@ public interface GameState {
 
     void gameStart();
     void gameIdle();
-    void waitForMoveServer();
-    void waitForMoveClient();
+    void moveServer();
+    void moveClient();
 
     void establishConnection();
 }
@@ -54,12 +54,12 @@ class GameEndedDraw implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Game already finished");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Game already finished");
     }
 
@@ -106,12 +106,12 @@ class GameEndedWin implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Game already finished");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Game already finished");
     }
 
@@ -158,12 +158,12 @@ class GameEndedLoss implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Game already finished");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Game already finished");
     }
 
@@ -212,12 +212,12 @@ class GameStarted implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Game hasn't started");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Game hasn't started");
     }
 
@@ -265,12 +265,12 @@ class ClientMove implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         stateHandler.setGameState(stateHandler.getServerMove());
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Already your turn");
     }
 
@@ -317,12 +317,12 @@ class ServerMove implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Already your turn");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         stateHandler.setGameState(stateHandler.getClientMove());
     }
 
@@ -369,12 +369,12 @@ class Idle implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         stateHandler.setGameState(stateHandler.getServerMove());
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         stateHandler.setGameState(stateHandler.getClientMove());
     }
 
@@ -422,12 +422,12 @@ class ConnectingToServer implements GameState{
     }
 
     @Override
-    public void waitForMoveServer() {
+    public void moveServer() {
         System.out.print("Not connected");
     }
 
     @Override
-    public void waitForMoveClient() {
+    public void moveClient() {
         System.out.print("Not connected");
     }
 

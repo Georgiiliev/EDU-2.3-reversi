@@ -26,6 +26,7 @@ public class CommandController {
         int resultaat = size * column;
         positie = resultaat + row;
 
+        System.out.println("Sending move to server move: " + Integer.toString(positie));
         sendCommand("move", Integer.toString(positie));
     }
 }

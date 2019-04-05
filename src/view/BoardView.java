@@ -8,6 +8,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import controller.CommandController;
 import controller.MoveController;
 import model.StateHandler;
 
@@ -16,17 +17,21 @@ public class BoardView extends JPanel {
     private final JPanel tiles = new JPanel();
     private MoveController moveController;
     private StateHandler stateHandler;
+    private CommandController commandController;
+    private GameView gameView;
 
 
     public int boardSize; // 8*8
     public JButton[][] button;
 
 
-    public BoardView( int newBoardSize, StateHandler stateHandler) {
-
+    public BoardView(int newBoardSize, StateHandler stateHandler, CommandController commandController, GameView gameView) {
+        this.commandController = commandController;
         boardSize = newBoardSize;
         this.stateHandler = stateHandler;
         this.moveController = new MoveController(boardSize,stateHandler);
+        this.gameView = gameView;
+
         drawBoardView();
     }
 
@@ -84,8 +89,9 @@ public class BoardView extends JPanel {
                 btn.setOpaque(false);
                 btn.setBackground(Color.black);
                 btn.setIcon(c);
-                System.out.println("column: " + column + ", row: " + row);
+                System.out.println("column: " + row + ", row: " + column);
 
+                commandController.positieOmzetten(gameView.getGameValue(), row, column);
             }
         }
     }
