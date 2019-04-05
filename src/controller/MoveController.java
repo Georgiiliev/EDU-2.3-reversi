@@ -43,11 +43,14 @@ public class MoveController {
                 System.out.println(setInterval());
             }
         }, delay, period);
+
     }
 
     private static final int setInterval() {
-        if (interval == 1)
+        if (interval == 1) {
             timer.cancel();
+            System.out.println("TIME RAN OUT");
+        }
         return --interval;
     }
 
