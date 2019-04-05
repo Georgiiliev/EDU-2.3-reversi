@@ -179,7 +179,6 @@ class GameStarted implements GameState{
 
     public GameStarted(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
-        gameView = new GameView();
     }
     @Override
     public boolean action() {
@@ -203,12 +202,13 @@ class GameStarted implements GameState{
 
     @Override
     public void gameStart() {
-        System.out.print("Game is already starting");
+        System.out.print("Game is starting...");
+        gameView = new GameView(stateHandler);
     }
 
     @Override
     public void gameIdle() {
-        stateHandler.setGameState(stateHandler.getIdle());
+        stateHandler.setGameState(stateHandler.getIdle()); //already idle
     }
 
     @Override
@@ -340,7 +340,6 @@ class Idle implements GameState{
     }
     @Override
     public boolean action() {
-
         return false;
     }
 
@@ -391,7 +390,6 @@ class ConnectingToServer implements GameState{
 
     public ConnectingToServer(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
-        startController = new StartController("localhost",stateHandler);
     }
     @Override
     public boolean action() {
@@ -435,6 +433,10 @@ class ConnectingToServer implements GameState{
 
     @Override
     public void establishConnection() {
-        System.out.print("Already connecting");
+        System.out.println("Connecting to the server...");
+        startController = new StartController("localhost",stateHandler);
     }
 }
+//class MatchFound implements GameState{
+//
+//}

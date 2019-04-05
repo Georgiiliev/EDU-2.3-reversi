@@ -1,6 +1,7 @@
 package view;
 
 import connection.ServerConnection;
+import model.StateHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +19,15 @@ public class GameView extends JFrame{
     private BoardView boardView = new BoardView(1);
     private String gameValue;
 
+    private StateHandler stateHandler;
+
     ServerConnection serverConnection;
-    public GameView(){
+    public GameView(StateHandler stateHandler){
+        this.stateHandler = stateHandler;
         serverConnection = ServerConnection.getServerConnection();
         drawGui();
+        stateHandler.setGameState(stateHandler.getIdle());
+        stateHandler.gameIdle();
     }
 
     public void drawGui(){
