@@ -33,15 +33,11 @@ public class MoveController {
         }
     }
 
-    public static void getTimer() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Input seconds => : ");
-        String secs = sc.nextLine();
+    public static void setTimer(int time) {
         int delay = 1000;
         int period = 1000;
         timer = new Timer();
-        interval = Integer.parseInt(secs);
-        System.out.println(secs);
+        interval = time;
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 System.out.println(setInterval());
