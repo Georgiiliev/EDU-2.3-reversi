@@ -24,5 +24,6 @@ public class StartController {
 
         Thread thread = new Thread(commandHandler);
         thread.start();
+        
     }
 }

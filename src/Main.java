@@ -1,3 +1,4 @@
+import controller.MoveController;
 import model.StateHandler;
 
 public class Main {
