@@ -9,9 +9,7 @@ public class StateHandler{
     GameState gameEndedWin;
     GameState gameStarted;
     GameState idle;
-
     GameState gameState;
-    GameState establishConnection;
 
     public StateHandler(){
         clientMove = new ClientMove(this);
