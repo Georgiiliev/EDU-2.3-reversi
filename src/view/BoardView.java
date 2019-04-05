@@ -19,6 +19,7 @@ public class BoardView extends JPanel {
     private StateHandler stateHandler;
     private CommandController commandController;
     private GameView gameView;
+    private static BoardView boardView;
 
 
     public int boardSize; // 8*8
@@ -26,10 +27,11 @@ public class BoardView extends JPanel {
 
 
     public BoardView(int newBoardSize, StateHandler stateHandler, CommandController commandController, GameView gameView) {
+        boardView = this;
+        System.out.println("De boardview: " + boardView);
         this.commandController = commandController;
         boardSize = newBoardSize;
         this.stateHandler = stateHandler;
-        this.moveController = new MoveController(boardSize,stateHandler);
         this.gameView = gameView;
 
         drawBoardView();
@@ -83,17 +85,25 @@ public class BoardView extends JPanel {
             int column = (int)btn.getClientProperty("column");
             int row = (int)btn.getClientProperty("row");
 
+            moveController = MoveController.getMoveController();
 
-            if (moveController.clientmove(row, column)){
-                MovableObjectCircle c = new MovableObjectCircle();
-                btn.setOpaque(false);
-                btn.setBackground(Color.black);
-                btn.setIcon(c);
-                System.out.println("column: " + row + ", row: " + column);
+            System.out.println(moveController);
+            if(moveController != null){
+                if (moveController.clientmove(row, column)){
+                    MovableObjectCircle c = new MovableObjectCircle();
+                    btn.setOpaque(false);
+                    btn.setBackground(Color.black);
+                    btn.setIcon(c);
+                    System.out.println("column: " + row + ", row: " + column);
 
-                commandController.positieOmzetten(gameView.getGameValue(), row, column);
+                    commandController.positieOmzetten(gameView.getGameValue(), row, column);
+                }
             }
         }
+    }
+    public static BoardView getBoardView(){
+        System.out.println(boardView);
+        return boardView;
     }
 
     public void printIcon(int x, int y, String i) {

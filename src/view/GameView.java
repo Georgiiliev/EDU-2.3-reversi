@@ -142,11 +142,9 @@ public class GameView extends JFrame{
 
     private void submitAction() {
         if(gameOne.isSelected()) {
-            System.out.println("Tic-Tac-Toe");
             gameValue = "Tic-tac-toe";
 
         } else if(gameTwo.isSelected()) {
-            System.out.println("Reversi");
             gameValue = "Reversi";
         }
 
@@ -155,7 +153,7 @@ public class GameView extends JFrame{
         System.out.println(name);
         modelConsole.clear();
         modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + name, 0);
-        modelConsole.insertElementAt("Jou gekozen spel is: <game>", 1);
+        modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
         modelConsole.insertElementAt("", 2);
 
 
