@@ -17,13 +17,14 @@ public class StartController {
         startGame();
     }
 
-    public void startGame(){
-        connect = new ServerConnection(host,stateHandler); //zet connectie op
+    public void startGame() {
+        connect = new ServerConnection(host, stateHandler); //zet connectie op
 
-        CommandHandler commandHandler = new CommandHandler(connect, stateHandler);
+        if (connect.connectionSucceed()) {
+            CommandHandler commandHandler = new CommandHandler(connect, stateHandler);
 
-        Thread thread = new Thread(commandHandler);
-        thread.start();
-        
+            Thread thread = new Thread(commandHandler);
+            thread.start();
+        }
     }
 }

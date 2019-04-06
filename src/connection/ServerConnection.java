@@ -18,8 +18,10 @@ public class ServerConnection implements Runnable{
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
+    private boolean connection;
 
     public ServerConnection(String host, StateHandler stateHandler) {
+        connection = false;
         serverConnection = this;
         this.host = host;
         this.stateHandler = stateHandler;
@@ -39,6 +41,8 @@ public class ServerConnection implements Runnable{
             receive(); // haal welkom regel 1 op
             receive(); // haal welkom regel 2 op
 
+            connection = true;
+
             stateHandler.setGameState(stateHandler.getGameStarted());
             stateHandler.gameStart();
             System.out.println(stateHandler.getState());
@@ -46,11 +50,10 @@ public class ServerConnection implements Runnable{
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
         }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    }
+
+    public boolean connectionSucceed(){
+        return connection;
     }
 
     public void send(String action, String value){
