@@ -3,6 +3,7 @@ package controller;
 import model.StateHandler;
 import view.BoardView;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,7 +70,7 @@ public class MoveController {
     public boolean serverMove(String gametype, int row, int column){
         if (stateHandler.getState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
-            fillCharBoard(row, column, 'X');
+            fillCharBoard(column, row, 'X');
             return true;
         }
         return false;
@@ -91,6 +92,7 @@ public class MoveController {
 
     public void fillCharBoard(int row, int column, char type){
         board[column][row] = type;
+        System.out.println(Arrays.deepToString(board));
     }
     public static MoveController getMoveController (){
         return moveController;

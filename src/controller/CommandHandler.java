@@ -6,7 +6,6 @@ import view.GameView;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class CommandHandler implements Runnable{
     private String gameType;
@@ -14,8 +13,10 @@ public class CommandHandler implements Runnable{
     private CommandHandler commandHandler;
     private StateHandler stateHandler;
     private MoveController moveController;
+    private GameView gameView;
 
     public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
+        this.gameView = GameView.getGameView();
         this.moveController = MoveController.getMoveController();
         this.connect = connect;
         this.commandHandler = this;
@@ -55,16 +56,15 @@ public class CommandHandler implements Runnable{
                             receive = receive.substring(5);
                             HashMap hashMap = stringToHashMap(receive);
 
-                            String name = "name"; //TODO
+                            String name = gameView.getUserName();
                             if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
-                                System.out.println("TEGENSTANDER");
+                                System.out.println("TEGENSTANDER doet het volgende: ");
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
 
                                 // TODO geef het volgende aan een functie
-                                System.out.println(a[0]);
-                                System.out.println(a[1]);
+                                System.out.println("zet die gedaan is: " +a[0] + ", " + a[1]);
                                 moveController.serverMove(gameType, a[0], a[1]);
 //                                printIcon(a[0], a[1]), "X");
 

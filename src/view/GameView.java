@@ -19,16 +19,15 @@ public class GameView extends JFrame{
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
     private String gameValue;
+    private String userName = "";
 
     private ServerConnection serverConnection;
     private StateHandler stateHandler;
     private CommandController commandController;
-
-    public String getGameValue(){
-        return gameValue;
-    }
+    private static GameView gameView;
 
     public GameView(StateHandler stateHandler){
+        this.gameView = this;
         serverConnection = ServerConnection.getServerConnection();
         commandController = new CommandController(serverConnection);
         this.stateHandler = stateHandler;
@@ -151,11 +150,12 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
         System.out.println(name);
+        if (userName.equals(null) || userName.equals("")){
+            userName = name;
+        }
         modelConsole.clear();
-        modelConsole.insertElementAt("Er wordt ingelogt met de naam: "  + name, 0);
+        modelConsole.insertElementAt("Er is ingelogt met de naam: "  + userName, 0);
         modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
-        modelConsole.insertElementAt("", 2);
-
 
         sendCommand("login", name);
         sendCommand("subscribe", gameValue);
@@ -183,6 +183,16 @@ public class GameView extends JFrame{
 
     private void sendCommand(String action, String value){
         serverConnection.send(action,value);
+    }
+
+    public String getGameValue(){
+        return gameValue;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public static GameView getGameView(){
+        return gameView;
     }
 
 

@@ -28,7 +28,6 @@ public class BoardView extends JPanel {
 
     public BoardView(int newBoardSize, StateHandler stateHandler, CommandController commandController, GameView gameView) {
         boardView = this;
-        System.out.println("De boardview: " + boardView);
         this.commandController = commandController;
         boardSize = newBoardSize;
         this.stateHandler = stateHandler;
@@ -87,7 +86,6 @@ public class BoardView extends JPanel {
 
             moveController = MoveController.getMoveController();
 
-            System.out.println(moveController);
             if(moveController != null){
                 if (moveController.clientmove(row, column)){
                     MovableObjectCircle c = new MovableObjectCircle();
