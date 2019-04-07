@@ -15,16 +15,41 @@ public class MoveController {
     private char[][] board;
     private int size;
     private BoardView boardView;
+    private char clientSymbol;
+    private char serverSymbol;
 
-    public MoveController(int size, StateHandler stateHandler){
+    public MoveController(int size, StateHandler stateHandler, boolean firstToStart){
         boardView = BoardView.getBoardView();
         moveController = this;
         this.size = size;
         this.stateHandler = stateHandler;
         drawBoard();
+        setSymbol(firstToStart);
+
+        if (size == 8){ // Als het spel reversi is dan:
+            drawMiddle();
+        }
+    }
+    private void setSymbol (boolean firstToStart){
+        if (firstToStart){
+            clientSymbol = 'O';
+            serverSymbol = 'X';
+        }
+        else {
+            clientSymbol = 'X';
+            serverSymbol = 'O';
+        }
     }
 
-   public void drawBoard(){
+    private void drawMiddle(){
+        fillCharBoard(3, 3, 'X');
+        fillCharBoard(4, 4, 'X');
+        fillCharBoard(3, 4, 'O');
+        fillCharBoard(4, 3, 'O');
+
+    }
+
+    public void drawBoard(){
         board = new char[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
@@ -63,14 +88,14 @@ public class MoveController {
             return false;
         }
 
-        fillCharBoard(row, column, 'O');
+        fillCharBoard(row, column, clientSymbol);
         return true;
     }
 
     public boolean serverMove(String gametype, int row, int column){
         if (stateHandler.getState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
-            fillCharBoard(column, row, 'X');
+            fillCharBoard(column, row, serverSymbol);
             return true;
         }
         return false;
@@ -91,7 +116,10 @@ public class MoveController {
     }
 
     public void fillCharBoard(int row, int column, char type){
+        System.out.println("server=" + serverSymbol + " client="+clientSymbol);
+        System.out.println("HET TYPE IS: " + type);
         board[column][row] = type;
+        boardView.printIcon(column, row, String.valueOf(type));
         System.out.println(Arrays.deepToString(board));
     }
     public static MoveController getMoveController (){
