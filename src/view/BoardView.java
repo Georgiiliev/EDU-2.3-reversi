@@ -8,6 +8,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.CommandController;
 import controller.MoveController;
 import model.StateHandler;
@@ -88,11 +89,11 @@ public class BoardView extends JPanel {
 
             if(moveController != null){
                 if (moveController.clientmove(row, column)){
-                    MovableObjectCircle c = new MovableObjectCircle();
-                    btn.setOpaque(false);
-                    btn.setBackground(Color.black);
-                    btn.setIcon(c);
-                    System.out.println("column: " + row + ", row: " + column);
+//                    MovableObjectCircle c = new MovableObjectCircle();
+//                    btn.setOpaque(false);
+//                    btn.setBackground(Color.black);
+//                    btn.setIcon(c);
+//                    System.out.println("column: " + row + ", row: " + column);
 
                     commandController.positieOmzetten(gameView.getGameValue(), row, column);
                 }
@@ -106,12 +107,12 @@ public class BoardView extends JPanel {
 
     public void printIcon(int x, int y, String i) {
         JButton button = this.button[x][y];
+        System.out.println(button);
         if (i.equals("O")) {
-            MovableObjectCircle o = new MovableObjectCircle();
-            button.setIcon(o);
+            button.setIcon(new MovableObjectCircle());
         } else if (i.equals("X")) {
-            MovableObjectCross n = new MovableObjectCross();
-            button.setIcon(n);
+            button.setIcon(new MovableObjectCross());
+            //TODO geeft soms null pointer exeption?
         }
     }
 

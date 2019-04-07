@@ -38,16 +38,25 @@ public class CommandHandler implements Runnable{
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
                             receive = receive.substring(6);
+
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
+                            String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
+
+                            boolean start = false;
+
+                            String name = gameView.getUserName();
+                            if (name.equals(firstToStart)){
+                                start = true;
+                            }
 
                             System.out.println("Er is een match gevonden!");
                             if (gameType.equals("Reversi")){
-                                moveController = new MoveController(8, stateHandler);
-
+                                moveController = new MoveController(8, stateHandler, start);
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
-                                moveController = new MoveController(3, stateHandler);
+                                moveController = new MoveController(3, stateHandler, start);
                             }
+
 
                             stateHandler.setGameState(stateHandler.getServerMove());
                         }
