@@ -126,7 +126,9 @@ public class GameView extends JFrame{
                 if(boardView != null){
                     GUI.remove(boardView);
                 }
-                GUI.remove(boardView);
+                if(boardView != null){
+                    GUI.remove(boardView);
+                }
                 drawReversi(boardView = new BoardView(8, stateHandler, commandController, this));
                 GUI.revalidate();
                 GUI.repaint();
