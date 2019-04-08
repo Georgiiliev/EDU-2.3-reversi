@@ -180,7 +180,6 @@ public class GameView extends JFrame{
 
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
-        System.out.println(name);
         if (userName == null || userName.equals("")){
             userName = name;
         }
@@ -238,7 +237,6 @@ public class GameView extends JFrame{
     public void setPlayerListFromServer(String[] players){
         playerList.clear();
         this.players = players;
-        System.out.println(Arrays.deepToString(this.players));
 
         for(int i = 0; i < this.players.length; i++){
             playerList.addElement(this.players[i]);

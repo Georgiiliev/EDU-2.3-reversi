@@ -18,8 +18,10 @@ public class MoveController {
     private BoardView boardView;
     private char clientSymbol;
     private char serverSymbol;
+    private static GameView gameView;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart){
+        this.gameView = GameView.getGameView();
         boardView = BoardView.getBoardView();
         moveController = this;
         this.size = size;
@@ -75,8 +77,10 @@ public class MoveController {
         if (interval == 1) {
             timer.cancel();
             System.out.println("TIME RAN OUT");
-//            MoveController.setTimer(6);
+            MoveController.setTimer(6);
             //TODO sendCommand get players
+            gameView.sendCommand("get","playerlist");
+
         }
         return --interval;
     }
@@ -119,11 +123,8 @@ public class MoveController {
     }
 
     public void fillCharBoard(int row, int column, char type){
-        System.out.println("server=" + serverSymbol + " client="+clientSymbol);
-        System.out.println("HET TYPE IS: " + type);
         board[column][row] = type;
         boardView.printIcon(column, row, String.valueOf(type));
-        System.out.println(Arrays.deepToString(board));
     }
     public static MoveController getMoveController (){
         return moveController;
