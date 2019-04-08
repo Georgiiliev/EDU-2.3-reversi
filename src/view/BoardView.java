@@ -106,7 +106,6 @@ public class BoardView extends JPanel {
 
     public void printIcon(int x, int y, String i) {
         JButton button = this.button[x][y];
-        System.out.println(button);
         if (i.equals("O")) {
             button.setIcon(new MovableObjectCircle());
         } else if (i.equals("X")) {
