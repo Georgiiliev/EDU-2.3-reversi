@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import connection.ServerConnection;
 import controller.CommandController;
 import model.StateHandler;
@@ -12,6 +13,7 @@ public class GameView extends JFrame{
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
+    private JButton restart = new JButton("Go back to lobby");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JTextField nameInput = new JTextField("name",1);
@@ -204,8 +206,7 @@ public class GameView extends JFrame{
     public void endGamePopUp(String text){
         JFrame frame = new JFrame(text);
         frame.setSize(300,100);
-        JButton button = new JButton("Go back to lobby");
-        frame.getContentPane().add(button);
+        frame.getContentPane().add(restart);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
@@ -218,5 +219,11 @@ public class GameView extends JFrame{
         for(int i = 0; i < this.players.length; i++){
             playerList.addElement(this.players[i]);
         }
+    }
+
+    public void restartGame(){
+        restart.addActionListener( (e)-> {
+            System.out.println("Restarting game");
+        });
     }
 }
