@@ -6,6 +6,8 @@ import controller.CommandController;
 import model.StateHandler;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.Arrays;
 
@@ -90,6 +92,27 @@ public class GameView extends JFrame{
         setListPanel.add(scrollableList);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
+        ListSelectionListener listSelectionListener = new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                System.out.println("First index: " + listSelectionEvent.getFirstIndex());
+                System.out.println(", Last index: " + listSelectionEvent.getLastIndex());
+                boolean adjust = listSelectionEvent.getValueIsAdjusting();
+                System.out.println(", Adjusting? " + adjust);
+                if (!adjust) {
+                    JList list = (JList) listSelectionEvent.getSource();
+                    int selections[] = list.getSelectedIndices();
+                    Object selectionValues[] = list.getSelectedValues();
+                    for (int i = 0, n = selections.length; i < n; i++) {
+                        if (i == 0) {
+                            System.out.println(" Selections: ");
+                        }
+                        System.out.println(selections[i] + "/" + selectionValues[i] + " ");
+                        modelConsole.addElement(selectionValues[i]);
+                    }
+                }
+            }
+        };
+        list.addListSelectionListener(listSelectionListener);
         addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
