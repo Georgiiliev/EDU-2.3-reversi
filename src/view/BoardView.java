@@ -101,7 +101,6 @@ public class BoardView extends JPanel {
         }
     }
     public static BoardView getBoardView(){
-        System.out.println(boardView);
         return boardView;
     }
 

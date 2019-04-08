@@ -31,6 +31,7 @@ class GameEndedDraw implements GameState{
     @Override
     public void endGameDraw() {
         System.out.print("Game already finished");
+
     }
 
     @Override

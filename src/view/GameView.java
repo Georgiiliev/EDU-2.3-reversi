@@ -56,6 +56,8 @@ public class GameView extends JFrame{
         this.add(GUI);
         this.setVisible(true);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
     }
 
     private void drawTicTacToe(BoardView b){
@@ -152,7 +154,7 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
         System.out.println(name);
-        if (userName.equals(null) || userName.equals("")){
+        if (userName == null || userName.equals("")){
             userName = name;
         }
         modelConsole.clear();
@@ -197,5 +199,13 @@ public class GameView extends JFrame{
         return gameView;
     }
 
-
+    public void endGamePopUp(String text){
+        JFrame frame = new JFrame(text);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300,300);
+        JButton button = new JButton("Restart");
+        frame.getContentPane().add(button);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+    }
 }
