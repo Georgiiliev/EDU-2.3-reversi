@@ -26,7 +26,11 @@ public class GameView extends JFrame{
     private CommandController commandController;
     private static GameView gameView;
 
+    private String[] playerList;
+
     public GameView(StateHandler stateHandler){
+        //serverConnection.send("get","playerlist");
+
         this.gameView = this;
         serverConnection = ServerConnection.getServerConnection();
         commandController = new CommandController(serverConnection);
@@ -207,5 +211,9 @@ public class GameView extends JFrame{
         frame.getContentPane().add(button);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+    }
+
+    public void setPlayerList(String[] players){
+        playerList = players;
     }
 }
