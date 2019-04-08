@@ -1,21 +1,24 @@
 package view;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import connection.ServerConnection;
 import controller.CommandController;
 import model.StateHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class GameView extends JFrame{
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
+    private JButton restart = new JButton("Go back to lobby");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JTextField nameInput = new JTextField("name",1);
     private JLabel consoleName = new JLabel();
-    private JLabel playerListName = new JLabel();
+    private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
     private String gameValue;
@@ -25,8 +28,10 @@ public class GameView extends JFrame{
     private StateHandler stateHandler;
     private CommandController commandController;
     private static GameView gameView;
+    private String[] players;
 
     public GameView(StateHandler stateHandler){
+
         this.gameView = this;
         serverConnection = ServerConnection.getServerConnection();
         commandController = new CommandController(serverConnection);
@@ -56,6 +61,8 @@ public class GameView extends JFrame{
         this.add(GUI);
         this.setVisible(true);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
     }
 
     private void drawTicTacToe(BoardView b){
@@ -77,15 +84,13 @@ public class GameView extends JFrame{
     }
 
     private void drawPlayerList() {
-        Box playerBox = Box.createVerticalBox();
-        playerBox.add(playerListName);
-        JList list = new JList();
+        JPanel setListPanel = new JPanel();
+        JList list = new JList(playerList);
         JScrollPane scrollableList = new JScrollPane(list);
+        setListPanel.add(scrollableList);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
-        playerBox.add(scrollableList);
-
-        addComp(GUI, playerBox, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -115,6 +120,7 @@ public class GameView extends JFrame{
 
         submit.addActionListener( (e)-> {
             submitAction();
+            sendCommand("get", "playerlist");
             if(gameOne.isSelected()){
                 if(boardView != null){
                     GUI.remove(boardView);
@@ -152,7 +158,7 @@ public class GameView extends JFrame{
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
         System.out.println(name);
-        if (userName.equals(null) || userName.equals("")){
+        if (userName == null || userName.equals("")){
             userName = name;
         }
         modelConsole.clear();
@@ -183,7 +189,7 @@ public class GameView extends JFrame{
         thePanel.add(comp, gridConstraints);
     }
 
-    private void sendCommand(String action, String value){
+    public void sendCommand(String action, String value){
         serverConnection.send(action,value);
     }
 
@@ -197,5 +203,27 @@ public class GameView extends JFrame{
         return gameView;
     }
 
+    public void endGamePopUp(String text){
+        JFrame frame = new JFrame(text);
+        frame.setSize(300,100);
+        frame.getContentPane().add(restart);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+    }
 
+    public void setPlayerListFromServer(String[] players){
+        playerList.clear();
+        this.players = players;
+        System.out.println(Arrays.deepToString(this.players));
+
+        for(int i = 0; i < this.players.length; i++){
+            playerList.addElement(this.players[i]);
+        }
+    }
+
+    public void restartGame(){
+        restart.addActionListener( (e)-> {
+            System.out.println("Restarting game");
+        });
+    }
 }

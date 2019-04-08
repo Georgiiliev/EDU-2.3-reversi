@@ -2,6 +2,7 @@ package controller;
 
 import model.StateHandler;
 import view.BoardView;
+import view.GameView;
 
 import java.util.Arrays;
 import java.util.Timer;
@@ -74,6 +75,8 @@ public class MoveController {
         if (interval == 1) {
             timer.cancel();
             System.out.println("TIME RAN OUT");
+//            MoveController.setTimer(6);
+            //TODO sendCommand get players
         }
         return --interval;
     }
