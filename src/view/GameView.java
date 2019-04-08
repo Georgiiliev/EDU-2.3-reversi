@@ -6,6 +6,7 @@ import model.StateHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class GameView extends JFrame{
 
@@ -25,11 +26,9 @@ public class GameView extends JFrame{
     private StateHandler stateHandler;
     private CommandController commandController;
     private static GameView gameView;
-
-//    private String[] playerList;
+    private String[] players;
 
     public GameView(StateHandler stateHandler){
-        //serverConnection.send("get","playerlist");
 
         this.gameView = this;
         serverConnection = ServerConnection.getServerConnection();
@@ -89,7 +88,6 @@ public class GameView extends JFrame{
         setListPanel.add(scrollableList);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
-        
         addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
@@ -120,6 +118,7 @@ public class GameView extends JFrame{
 
         submit.addActionListener( (e)-> {
             submitAction();
+            sendCommand("get", "playerlist");
             if(gameOne.isSelected()){
                 if(boardView != null){
                     GUI.remove(boardView);
@@ -188,7 +187,7 @@ public class GameView extends JFrame{
         thePanel.add(comp, gridConstraints);
     }
 
-    private void sendCommand(String action, String value){
+    public void sendCommand(String action, String value){
         serverConnection.send(action,value);
     }
 
@@ -204,15 +203,20 @@ public class GameView extends JFrame{
 
     public void endGamePopUp(String text){
         JFrame frame = new JFrame(text);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300,300);
-        JButton button = new JButton("Restart");
+        frame.setSize(300,100);
+        JButton button = new JButton("Go back to lobby");
         frame.getContentPane().add(button);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
 
-//    public void setPlayerList(String[] players){
-//        playerList = players;
-//    }
+    public void setPlayerListFromServer(String[] players){
+        playerList.clear();
+        this.players = players;
+        System.out.println(Arrays.deepToString(this.players));
+
+        for(int i = 0; i < this.players.length; i++){
+            playerList.addElement(this.players[i]);
+        }
+    }
 }
