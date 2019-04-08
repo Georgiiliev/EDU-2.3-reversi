@@ -76,10 +76,11 @@ public class MoveController {
     private static final int setInterval() {
         if (interval == 1) {
             timer.cancel();
-            System.out.println("TIME RAN OUT");
             MoveController.setTimer(6);
             //TODO sendCommand get players
-            gameView.sendCommand("get","playerlist");
+            if (moveController != null){
+                gameView.sendCommand("get","playerlist");
+            }
 
         }
         return --interval;
