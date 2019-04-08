@@ -36,7 +36,7 @@ public class StateHandler{
     public GameState getGameEndedWin() { return gameEndedWin; }
     public GameState getClientMove() { return clientMove; }
     public GameState getServerMove() { return serverMove;  }
-    public GameState getConnectingToServer(){ return connectingToServer; }
+    public GameState        getConnectingToServer(){ return connectingToServer; }
     public GameState getGameStarted(){ return gameStarted; }
     public GameState getIdle(){ return idle; }
 

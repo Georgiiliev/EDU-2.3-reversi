@@ -1,10 +1,7 @@
 package controller;
 
-import com.sun.security.ntlm.Server;
 import connection.ServerConnection;
 import model.StateHandler;
-
-import static java.lang.Thread.sleep;
 
 public class StartController {
     private ServerConnection connect;
