@@ -232,6 +232,7 @@ public class GameView extends JFrame{
         frame.getContentPane().add(restart);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        restartGame();
     }
 
     public void setPlayerListFromServer(String[] players){
@@ -244,9 +245,11 @@ public class GameView extends JFrame{
         }
     }
 
-    public void restartGame(){
+    private void restartGame(){
         restart.addActionListener( (e)-> {
             System.out.println("Restarting game");
+            stateHandler.setGameState(stateHandler.getGameStarted());
+            stateHandler.gameStart();
         });
     }
 }
