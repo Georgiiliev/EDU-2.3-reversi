@@ -87,7 +87,6 @@ public class MoveController {
 
     public boolean clientmove(int row, int column){
         if(board[column][row] != '_'){ // check if vakje is leeg
-            System.out.println("You can't do this move.");
             return false;
         }
 

@@ -67,20 +67,17 @@ public class CommandHandler implements Runnable{
 
                             String name = gameView.getUserName();
                             if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
-                                System.out.println("TEGENSTANDER doet het volgende: ");
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
 
                                 // TODO geef het volgende aan een functie
-                                System.out.println("zet die gedaan is: " +a[0] + ", " + a[1]);
                                 moveController.serverMove(gameType, a[0], a[1]);
 //                                printIcon(a[0], a[1]), "X");
 
                                 stateHandler.setGameState(stateHandler.getClientMove());
                             }
                             else{
-                                System.out.println("WIJZELF");
                                 stateHandler.setGameState(stateHandler.getServerMove());
                             }
                         }
