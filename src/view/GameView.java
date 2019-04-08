@@ -94,10 +94,7 @@ public class GameView extends JFrame{
         list.setFixedCellWidth(190);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                System.out.println("First index: " + listSelectionEvent.getFirstIndex());
-                System.out.println(", Last index: " + listSelectionEvent.getLastIndex());
                 boolean adjust = listSelectionEvent.getValueIsAdjusting();
-                System.out.println(", Adjusting? " + adjust);
                 if (!adjust) {
                     JList list = (JList) listSelectionEvent.getSource();
                     int selections[] = list.getSelectedIndices();
@@ -106,7 +103,6 @@ public class GameView extends JFrame{
                         if (i == 0) {
                             System.out.println(" Selections: ");
                         }
-                        System.out.println(selections[i] + "/" + selectionValues[i] + " ");
                         modelConsole.addElement(selectionValues[i]);
                     }
                 }
@@ -246,8 +242,9 @@ public class GameView extends JFrame{
     private void restartGame(){
         restart.addActionListener( (e)-> {
             System.out.println("Restarting game");
-            stateHandler.setGameState(stateHandler.getGameStarted());
-            stateHandler.gameStart();
+            sendCommand("logout", "");
+            stateHandler.setGameState(stateHandler.getConnectingToServer());
+            stateHandler.establishConnection();
         });
     }
 }
