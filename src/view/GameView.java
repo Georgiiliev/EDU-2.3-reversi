@@ -15,7 +15,7 @@ public class GameView extends JFrame{
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JTextField nameInput = new JTextField("name",1);
     private JLabel consoleName = new JLabel();
-    private JLabel playerListName = new JLabel();
+    private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
     private String gameValue;
@@ -26,7 +26,7 @@ public class GameView extends JFrame{
     private CommandController commandController;
     private static GameView gameView;
 
-    private String[] playerList;
+//    private String[] playerList;
 
     public GameView(StateHandler stateHandler){
         //serverConnection.send("get","playerlist");
@@ -83,15 +83,14 @@ public class GameView extends JFrame{
     }
 
     private void drawPlayerList() {
-        Box playerBox = Box.createVerticalBox();
-        playerBox.add(playerListName);
-        JList list = new JList();
+        JPanel setListPanel = new JPanel();
+        JList list = new JList(playerList);
         JScrollPane scrollableList = new JScrollPane(list);
+        setListPanel.add(scrollableList);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
-        playerBox.add(scrollableList);
-
-        addComp(GUI, playerBox, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        
+        addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -213,7 +212,7 @@ public class GameView extends JFrame{
         frame.setLocationRelativeTo(null);
     }
 
-    public void setPlayerList(String[] players){
-        playerList = players;
-    }
+//    public void setPlayerList(String[] players){
+//        playerList = players;
+//    }
 }

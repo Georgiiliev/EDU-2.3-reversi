@@ -119,7 +119,7 @@ public class CommandHandler implements Runnable{
                     else if (receive.startsWith("PLAYERLIST")){
                         receive = receive.substring(11);
                         String[] players = stringToArray(receive);
-                        gameView.setPlayerList(players);
+//                        gameView.setPlayerList(players);
                     }
                 }
 
