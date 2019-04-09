@@ -97,8 +97,8 @@ public class BoardView extends JPanel {
 
         int positie;
 
-        int resultaat = size * column;
-        positie = resultaat + row;
+        int resultaat = size * row;
+        positie = resultaat + column;
 
         gameView.sendCommand("move", Integer.toString(positie));
     }

@@ -28,8 +28,6 @@ public class MoveController {
 
         if (size == 8) // Als het spel reversi is dan:
             drawMiddle();
-
-
     }
 
     public boolean clientMove(int row, int column){
@@ -39,13 +37,16 @@ public class MoveController {
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
         if (size == 8)
-            reversiDoMove(row, column, clientSymbol);
+            if (!reversiDoMove(row, column, clientSymbol)){
+                return false;
+            }
         updateBoard(row, column, clientSymbol);
         printBoard(board);
         return true;
     }
 
     public boolean serverMove(int row, int column){
+        System.out.println("Server move: " + row +" "+ column);
         this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
@@ -56,17 +57,20 @@ public class MoveController {
     }
 
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
-    public void reversiDoMove(int row, int column, char player){
+    public boolean reversiDoMove(int row, int column, char player){
+        boolean goodMove = false;
         List<Point> possibleMoves = checkBoard(board, clientSymbol);
         for (int i = 0; i < possibleMoves.size(); i++){
             int r = possibleMoves.get(i).x;
             int c = possibleMoves.get(i).y;
             if (r == row && c == column){ // als geldige move is dan board updaten.
                 reversiUpdate(row, column, player, directions[i][0], directions[i][1]);
+                goodMove = true;
             }
 //            board[r][c] = '*';
 //            System.out.println("X=" + possibleMoves.get(i).x + " Y=" + possibleMoves.get(i).y);
         }
+        return goodMove;
     }
     private List<Point> checkBoard(char[][] board, char player) {
         int i = 0;
