@@ -12,12 +12,11 @@ public class CommandHandler implements Runnable{
     private ServerConnection connect;
     private CommandHandler commandHandler;
     private StateHandler stateHandler;
-    private MoveController moveController;
     private GameView gameView;
+    private MoveController moveController;
 
-    public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
-//        this.gameView = GameView.getGameView();
-//        this.moveController = MoveController.getMoveController();
+    public CommandHandler(ServerConnection connect, StateHandler stateHandler, GameView gameView) {
+        this.gameView = gameView;
         this.connect = connect;
         this.commandHandler = this;
         this.stateHandler = stateHandler;
@@ -44,17 +43,17 @@ public class CommandHandler implements Runnable{
 
                             boolean start = false;
 
-//                            String name = gameView.getUserName();
-//                            if (name.equals(firstToStart)){
-//                                start = true;
-//                            }
+                            String name = gameView.getUserName();
+                            if (name.equals(firstToStart)){
+                                start = true;
+                            }
 
                             System.out.println("Er is een match gevonden!");
                             if (gameType.equals("Reversi")){
-//                                moveController = new MoveController(8, stateHandler, start);
+                                moveController = new MoveController(8, stateHandler, start, gameView);
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
-//                                moveController = new MoveController(3, stateHandler, start);
+                                moveController = new MoveController(3, stateHandler, start,gameView);
                             }
 
 
@@ -65,17 +64,14 @@ public class CommandHandler implements Runnable{
                             receive = receive.substring(5);
                             HashMap hashMap = stringToHashMap(receive);
 
-//                            String name = gameView.getUserName();
-                            String name = "";
+                            String name = gameView.getUserName();
                             if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
 
                                 // TODO geef het volgende aan een functie
-//                                moveController.serverMove(gameType, a[0], a[1]);
-//                                printIcon(a[0], a[1]), "X");
-
+                                moveController.serverMove( a[0], a[1]);
                                 stateHandler.setGameState(stateHandler.getClientMove());
                             }
                             else{

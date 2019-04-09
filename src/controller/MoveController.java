@@ -19,7 +19,8 @@ public class MoveController {
     private char serverSymbol;
     private static GameView gameView;
 
-    public MoveController(int size, StateHandler stateHandler, boolean firstToStart){
+    public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
+        this.gameView = gameView;
         moveController = this;
         this.size = size;
         this.stateHandler = stateHandler;
@@ -84,6 +85,7 @@ public class MoveController {
     }
 
     public boolean clientmove(int row, int column){
+        this.boardView = gameView.getBoardView();
         if(board[column][row] != '_'){ // check if vakje is leeg
             return false;
         }
@@ -96,7 +98,8 @@ public class MoveController {
         return true;
     }
 
-    public boolean serverMove(String gametype, int row, int column){
+    public boolean serverMove( int row, int column){
+        this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
             fillCharBoard(column, row, serverSymbol);

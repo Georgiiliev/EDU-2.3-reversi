@@ -9,8 +9,8 @@ public class Main {
         ServerConnection connect = new ServerConnection(stateHandler);
 
         if (connect.connectionSucceed()) {
-            CommandHandler commandHandler = new CommandHandler(connect, stateHandler);
-            GameView gameView = new GameView(stateHandler,connect, commandHandler);
+            GameView gameView = new GameView(stateHandler,connect);
+            CommandHandler commandHandler = new CommandHandler(connect, stateHandler, gameView);
 
             Thread thread = new Thread(commandHandler);
             thread.start();

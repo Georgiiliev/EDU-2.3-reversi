@@ -38,10 +38,6 @@ public class ServerConnection implements Runnable{
             connection = true;
             System.out.println("Connection established.");
 
-            stateHandler.setGameState(stateHandler.getGameStarted());
-            stateHandler.gameStart();
-            System.out.println(stateHandler.getGameState());
-
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");

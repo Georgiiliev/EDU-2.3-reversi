@@ -7,7 +7,6 @@ public class GameStartedState implements I_GameState {
         this.stateHandler = stateHandler;
     }
 
-
     @Override
     public void endGameDraw() {
         System.out.print("Game already finished");

@@ -1,7 +1,6 @@
 package view;
 
 import connection.ServerConnection;
-import controller.CommandHandler;
 import model.StateHandler;
 import view.GUI.GhostText;
 
@@ -20,7 +19,6 @@ public class GameView  extends JFrame {
     private JTextField nameInput = new JTextField(1);
     private GhostText ghostText = new GhostText(nameInput, "Enter your name..");
 
-//    private JLabel consoleName = new JLabel();
     private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
@@ -29,17 +27,15 @@ public class GameView  extends JFrame {
 
     private ServerConnection serverConnection;
     private StateHandler stateHandler;
-    private CommandHandler commandHandler;
     private GameView gameView;
     private String[] players;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
-    public GameView(StateHandler stateHandler, ServerConnection serverConnection, CommandHandler commandHandler){
+    public GameView(StateHandler stateHandler, ServerConnection serverConnection){
         this.gameView = this;
         this.serverConnection = serverConnection;
-        this.commandHandler = commandHandler;
         this.stateHandler = stateHandler;
 
         this.stateHandler.setGameState(this.stateHandler.getIdle());
@@ -60,7 +56,6 @@ public class GameView  extends JFrame {
         drawPlayerList();
         drawBox();
         drawTextInput();
-//        drawTicTacToe(boardView);
 
         this.add(GUI);
         this.setVisible(true);
@@ -178,6 +173,7 @@ public class GameView  extends JFrame {
 
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
+
         if (userName == null || userName.equals("")){
             userName = name;
         }
@@ -249,4 +245,5 @@ public class GameView  extends JFrame {
     public GameView getGameView(){
         return gameView;
     }
+    public BoardView getBoardView(){return boardView;}
 }
