@@ -1,5 +1,4 @@
 package controller;
-
 import model.StateHandler;
 import view.BoardView;
 import view.GameView;

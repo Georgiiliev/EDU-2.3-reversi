@@ -1,5 +1,9 @@
 package model;
 
+import connection.ServerConnection;
+import controller.CommandHandler;
+import view.GameView;
+
 public class ConnectingToServerState implements I_GameState {
     private StateHandler stateHandler;
 
@@ -45,5 +49,16 @@ public class ConnectingToServerState implements I_GameState {
     @Override
     public void establishConnection() {
         System.out.println("Connecting to the server...");
+        ServerConnection connect = new ServerConnection(stateHandler);
+
+        if (connect.connectionSucceed()) {
+            GameView gameView = new GameView(stateHandler,connect);
+            CommandHandler commandHandler = new CommandHandler(connect, stateHandler, gameView);
+
+            Thread thread = new Thread(commandHandler);
+            thread.start();
+        } else {
+            System.exit(0);
+        }
     }
 }
