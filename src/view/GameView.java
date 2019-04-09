@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import connection.ServerConnection;
 import controller.CommandController;
 import model.StateHandler;
@@ -9,7 +8,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.util.Arrays;
 
 public class GameView extends JFrame{
 
@@ -19,7 +17,7 @@ public class GameView extends JFrame{
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JTextField nameInput = new JTextField("name",1);
-    private JLabel consoleName = new JLabel();
+
     private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
