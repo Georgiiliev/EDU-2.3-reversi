@@ -17,12 +17,10 @@ public class MoveController {
     private char clientSymbol;
     private char serverSymbol;
     private static GameView gameView;
-    private boolean foundMatch;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
-        this.foundMatch = false;
+        this.moveController = this;
         this.gameView = gameView;
-        moveController = this;
         this.size = size;
         this.stateHandler = stateHandler;
         drawBoard();
@@ -44,6 +42,12 @@ public class MoveController {
     }
 
     private void drawMiddle(){
+//        try {
+//            Thread.sleep(100);
+//        }
+//        catch(InterruptedException e){
+//            e.printStackTrace();
+//        }
         fillCharBoard(3, 3, 'X');
         fillCharBoard(4, 4, 'X');
         fillCharBoard(3, 4, 'O');
@@ -76,7 +80,6 @@ public class MoveController {
         if (interval == 1) {
             timer.cancel();
             MoveController.setTimer(6);
-            //TODO sendCommand get players
             if (moveController != null){
                 gameView.sendCommand("get","playerlist");
             }
@@ -98,7 +101,7 @@ public class MoveController {
         return true;
     }
 
-    public boolean serverMove( int row, int column){
+    public boolean serverMove(int row, int column){
         this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
@@ -109,30 +112,16 @@ public class MoveController {
     }
 
     public void reversieCheck(int row, int column){
-        for (int i = 0; i < row; i++){
-            int newRow = row - 1;
-            for (int j = 0; j < column; i++){
-                int newColumn = column -1;
 
-            }
-        }
-        // check die geldige zetten uitrekend
-        // zijn er stenen van tegen partij om me heen? Opslaan nieuwe array.
-        // ja? zijn er stenen die
-        // functie die de stenen aanpast.
     }
 
     public void fillCharBoard(int row, int column, char type){
         this.boardView = gameView.getBoardView();
         board[column][row] = type;
-        System.out.println(boardView);
         boardView.printIcon(column, row, String.valueOf(type));
     }
 
     public static MoveController getMoveController (){
         return moveController;
-    }
-    public void setFoundMatch(boolean matchFound){
-        this.foundMatch = matchFound;
     }
 }
