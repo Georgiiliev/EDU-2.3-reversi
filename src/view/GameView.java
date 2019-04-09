@@ -16,7 +16,12 @@ public class GameView  extends JFrame {
     private JButton restart = new JButton("Go back to lobby");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
+    private JRadioButton gameTypeOne = new JRadioButton("Human vs Human");
+    private JRadioButton gameTypeTwo = new JRadioButton("Human vs AI");
+    private JRadioButton gameTypeThree = new JRadioButton("AI vs AI");
     private JTextField nameInput = new JTextField(1);
+    private JLabel nameGame = new JLabel("Game");
+    private JLabel nameGameType = new JLabel("Gametype");
     private GhostText ghostText = new GhostText(nameInput, "Enter your name..");
 
     private DefaultListModel playerList = new DefaultListModel();
@@ -111,19 +116,33 @@ public class GameView  extends JFrame {
 
     private void drawBox(){
         Box box = Box.createVerticalBox();
-        nameInput.setPreferredSize(new Dimension(100, 20));
+        nameInput.setPreferredSize(new Dimension(50, 20));
 
-        ButtonGroup group = new ButtonGroup();
-        group.add(gameOne);
-        group.add(gameTwo);
+        ButtonGroup typeGroup = new ButtonGroup();
+        typeGroup.add(gameTypeOne);
+        typeGroup.add(gameTypeTwo);
+        typeGroup.add(gameTypeThree);
 
+        ButtonGroup gameGroup = new ButtonGroup();
+        gameGroup.add(gameOne);
+        gameGroup.add(gameTwo);
+
+        box.add(nameGame);
+        box.add(Box.createRigidArea(new Dimension(20, 5)));
+        box.add(gameOne);
+        box.add(gameTwo);
+
+        box.add(Box.createRigidArea(new Dimension(20, 20)));
+        box.add(nameGameType);
+        box.add(Box.createRigidArea(new Dimension(20, 5)));
+        box.add(gameTypeOne);
+        box.add(gameTypeTwo);
+        box.add(gameTypeThree);
+
+        box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(nameInput);
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(submit);
-        box.add(Box.createRigidArea(new Dimension(20, 20)));
-        box.add(gameOne);
-        box.add(Box.createRigidArea(new Dimension(20, 20)));
-        box.add(gameTwo);
         addComp(GUI, box, 0,0,3,1,GridBagConstraints.WEST,GridBagConstraints.NONE);
 
     }
