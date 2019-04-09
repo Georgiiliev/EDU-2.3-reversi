@@ -28,6 +28,8 @@ public class MoveController {
 
         if (size == 8) // Als het spel reversi is dan:
             drawMiddle();
+
+
     }
 
     public boolean clientMove(int row, int column){
@@ -37,9 +39,9 @@ public class MoveController {
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
         if (size == 8)
-            reversiDoMove(row, column, clientSymbol);
-
+            reversiDoMove(column, row, clientSymbol);
         updateBoard(row, column, clientSymbol);
+        printBoard(board);
         return true;
     }
 
@@ -164,6 +166,12 @@ public class MoveController {
     }
 
     private void drawMiddle(){
+        try {
+            Thread.sleep(100);
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
         updateBoard(3, 3, 'X');
         updateBoard(4, 4, 'X');
         updateBoard(3, 4, 'O');
@@ -176,6 +184,14 @@ public class MoveController {
             for (int j = 0; j < size; j++){
                 board[i][j] = '-';
             }
+        }
+    }
+
+    public static void printBoard(char[][] board) {
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[0].length; c++)
+                System.out.print(board[r][c]);
+            System.out.println();
         }
     }
 
