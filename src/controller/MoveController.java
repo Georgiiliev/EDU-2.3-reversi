@@ -18,8 +18,10 @@ public class MoveController {
     private char clientSymbol;
     private char serverSymbol;
     private static GameView gameView;
+    private boolean foundMatch;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
+        this.foundMatch = false;
         this.gameView = gameView;
         moveController = this;
         this.size = size;
@@ -93,7 +95,6 @@ public class MoveController {
         if (stateHandler.getGameState() != stateHandler.getClientMove()){
             return false;
         }
-
         fillCharBoard(row, column, clientSymbol);
         return true;
     }
@@ -123,10 +124,16 @@ public class MoveController {
     }
 
     public void fillCharBoard(int row, int column, char type){
+        this.boardView = gameView.getBoardView();
         board[column][row] = type;
+        System.out.println(boardView);
         boardView.printIcon(column, row, String.valueOf(type));
     }
+
     public static MoveController getMoveController (){
         return moveController;
+    }
+    public void setFoundMatch(boolean matchFound){
+        this.foundMatch = matchFound;
     }
 }
