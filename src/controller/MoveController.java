@@ -4,6 +4,7 @@ import model.StateHandler;
 import view.BoardView;
 import view.GameView;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
