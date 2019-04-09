@@ -37,6 +37,7 @@ public class CommandHandler implements Runnable{
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
                             receive = receive.substring(6);
+                            moveController.setFoundMatch(true);
 
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
                             String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
@@ -87,12 +88,14 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
+                            moveController.setFoundMatch(false);
                             stateHandler.setGameState(stateHandler.getGameEndedLoss());
                             gameView.endGamePopUp("You have lost the game!");
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
+                            moveController.setFoundMatch(false);
                             stateHandler.setGameState(stateHandler.getGameEndedWin());
                             gameView.endGamePopUp("You have won the game!");
 
@@ -100,6 +103,7 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("DRAW")){
                             // state = game ended win
+                            moveController.setFoundMatch(false);
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
                             gameView.endGamePopUp("You have tied the game!");
 
