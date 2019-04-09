@@ -34,12 +34,12 @@ public class MoveController {
 
     public boolean clientMove(int row, int column){
         this.boardView = gameView.getBoardView();
-        if(board[column][row] != '-') // check if vakje is leeg
+        if(board[row][column] != '-') // check if vakje is leeg
             return false;
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
         if (size == 8)
-            reversiDoMove(column, row, clientSymbol);
+            reversiDoMove(row, column, clientSymbol);
         updateBoard(row, column, clientSymbol);
         printBoard(board);
         return true;
@@ -49,7 +49,7 @@ public class MoveController {
         this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
-            updateBoard(column, row, serverSymbol);
+            updateBoard(row, column, serverSymbol);
             return true;
         }
         return false;
@@ -151,9 +151,9 @@ public class MoveController {
     }
 
     public void updateBoard(int row, int column, char type){
-        board[column][row] = type;                              // update local board
+        board[row][column] = type;                              // update local board
         this.boardView = gameView.getBoardView();               // get current board
-        boardView.printIcon(column, row, String.valueOf(type)); // update gameView board
+        boardView.printIcon(row, column, String.valueOf(type)); // update gameView board
     }
 
     private void setSymbol (boolean firstToStart){
