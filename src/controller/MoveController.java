@@ -5,13 +5,14 @@ import view.GameView;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MoveController {
     public static MoveController moveController;
     private StateHandler stateHandler;
     private char[][] board;
-    private int[][] directions;
+    private List<Integer> directions;
     private int size;
     private BoardView boardView;
     private char clientSymbol;
@@ -37,34 +38,33 @@ public class MoveController {
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
         if (size == 8)
-            if (!reversiDoMove(row, column, clientSymbol)){
+            if (!reversiDoMove(row, column, clientSymbol))
                 return false;
-            }
+
         updateBoard(row, column, clientSymbol);
-        printBoard(board);
         return true;
     }
 
-    public boolean serverMove(int row, int column){
-        System.out.println("Server move: " + row +" "+ column);
+    public void serverMove(int row, int column){
         this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
-            boardView.printIcon(row, column, "X");
+            if (size == 8)
+                reversiDoMove(row, column, serverSymbol);
             updateBoard(row, column, serverSymbol);
-            return true;
         }
-        return false;
     }
 
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
     public boolean reversiDoMove(int row, int column, char player){
         boolean goodMove = false;
-        List<Point> possibleMoves = checkBoard(board, clientSymbol);
+        List<Point> possibleMoves = checkBoard(board, player);
+
+        int j = 0;
         for (int i = 0; i < possibleMoves.size(); i++){
             int r = possibleMoves.get(i).x;
             int c = possibleMoves.get(i).y;
             if (r == row && c == column){ // als geldige move is dan board updaten.
-                reversiUpdate(row, column, player, directions[i][0], directions[i][1]);
+                reversiUpdate(row, column, player, directions.get(j++), directions.get(j++));
                 goodMove = true;
             }
 //            board[r][c] = '*';
@@ -73,10 +73,8 @@ public class MoveController {
         return goodMove;
     }
     private List<Point> checkBoard(char[][] board, char player) {
-        int i = 0;
-        directions = new int[32][2];
-
         List<Point> points = new ArrayList<>();
+        directions = new ArrayList<>();
         int[][] dirs = new int[][] {
                 new int[] {0, 1}, new int[] {1, 1}, new int[] {1, 0}, new int[] {1, -1},
                 new int[] {0, -1}, new int[] {-1, -1}, new int[] {-1, 0}, new int[] {-1, 1}
@@ -89,8 +87,8 @@ public class MoveController {
                     Point p = checkDir(board, player, r, c, dir[0], dir[1]);
                     if (p != null) {
                         points.add(p);
-                        directions[i][0] = dir[0];
-                        directions[i][1] = dir[1];
+                        directions.add(dir[0]);
+                        directions.add(dir[1]);
                     }
                 }
             }

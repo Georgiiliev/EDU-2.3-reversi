@@ -167,7 +167,6 @@ public class CommandHandler implements Runnable{
     }
 
 
-
     private void setTimer(int time) {
         int delay = 1000;
         int period = 1000;
