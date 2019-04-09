@@ -88,20 +88,20 @@ public class CommandHandler implements Runnable{
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
                             stateHandler.setGameState(stateHandler.getGameEndedLoss());
-//                            gameView.endGamePopUp("You have lost the game!");
+                            gameView.endGamePopUp("You have lost the game!");
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedWin());
-//                            gameView.endGamePopUp("You have won the game!");
+                            gameView.endGamePopUp("You have won the game!");
 
                         }
 
                         else if(receive.startsWith("DRAW")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
-//                            gameView.endGamePopUp("You have tied the game!");
+                            gameView.endGamePopUp("You have tied the game!");
 
                         }
 
@@ -114,7 +114,7 @@ public class CommandHandler implements Runnable{
                         receive = receive.substring(11);
                         String[] players = stringToArray(receive);
 
-//                        gameView.setPlayerListFromServer(players);
+                        gameView.setPlayerListFromServer(players);
                     }
                 }
 
