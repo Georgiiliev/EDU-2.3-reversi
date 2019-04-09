@@ -6,6 +6,8 @@ import view.GameView;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CommandHandler implements Runnable{
     private String gameType;
@@ -15,12 +17,18 @@ public class CommandHandler implements Runnable{
     private GameView gameView;
     private MoveController moveController;
 
+    private int interval;
+    private Timer timer;
+
     public CommandHandler(ServerConnection connect, StateHandler stateHandler,
                           GameView gameView) {
         this.gameView = gameView;
         this.connect = connect;
         this.commandHandler = this;
         this.stateHandler = stateHandler;
+
+        connect.send("get","playerlist");
+        setTimer(5);
     }
 
     public void start(){
@@ -156,6 +164,28 @@ public class CommandHandler implements Runnable{
         newInt[0] = oldInt / gameSize;
         newInt[1] = oldInt % gameSize;
         return newInt;
+    }
+
+
+
+    private void setTimer(int time) {
+        int delay = 1000;
+        int period = 1000;
+        timer = new Timer();
+        interval = time;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                setInterval(time);
+            }
+        }, delay, period);
+    }
+    private final int setInterval(int time) {
+        if (interval == 0) {
+            timer.cancel();
+            setTimer(time);
+            connect.send("get","playerlist");
+        }
+        return --interval;
     }
 
     public String getGameType(){

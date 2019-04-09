@@ -7,8 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MoveController {
-    static int interval;
-    static Timer timer;
     public static MoveController moveController;
     private StateHandler stateHandler;
     private char[][] board;
@@ -62,30 +60,6 @@ public class MoveController {
                 board[i][j] = '_';
             }
         }
-    }
-
-    public static void setTimer(int time) {
-        int delay = 1000;
-        int period = 1000;
-        timer = new Timer();
-        interval = time;
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                System.out.println(setInterval());
-            }
-        }, delay, period);
-    }
-
-    private static final int setInterval() {
-        if (interval == 1) {
-            timer.cancel();
-            MoveController.setTimer(6);
-            if (moveController != null){
-                gameView.sendCommand("get","playerlist");
-            }
-
-        }
-        return --interval;
     }
 
     public boolean clientmove(int row, int column){
