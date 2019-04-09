@@ -68,8 +68,8 @@ public class BoardView extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             JButton btn = (JButton) e.getSource();
-            int column = (int)btn.getClientProperty("column");
-            int row = (int)btn.getClientProperty("row");
+            int row = (int)btn.getClientProperty("column");
+            int column = (int)btn.getClientProperty("row");
 
             moveController = MoveController.getMoveController();
 

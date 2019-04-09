@@ -161,8 +161,8 @@ public class CommandHandler implements Runnable{
         } else if (getGameType().equals("Tic-tac-toe")){
             gameSize = 3;
         }
-        newInt[0] = oldInt / gameSize;
-        newInt[1] = oldInt % gameSize;
+        newInt[1] = oldInt / gameSize; // = column
+        newInt[0] = oldInt % gameSize;// = row
         return newInt;
     }
 
