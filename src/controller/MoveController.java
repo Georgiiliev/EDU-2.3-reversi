@@ -4,7 +4,6 @@ import model.StateHandler;
 import view.BoardView;
 import view.GameView;
 
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,8 +20,6 @@ public class MoveController {
     private static GameView gameView;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart){
-        this.gameView = GameView.getGameView();
-        boardView = BoardView.getBoardView();
         moveController = this;
         this.size = size;
         this.stateHandler = stateHandler;
@@ -91,7 +88,7 @@ public class MoveController {
             return false;
         }
 
-        if (stateHandler.getState() != stateHandler.getClientMove()){
+        if (stateHandler.getGameState() != stateHandler.getClientMove()){
             return false;
         }
 
@@ -100,7 +97,7 @@ public class MoveController {
     }
 
     public boolean serverMove(String gametype, int row, int column){
-        if (stateHandler.getState() == stateHandler.getServerMove()){
+        if (stateHandler.getGameState() == stateHandler.getServerMove()){
             boardView.printIcon(row, column, "X");
             fillCharBoard(column, row, serverSymbol);
             return true;
@@ -110,15 +107,15 @@ public class MoveController {
 
     public void reversieCheck(int row, int column){
         for (int i = 0; i < row; i++){
-             int newRow = row - 1;
-             for (int j = 0; j < column; i++){
-                 int newColumn = column -1;
+            int newRow = row - 1;
+            for (int j = 0; j < column; i++){
+                int newColumn = column -1;
 
-             }
+            }
         }
         // check die geldige zetten uitrekend
-            // zijn er stenen van tegen partij om me heen? Opslaan nieuwe array.
-            // ja? zijn er stenen die
+        // zijn er stenen van tegen partij om me heen? Opslaan nieuwe array.
+        // ja? zijn er stenen die
         // functie die de stenen aanpast.
     }
 

@@ -1,25 +1,26 @@
 package view;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import connection.ServerConnection;
-import controller.CommandController;
+import controller.CommandHandler;
 import model.StateHandler;
+import view.GUI.GhostText;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.util.Arrays;
 
-public class GameView extends JFrame{
+public class GameView  extends JFrame {
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
     private JButton restart = new JButton("Go back to lobby");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
-    private JTextField nameInput = new JTextField("name",1);
-    private JLabel consoleName = new JLabel();
+    private JTextField nameInput = new JTextField(1);
+    private GhostText ghostText = new GhostText(nameInput, "Enter your name..");
+
+//    private JLabel consoleName = new JLabel();
     private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
     private BoardView boardView;
@@ -28,29 +29,30 @@ public class GameView extends JFrame{
 
     private ServerConnection serverConnection;
     private StateHandler stateHandler;
-    private CommandController commandController;
-    private static GameView gameView;
+    private CommandHandler commandHandler;
+    private GameView gameView;
     private String[] players;
 
-    public GameView(StateHandler stateHandler){
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+
+    public GameView(StateHandler stateHandler, ServerConnection serverConnection, CommandHandler commandHandler){
         this.gameView = this;
-        serverConnection = ServerConnection.getServerConnection();
-        commandController = new CommandController(serverConnection);
+        this.serverConnection = serverConnection;
+        this.commandHandler = commandHandler;
         this.stateHandler = stateHandler;
-        drawGui();
 
         this.stateHandler.setGameState(this.stateHandler.getIdle());
         this.stateHandler.gameIdle();
-        System.out.println(this.stateHandler.getState());
+
+        drawGui();
     }
 
     public void drawGui(){
-        this.setSize(1000, 800);
+        this.setSize(screenSize.width, screenSize.height);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("Board");
-
+        this.setTitle("Game Engine - Groep 4");
 
         GUI.setLayout(new GridBagLayout());
 
@@ -80,7 +82,7 @@ public class GameView extends JFrame{
         JList consoleList = new JList(modelConsole);
         JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
         console.add(scrollableConsoleList);
-        consoleList.setFixedCellWidth(600);
+        consoleList.setFixedCellWidth(900);
         consoleList.setFixedCellHeight(20);
         addComp(GUI, console, 0, 0, 1, 1, GridBagConstraints.SOUTH, GridBagConstraints.NONE);
     }
@@ -144,7 +146,7 @@ public class GameView extends JFrame{
                 if(boardView != null){
                     GUI.remove(boardView);
                 }
-                drawTicTacToe(boardView = new BoardView(3, stateHandler, commandController, this));
+                drawTicTacToe(boardView = new BoardView(3, stateHandler, this));
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
@@ -154,7 +156,7 @@ public class GameView extends JFrame{
                 if(boardView != null){
                     GUI.remove(boardView);
                 }
-                drawReversi(boardView = new BoardView(8, stateHandler, commandController, this));
+                drawReversi(boardView = new BoardView(8, stateHandler, this));
                 GUI.revalidate();
                 GUI.repaint();
             } else{
@@ -211,16 +213,6 @@ public class GameView extends JFrame{
         serverConnection.send(action,value);
     }
 
-    public String getGameValue(){
-        return gameValue;
-    }
-    public String getUserName(){
-        return userName;
-    }
-    public static GameView getGameView(){
-        return gameView;
-    }
-
     public void endGamePopUp(String text){
         JFrame frame = new JFrame(text);
         frame.setSize(300,100);
@@ -246,5 +238,15 @@ public class GameView extends JFrame{
             stateHandler.setGameState(stateHandler.getConnectingToServer());
             stateHandler.establishConnection();
         });
+    }
+
+    public String getGameValue(){
+        return gameValue;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public GameView getGameView(){
+        return gameView;
     }
 }

@@ -16,8 +16,8 @@ public class CommandHandler implements Runnable{
     private GameView gameView;
 
     public CommandHandler(ServerConnection connect, StateHandler stateHandler) {
-        this.gameView = GameView.getGameView();
-        this.moveController = MoveController.getMoveController();
+//        this.gameView = GameView.getGameView();
+//        this.moveController = MoveController.getMoveController();
         this.connect = connect;
         this.commandHandler = this;
         this.stateHandler = stateHandler;
@@ -44,17 +44,17 @@ public class CommandHandler implements Runnable{
 
                             boolean start = false;
 
-                            String name = gameView.getUserName();
-                            if (name.equals(firstToStart)){
-                                start = true;
-                            }
+//                            String name = gameView.getUserName();
+//                            if (name.equals(firstToStart)){
+//                                start = true;
+//                            }
 
                             System.out.println("Er is een match gevonden!");
                             if (gameType.equals("Reversi")){
-                                moveController = new MoveController(8, stateHandler, start);
+//                                moveController = new MoveController(8, stateHandler, start);
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
-                                moveController = new MoveController(3, stateHandler, start);
+//                                moveController = new MoveController(3, stateHandler, start);
                             }
 
 
@@ -65,14 +65,15 @@ public class CommandHandler implements Runnable{
                             receive = receive.substring(5);
                             HashMap hashMap = stringToHashMap(receive);
 
-                            String name = gameView.getUserName();
+//                            String name = gameView.getUserName();
+                            String name = "";
                             if (!hashMap.get("PLAYER").equals(name)){ // als speler tegenstander is dan:
                                 int move = Integer.parseInt((String)hashMap.get("MOVE")); // De speler heeft op X gespeeld
 
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
 
                                 // TODO geef het volgende aan een functie
-                                moveController.serverMove(gameType, a[0], a[1]);
+//                                moveController.serverMove(gameType, a[0], a[1]);
 //                                printIcon(a[0], a[1]), "X");
 
                                 stateHandler.setGameState(stateHandler.getClientMove());
@@ -84,27 +85,27 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("YOURTURN")){
                             // state = doe een zet.
-                            System.out.println(stateHandler.getState());
+                            System.out.println(stateHandler.getGameState());
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
                             stateHandler.setGameState(stateHandler.getGameEndedLoss());
-                            gameView.endGamePopUp("You have lost the game!");
+//                            gameView.endGamePopUp("You have lost the game!");
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedWin());
-                            gameView.endGamePopUp("You have won the game!");
+//                            gameView.endGamePopUp("You have won the game!");
 
                         }
 
                         else if(receive.startsWith("DRAW")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
-                            gameView.endGamePopUp("You have tied the game!");
+//                            gameView.endGamePopUp("You have tied the game!");
 
                         }
 
@@ -117,7 +118,7 @@ public class CommandHandler implements Runnable{
                         receive = receive.substring(11);
                         String[] players = stringToArray(receive);
 
-                        gameView.setPlayerListFromServer(players);
+//                        gameView.setPlayerListFromServer(players);
                     }
                 }
 

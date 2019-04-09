@@ -7,29 +7,23 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-
 public class ServerConnection implements Runnable{
-    private static ServerConnection serverConnection;
-    private static StateHandler stateHandler;
+    private ServerConnection serverConnection;
+    private StateHandler stateHandler;
 
     private static final int port = 7789;
-    private static String host;
+    private String host = "localhost";
 
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
     private boolean connection;
 
-    public ServerConnection(String host, StateHandler stateHandler) {
+    public ServerConnection(StateHandler stateHandler) {
         connection = false;
         serverConnection = this;
-        this.host = host;
         this.stateHandler = stateHandler;
         connect();
-    }
-
-    public static StateHandler getStateHandler() {
-        return stateHandler;
     }
 
     private void connect() {
@@ -42,10 +36,12 @@ public class ServerConnection implements Runnable{
             receive(); // haal welkom regel 2 op
 
             connection = true;
+            System.out.println("Connection established.");
 
             stateHandler.setGameState(stateHandler.getGameStarted());
             stateHandler.gameStart();
-            System.out.println(stateHandler.getState());
+            System.out.println(stateHandler.getGameState());
+
         }
         catch (IOException e){
             System.out.println("Kan geen verbinding maken met de server! \n - Controleer de host naam.");
@@ -81,7 +77,7 @@ public class ServerConnection implements Runnable{
         send("get", "playerlist");
     }
 
-    public static ServerConnection getServerConnection(){
+    public ServerConnection getServerConnection(){
         return serverConnection;
     }
 

@@ -1,25 +1,26 @@
 package model;
 
-public class StateHandler{
-    GameState clientMove;
-    GameState serverMove;
-    GameState connectingToServer;
-    GameState gameEndedDraw;
-    GameState gameEndedLoss;
-    GameState gameEndedWin;
-    GameState gameStarted;
-    GameState idle;
-    GameState gameState;
+public class StateHandler {
+    private I_GameState clientMove;
+    private I_GameState serverMove;
+    private I_GameState connectingToServer;
+    private I_GameState gameEndedDraw;
+    private I_GameState gameEndedLoss;
+    private I_GameState gameEndedWin;
+    private I_GameState gameStarted;
+    private I_GameState idle;
+
+    I_GameState gameState;
 
     public StateHandler(){
-        clientMove = new ClientMove(this);
-        serverMove = new ServerMove(this);
-        connectingToServer = new ConnectingToServer(this);
-        gameEndedDraw = new GameEndedDraw(this);
-        gameEndedLoss = new GameEndedLoss(this);
-        gameEndedWin = new GameEndedWin(this);
-        gameStarted = new GameStarted(this);
-        idle = new Idle(this);
+        clientMove = new ClientMoveState(this);
+        serverMove = new ServerMoveState(this);
+        connectingToServer = new ConnectingToServerState(this);
+        gameEndedDraw = new GameDrawState(this);
+        gameEndedLoss = new GameLoseState(this);
+        gameEndedWin = new GameWinState(this);
+        gameStarted = new GameStartedState(this);
+        idle = new IdleState(this);
     }
 
     public void endGameDraw() { gameState.endGameDraw(); }
@@ -31,15 +32,20 @@ public class StateHandler{
     public void waitForMoveClient() { gameState.moveClient(); }
     public void establishConnection() { gameState.establishConnection(); }
 
-    public GameState getGameEndedDraw() { return gameEndedDraw; }
-    public GameState getGameEndedLoss() { return gameEndedLoss; }
-    public GameState getGameEndedWin() { return gameEndedWin; }
-    public GameState getClientMove() { return clientMove; }
-    public GameState getServerMove() { return serverMove;  }
-    public GameState        getConnectingToServer(){ return connectingToServer; }
-    public GameState getGameStarted(){ return gameStarted; }
-    public GameState getIdle(){ return idle; }
+    public I_GameState getGameEndedDraw() { return gameEndedDraw; }
+    public I_GameState getGameEndedLoss() { return gameEndedLoss; }
+    public I_GameState getGameEndedWin() { return gameEndedWin; }
+    public I_GameState getClientMove() { return clientMove; }
+    public I_GameState getServerMove() { return serverMove;  }
+    public I_GameState getConnectingToServer(){ return connectingToServer; }
+    public I_GameState getGameStarted(){ return gameStarted; }
+    public I_GameState getIdle(){ return idle; }
 
-    public void setGameState(GameState gameState){ this.gameState = gameState; }
-    public GameState getState(){ return gameState; }
+    public I_GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(I_GameState gameState) {
+        this.gameState = gameState;
+    }
 }

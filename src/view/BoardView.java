@@ -1,39 +1,32 @@
 package view;
 
+import controller.MoveController;
+import model.StateHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.Color;
-
-import javax.swing.JPanel;
-
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import controller.CommandController;
-import controller.MoveController;
-import model.StateHandler;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BoardView extends JPanel {
 
     private final JPanel tiles = new JPanel();
     private MoveController moveController;
     private StateHandler stateHandler;
-    private CommandController commandController;
     private GameView gameView;
-    private static BoardView boardView;
+    private BoardView boardView;
 
 
     public int boardSize; // 8*8
     public JButton[][] button;
 
 
-    public BoardView(int newBoardSize, StateHandler stateHandler, CommandController commandController, GameView gameView) {
-        boardView = this;
-        this.commandController = commandController;
-        boardSize = newBoardSize;
+    public BoardView(int newBoardSize, StateHandler stateHandler, GameView gameView) {
+        this.boardView = this;
         this.stateHandler = stateHandler;
         this.gameView = gameView;
 
+        boardSize = newBoardSize;
         drawBoardView();
     }
 
@@ -69,13 +62,6 @@ public class BoardView extends JPanel {
         boardSize = size;
     }
 
-//    public int setBoardSizeX() {
-//
-//        int s = frame.getWidth();
-//        int width = s / boardSize;
-//        return width;
-//    }
-
     public class MyActionListener implements ActionListener {
 
         @Override
@@ -95,25 +81,38 @@ public class BoardView extends JPanel {
 //                    btn.setIcon(c);
 //                    System.out.println("column: " + row + ", row: " + column);
 
-                    commandController.positieOmzetten(gameView.getGameValue(), row, column);
+                    positieOmzetten(gameView.getGameValue(), row, column);
                 }
             }
         }
     }
-    public static BoardView getBoardView(){
+
+    public void positieOmzetten(String type, int row, int column) {
+        int size = 0;
+        if(type == "Reversi"){
+            size = 8;
+        } else if(type == "Tic-tac-toe"){
+            size = 3;
+        }
+
+        int positie;
+
+        int resultaat = size * column;
+        positie = resultaat + row;
+
+        gameView.sendCommand("move", Integer.toString(positie));
+    }
+    public BoardView getBoardView(){
         return boardView;
     }
 
     public void printIcon(int x, int y, String i) {
         JButton button = this.button[x][y];
         if (i.equals("O")) {
-            button.setIcon(new MovableObjectCircle());
+            button.setIcon(new CircleObject());
         } else if (i.equals("X")) {
-            button.setIcon(new MovableObjectCross());
+            button.setIcon(new CrossObject());
             //TODO geeft soms null pointer exeption?
         }
     }
-
 }
-
-
