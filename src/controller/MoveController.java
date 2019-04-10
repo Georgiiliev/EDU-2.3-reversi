@@ -1,4 +1,5 @@
 package controller;
+import AI.controller.ReversiAI;
 import model.StateHandler;
 import view.BoardView;
 import view.GameView;
@@ -26,8 +27,13 @@ public class MoveController {
         setupBoard(size);
         setSymbol(firstToStart);
 
-        if (size == 8) // Als het spel reversi is dan:
+        if (size == 8) { // Als het spel reversi is dan:
             drawMiddle();
+
+//            ReversiAI reversiAI = new ReversiAI(this, this.stateHandler);
+//            Thread thread = new Thread(reversiAI);
+//            thread.start();
+        }
     }
 
     public boolean clientMove(int row, int column){
@@ -54,7 +60,7 @@ public class MoveController {
     }
 
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
-    public boolean reversiDoMove(int row, int column, char player){
+    private boolean reversiDoMove(int row, int column, char player){
         boolean goodMove = false;
 
         List<Point> possibleMoves = getValidMoves(board, player); // haalt nieuwe lijst op met beschikbare moves.
@@ -72,7 +78,7 @@ public class MoveController {
         }
         return goodMove;
     }
-    private List<Point> getValidMoves(char[][] board, char player) {
+    public List<Point> getValidMoves(char[][] board, char player) {
         int i = 0;
         directions = new int[32][2];
 
@@ -99,7 +105,7 @@ public class MoveController {
         return points;
     }
 
-    public Point checkDir(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
+    private Point checkDir(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
         boolean inProgress = false;
         while (true) {
             row += dirRow;
@@ -154,7 +160,7 @@ public class MoveController {
         }
     }
 
-    public boolean inBounds(int row, int col) {
+    private boolean inBounds(int row, int col) {
         return row < size && col < size && row >= 0 && col >= 0;
     }
 
@@ -169,6 +175,14 @@ public class MoveController {
                 player = player + "B";
 
         boardView.printIcon(row, column, player); // update gameView board
+    }
+
+    public char[][] getBoard() {
+        return board;
+    }
+
+    public char getClientSymbol() {
+        return clientSymbol;
     }
 
     private void setSymbol (boolean firstToStart){
