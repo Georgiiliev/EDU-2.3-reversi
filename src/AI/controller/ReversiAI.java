@@ -40,6 +40,9 @@ public class ReversiAI implements Runnable{
     public void disableAI(){
         statusAI = false;
     }
+    public void enableAI(){
+        statusAI = true;
+    }
 
     @Override
     public void run() {
@@ -50,18 +53,18 @@ public class ReversiAI implements Runnable{
         catch(InterruptedException e){
             e.printStackTrace();
         }
-        while (statusAI){
-            System.out.println(stateHandler.getGameState());
-            if (stateHandler.getGameState() == stateHandler.getClientMove()){
+        while (true){ // thread moet altijd blijven leven
+            while (statusAI){ // als de AI enabled is dan mag hij dingen doen.
                 try {
-                    Random randomGenerator = new Random();
-                    int randomInt = randomGenerator.nextInt(500);
-                    Thread.sleep(randomInt+400);
+                    Thread.sleep(100);
                 }
                 catch(InterruptedException e){
                     e.printStackTrace();
                 }
-                doRandomMove();
+                if (stateHandler.getGameState() == stateHandler.getClientMove()){
+
+                    doRandomMove();
+                }
             }
         }
     }
