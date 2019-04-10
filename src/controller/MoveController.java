@@ -30,9 +30,9 @@ public class MoveController {
         if (size == 8) { // Als het spel reversi is dan:
             drawMiddle();
 
-            ReversiAI reversiAI = new ReversiAI(this, this.stateHandler);
-            Thread thread = new Thread(reversiAI);
-            thread.start();
+//            ReversiAI reversiAI = new ReversiAI(this, this.stateHandler);
+//            Thread thread = new Thread(reversiAI);
+//            thread.start();
         }
     }
 
