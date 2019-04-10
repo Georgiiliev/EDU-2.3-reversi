@@ -29,7 +29,8 @@ public class IdleState implements I_GameState {
 
     @Override
     public void gameIdle() {
-        System.out.print("Waiting for a command.");
+        System.out.print("Waiting for a match.");
+
     }
 
     @Override

@@ -14,6 +14,7 @@ public class GameView  extends JFrame {
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
     private JButton restart = new JButton("Go back to lobby");
+    private JButton accept = new JButton("Accept match");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JRadioButton gameTypeOne = new JRadioButton("Human vs Human");
@@ -64,7 +65,7 @@ public class GameView  extends JFrame {
 
         this.add(GUI);
         this.setVisible(true);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setLocationRelativeTo(null);
 
     }
@@ -179,7 +180,6 @@ public class GameView  extends JFrame {
 
             }
         });
-
     }
 
     private void submitAction() {
@@ -250,14 +250,14 @@ public class GameView  extends JFrame {
         restart.addActionListener( (e)-> {
             System.out.println("Restarting game");
             sendCommand("logout", "");
-            stateHandler.setGameState(stateHandler.getConnectingToServer());
-            stateHandler.establishConnection();
+            stateHandler.setGameState(stateHandler.getIdle());
         });
     }
 
     public String getGameValue(){
         return gameValue;
     }
+
     public String getUserName(){
         return userName;
     }
