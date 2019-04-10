@@ -16,7 +16,12 @@ public class CircleObject implements Icon {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setStroke(new BasicStroke(5));
         g2.setPaint(circleColor);
-        g2.drawOval(x+5, y+5, getIconWidth() - 10, getIconHeight() - 10);
+        if (type.equals("fill"))
+            g2.fillOval(x+5, y+5, getIconWidth() - 10, getIconHeight() - 10);
+        else
+            g2.drawOval(x+5, y+5, getIconWidth() - 10, getIconHeight() - 10);
+
+
         g2.setBackground(circleColor);
         g2.dispose();
     }

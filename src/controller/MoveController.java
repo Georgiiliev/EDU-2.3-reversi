@@ -161,7 +161,14 @@ public class MoveController {
     public void updateBoard(int row, int column, char type){
         board[row][column] = type;                              // update local board
         this.boardView = gameView.getBoardView();               // get current board
-        boardView.printIcon(row, column, String.valueOf(type)); // update gameView board
+        String player = String.valueOf(type);
+        if (size == 8)
+            if (player.equals("X"))
+                player = "OW";
+            else
+                player = player + "B";
+
+        boardView.printIcon(row, column, player); // update gameView board
     }
 
     private void setSymbol (boolean firstToStart){
