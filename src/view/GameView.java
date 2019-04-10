@@ -23,6 +23,7 @@ public class GameView  extends JFrame {
     private JLabel nameGame = new JLabel("Game");
     private JLabel nameGameType = new JLabel("Gametype");
     private GhostText ghostText = new GhostText(nameInput, "Enter your name..");
+    private JFrame popUp;
 
     private DefaultListModel playerList = new DefaultListModel();
     private DefaultListModel modelConsole = new DefaultListModel();
@@ -226,11 +227,11 @@ public class GameView  extends JFrame {
     }
 
     public void endGamePopUp(String text){
-        JFrame frame = new JFrame(text);
-        frame.setSize(300,100);
-        frame.getContentPane().add(restart);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
+        popUp = new JFrame(text);
+        popUp.setSize(300,100);
+        popUp.getContentPane().add(restart);
+        popUp.setVisible(true);
+        popUp.setLocationRelativeTo(null);
         restartGame();
     }
 
@@ -245,11 +246,12 @@ public class GameView  extends JFrame {
 
     private void restartGame(){
         restart.addActionListener( (e)-> {
-            System.out.println("Restarting game");
-            sendCommand("logout", "");
-            stateHandler.setGameState(stateHandler.getIdle());
+            System.out.println("Go back to lobby");
+            popUp.dispose();
+            boardView.setVisible(false);
         });
     }
+
 
     public String getGameValue(){
         return gameValue;
