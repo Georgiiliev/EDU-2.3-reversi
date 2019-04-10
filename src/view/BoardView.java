@@ -102,6 +102,7 @@ public class BoardView extends JPanel {
 
         gameView.sendCommand("move", Integer.toString(positie));
     }
+
     public BoardView getBoardView(){
         return boardView;
     }
