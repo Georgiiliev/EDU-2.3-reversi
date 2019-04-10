@@ -1,5 +1,6 @@
 package controller;
 import AI.controller.ReversiAI;
+import connection.ServerConnection;
 import model.StateHandler;
 import view.BoardView;
 import view.GameView;
@@ -47,6 +48,7 @@ public class MoveController {
                 return false;
 
         updateBoard(row, column, clientSymbol);
+        sendMoveToServer(row,column);
         return true;
     }
 
@@ -222,6 +224,14 @@ public class MoveController {
                 System.out.print(board[r][c]);
             System.out.println();
         }
+    }
+    public void sendMoveToServer(int row, int column) {
+        int positie;
+
+        int resultaat = size * row;
+        positie = resultaat + column;
+
+        gameView.sendCommand("move", Integer.toString(positie));
     }
 
     public static MoveController getMoveController (){

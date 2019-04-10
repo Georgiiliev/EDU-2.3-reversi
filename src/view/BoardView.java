@@ -81,7 +81,7 @@ public class BoardView extends JPanel {
 //                    btn.setIcon(c);
 //                    System.out.println("column: " + row + ", row: " + column);
 
-                    positieOmzetten(gameView.getGameValue(), row, column);
+//                    positieOmzetten(gameView.getGameValue(), row, column);
                 }
             }
         }
