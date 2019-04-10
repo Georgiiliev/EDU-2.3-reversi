@@ -5,14 +5,13 @@ import view.GameView;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MoveController {
     public static MoveController moveController;
     private StateHandler stateHandler;
     private char[][] board;
-    private List<Integer> directions;
+    private int[][] directions;
     private int size;
     private BoardView boardView;
     private char clientSymbol;
@@ -57,14 +56,15 @@ public class MoveController {
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
     public boolean reversiDoMove(int row, int column, char player){
         boolean goodMove = false;
-        List<Point> possibleMoves = checkBoard(board, player);
 
-        int j = 0;
-        for (int i = 0; i < possibleMoves.size(); i++){
+        List<Point> possibleMoves = getValidMoves(board, player); // haalt nieuwe lijst op met beschikbare moves.
+        for (int i = 0; i < directions.length; i++){
+        }
+        for (int i = 0; i < possibleMoves.size(); i++){ // doorloopt de lijst moves
             int r = possibleMoves.get(i).x;
             int c = possibleMoves.get(i).y;
-            if (r == row && c == column){ // als geldige move is dan board updaten.
-                reversiUpdate(row, column, player, directions.get(j++), directions.get(j++));
+            if (r == row && c == column){ // als een mogelijke move overeen komt met de gebruiker dan:
+                reversiUpdate(row, column, player, directions[i][0], directions[i][1]);
                 goodMove = true;
             }
 //            board[r][c] = '*';
@@ -72,23 +72,26 @@ public class MoveController {
         }
         return goodMove;
     }
-    private List<Point> checkBoard(char[][] board, char player) {
+    private List<Point> getValidMoves(char[][] board, char player) {
+        int i = 0;
+        directions = new int[32][2];
+
         List<Point> points = new ArrayList<>();
-        directions = new ArrayList<>();
         int[][] dirs = new int[][] {
                 new int[] {0, 1}, new int[] {1, 1}, new int[] {1, 0}, new int[] {1, -1},
                 new int[] {0, -1}, new int[] {-1, -1}, new int[] {-1, 0}, new int[] {-1, 1}
         };
         for (int r = 0; r < size; r++) {
             for (int c = 0; c < size; c++) {
-                if (board[r][c] != player)
-                    continue;
+                if (board[r][c] != player) // als vakje tegenstander is dan:
+                    continue;           // deze zorgt dat hij stopt en verder met vorige for loop gaat
                 for (int[] dir : dirs) {
                     Point p = checkDir(board, player, r, c, dir[0], dir[1]);
                     if (p != null) {
                         points.add(p);
-                        directions.add(dir[0]);
-                        directions.add(dir[1]);
+                        directions[i][0] = dir[0];
+                        directions[i][1] = dir[1];
+                        i++;
                     }
                 }
             }
@@ -96,29 +99,32 @@ public class MoveController {
         return points;
     }
 
-    public Point checkDir(char[][] board, char player, int r, int c, int dr, int dc) {
+    public Point checkDir(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
         boolean inProgress = false;
         while (true) {
-            r += dr;
-            c += dc;
-            if (!inBounds(r, c))
+            row += dirRow;
+            column += dirColumn;
+            if (!inBounds(row, column))
                 return null;
             if (!inProgress) {
-                if (board[r][c] == '-' || board[r][c] == player)
+                if (board[row][column] == '-' || board[row][column] == player)
                     return null;
                 inProgress = true;
             }
             else {
-                if (board[r][c] == player)
+                if (board[row][column] == player)
                     return null;
-                else if (board[r][c] == '-')
-                    return new Point(r, c);
+                else if (board[row][column] == '-')
+                    return new Point(row, column);
             }
         }
     }
 
     private void reversiUpdate(int row, int column, char player, int rowDir, int colDir){
-        int currentRow= row + rowDir;
+        rowDir *= -1;
+        colDir *= -1;
+
+        int currentRow = row + rowDir;
         int currentCol = column + colDir;
 
         if (currentRow==8 || currentRow<0 || currentCol==8 || currentCol<0)
@@ -155,7 +161,14 @@ public class MoveController {
     public void updateBoard(int row, int column, char type){
         board[row][column] = type;                              // update local board
         this.boardView = gameView.getBoardView();               // get current board
-        boardView.printIcon(row, column, String.valueOf(type)); // update gameView board
+        String player = String.valueOf(type);
+        if (size == 8)
+            if (player.equals("X"))
+                player = "OW";
+            else
+                player = player + "B";
+
+        boardView.printIcon(row, column, player); // update gameView board
     }
 
     private void setSymbol (boolean firstToStart){

@@ -17,9 +17,8 @@ public class GameView  extends JFrame {
     private JButton accept = new JButton("Accept match");
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
-    private JRadioButton gameTypeOne = new JRadioButton("Human vs Human");
-    private JRadioButton gameTypeTwo = new JRadioButton("Human vs AI");
-    private JRadioButton gameTypeThree = new JRadioButton("AI vs AI");
+    private JRadioButton gameTypeOne = new JRadioButton("Human");
+    private JRadioButton gameTypeTwo = new JRadioButton("AI");
     private JTextField nameInput = new JTextField(1);
     private JLabel nameGame = new JLabel("Game");
     private JLabel nameGameType = new JLabel("Gametype");
@@ -122,7 +121,6 @@ public class GameView  extends JFrame {
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
-        typeGroup.add(gameTypeThree);
 
         ButtonGroup gameGroup = new ButtonGroup();
         gameGroup.add(gameOne);
@@ -138,7 +136,6 @@ public class GameView  extends JFrame {
         box.add(Box.createRigidArea(new Dimension(20, 5)));
         box.add(gameTypeOne);
         box.add(gameTypeTwo);
-        box.add(gameTypeThree);
 
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(nameInput);

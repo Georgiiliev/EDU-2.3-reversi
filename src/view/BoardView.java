@@ -109,10 +109,13 @@ public class BoardView extends JPanel {
     public void printIcon(int x, int y, String i) {
         JButton button = this.button[x][y];
         if (i.equals("O")) {
-            button.setIcon(new CircleObject());
+            button.setIcon(new CircleObject(Color.black, "empty"));
         } else if (i.equals("X")) {
-            button.setIcon(new CrossObject());
-            //TODO geeft soms null pointer exeption?
+            button.setIcon(new CrossObject(Color.red));
+        } else if (i.equals("OB")) {
+            button.setIcon(new CircleObject(Color.black, "fill"));
+        } else if (i.equals("OW")) {
+            button.setIcon(new CircleObject(Color.white, "fill"));
         }
     }
 }

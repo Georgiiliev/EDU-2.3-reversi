@@ -4,12 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CircleObject implements Icon {
+    private String type;
+    public Color circleColor;
+
+    public CircleObject(Color circleColor, String type) {
+        this.circleColor = circleColor;
+        this.type = type;
+    }
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setPaint(Color.BLACK);
-        g2.drawOval(x, y, getIconWidth() - 1, getIconHeight() - 1);
-        g2.setBackground(Color.black);
+        g2.setStroke(new BasicStroke(5));
+        g2.setPaint(circleColor);
+        if (type.equals("fill"))
+            g2.fillOval(x+5, y+5, getIconWidth() - 10, getIconHeight() - 10);
+        else
+            g2.drawOval(x+5, y+5, getIconWidth() - 10, getIconHeight() - 10);
+
+
+        g2.setBackground(circleColor);
         g2.dispose();
     }
 

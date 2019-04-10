@@ -12,7 +12,6 @@ import java.util.TimerTask;
 public class CommandHandler implements Runnable{
     private String gameType;
     private ServerConnection connect;
-    private CommandHandler commandHandler;
     private StateHandler stateHandler;
     private GameView gameView;
     private MoveController moveController;
@@ -20,11 +19,9 @@ public class CommandHandler implements Runnable{
     private int interval;
     private Timer timer;
 
-    public CommandHandler(ServerConnection connect, StateHandler stateHandler,
-                          GameView gameView) {
+    public CommandHandler(ServerConnection connect, StateHandler stateHandler, GameView gameView) {
         this.gameView = gameView;
         this.connect = connect;
-        this.commandHandler = this;
         this.stateHandler = stateHandler;
 
         connect.send("get","playerlist");
@@ -87,7 +84,6 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("YOURTURN")){
                             // state = doe een zet.
-                            System.out.println(stateHandler.getGameState());
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
