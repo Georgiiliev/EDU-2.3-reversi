@@ -64,7 +64,7 @@ public class MoveController {
             int r = possibleMoves.get(i).x;
             int c = possibleMoves.get(i).y;
             if (r == row && c == column){ // als een mogelijke move overeen komt met de gebruiker dan:
-                reversiUpdate(row, column, player, directions[i][0], directions[i][1]); // komt goed binnen
+                reversiUpdate(row, column, player, directions[i][0], directions[i][1]);
                 goodMove = true;
             }
 //            board[r][c] = '*';
