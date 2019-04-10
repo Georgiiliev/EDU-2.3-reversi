@@ -87,7 +87,6 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("YOURTURN")){
                             // state = doe een zet.
-                            System.out.println(stateHandler.getGameState());
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
