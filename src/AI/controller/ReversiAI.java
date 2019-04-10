@@ -25,13 +25,16 @@ public class ReversiAI implements Runnable{
         List<Point> possibleMoves = moveController.getValidMoves(board, clientSymbol);
 
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(possibleMoves.size());
-        System.out.println(randomInt);
+        if (possibleMoves.size() != 0){
+            int randomInt = randomGenerator.nextInt(possibleMoves.size());
 
-        int row = possibleMoves.get(randomInt).x;
-        int column = possibleMoves.get(randomInt).y;
+            int row = possibleMoves.get(randomInt).x;
+            int column = possibleMoves.get(randomInt).y;
 
-        moveController.clientMove(row, column);
+            moveController.clientMove(row, column);
+        } else {
+            statusAI = false;
+        }
     }
 
     public void disableAI(){
@@ -41,15 +44,24 @@ public class ReversiAI implements Runnable{
     @Override
     public void run() {
         statusAI = true;
-        while (statusAI && (stateHandler.getGameState() == stateHandler.getClientMove() || stateHandler.getGameState() != stateHandler.getServerMove())){
+        try {
+            Thread.sleep(200);
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
+        while (statusAI){
+            System.out.println(stateHandler.getGameState());
             if (stateHandler.getGameState() == stateHandler.getClientMove()){
-                doRandomMove();
                 try {
-                    Thread.sleep(1000);
+                    Random randomGenerator = new Random();
+                    int randomInt = randomGenerator.nextInt(500);
+                    Thread.sleep(randomInt+400);
                 }
                 catch(InterruptedException e){
                     e.printStackTrace();
                 }
+                doRandomMove();
             }
         }
     }
