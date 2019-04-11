@@ -146,7 +146,7 @@ public class GameView  extends JFrame {
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
-
+        gameTypeOne.setSelected(true);
 
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(nameGameType);
@@ -208,7 +208,6 @@ public class GameView  extends JFrame {
         }
         modelConsole.clear();
         modelConsole.insertElementAt("Er is ingelogt met de naam: "  + userName, 0);
-        modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
 
         sendCommand("login", name);
 //        sendCommand("subscribe", gameValue);
