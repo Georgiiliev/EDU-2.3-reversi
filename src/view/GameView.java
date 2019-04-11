@@ -15,6 +15,7 @@ public class GameView  extends JFrame {
     private JButton submit = new JButton("Submit");
     private JButton restart = new JButton("Go back to lobby");
     private JButton accept = new JButton("Accept match");
+    private JButton challengeReceived = new JButton();
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JRadioButton gameTypeOne = new JRadioButton("Human");
@@ -109,6 +110,7 @@ public class GameView  extends JFrame {
                         if (i == 0) {
                             System.out.println(" Selections: ");
                         }
+                        challengePlayer(selectionValues[i]);
                         modelConsole.addElement(selectionValues[i]);
                     }
                 }
@@ -254,10 +256,26 @@ public class GameView  extends JFrame {
             boardView.setVisible(false);
         });
     }
+    public void challengePopUp(String challenger, String challengeNumber, String game){
+        String text = "You have been challenged for " + game + " by " + challenger;
+        popUp = new JFrame("Challenged!");
+        popUp.setSize(500,100);
+        challengeReceived.setText(text);
+        popUp.getContentPane().add(challengeReceived);
+        popUp.setVisible(true);
+        popUp.setLocationRelativeTo(null);
+        acceptChallenge(challengeNumber, game);
+    }
 
     public void acceptChallenge(String challengeNumber, String game){
-
+        challengeReceived.addActionListener( (e)-> {
             sendCommand("challenge accept", challengeNumber);
+            popUp.dispose();
+        });
+    }
+
+    private void challengePlayer(Object playerName){
+        sendCommand("challenge", "\"" + playerName + "\"\" Reversi\"");
     }
 
 
