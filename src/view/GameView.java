@@ -111,7 +111,13 @@ public class GameView  extends JFrame {
                         if (i == 0) {
                             System.out.println(" Selections: ");
                         }
-                        challengePlayer(selectionValues[i]);
+                        if(gameOne.isSelected()) {
+                            gameValue = "Tic-tac-toe";
+
+                        } else if(gameTwo.isSelected()) {
+                            gameValue = "Reversi";
+                        }
+                        challengePlayer(selectionValues[i], gameValue);
                         modelConsole.addElement(selectionValues[i]);
                     }
                 }
@@ -161,28 +167,22 @@ public class GameView  extends JFrame {
         submit.addActionListener( (e)-> {
             submitAction();
             sendCommand("get", "playerlist");
-            if(gameOne.isSelected()){
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                drawTicTacToe();
-                GUI.revalidate();
-                GUI.repaint();
-            }else if(gameTwo.isSelected()){
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                drawReversi();
-                GUI.revalidate();
-                GUI.repaint();
-            } else{
-                String error = "Select a game";
-                modelConsole.addElement(error);
-
-            }
+//            if(gameOne.isSelected()){
+//                if(boardView != null){
+//                    GUI.remove(boardView);
+//                }
+//                drawTicTacToe();
+//                GUI.revalidate();
+//                GUI.repaint();
+//            }else if(gameTwo.isSelected()){
+//                if(boardView != null){
+//                    GUI.remove(boardView);
+//                }
+//                drawReversi();
+//                GUI.revalidate();
+//                GUI.repaint();
+//
+//            }
             if(gameTypeOne.isSelected()){
                 this.ai = true;
             } else if(gameTypeTwo.isSelected()){
@@ -195,12 +195,6 @@ public class GameView  extends JFrame {
     }
 
     private void submitAction() {
-        if(gameOne.isSelected()) {
-            gameValue = "Tic-tac-toe";
-
-        } else if(gameTwo.isSelected()) {
-            gameValue = "Reversi";
-        }
 
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
@@ -213,7 +207,7 @@ public class GameView  extends JFrame {
         modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
 
         sendCommand("login", name);
-        sendCommand("subscribe", gameValue);
+//        sendCommand("subscribe", gameValue);
     }
 
     // Sets the rules for a component destined for a GridBagLayout
@@ -283,8 +277,8 @@ public class GameView  extends JFrame {
         });
     }
 
-    private void challengePlayer(Object playerName){
-        sendCommand("challenge", "\"" + playerName + "\"\" Reversi\"");
+    private void challengePlayer(Object playerName, String game){
+        sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
     }
 
 
