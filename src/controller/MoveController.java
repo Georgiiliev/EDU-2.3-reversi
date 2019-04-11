@@ -58,13 +58,17 @@ public class MoveController {
             if (size == 8)
                 reversiDoMove(row, column, serverSymbol);
             updateBoard(row, column, serverSymbol);
+            printAvalableMoves(clientSymbol);
+        }
+    }
+    private void printAvalableMoves(char player){
+        boardView.clearIcon();
 
-            List<Point> possibleMoves = getValidMoves(board, clientSymbol);
-            for (int i = 0; i < possibleMoves.size(); i++) {
-                int r = possibleMoves.get(i).x;
-                int c = possibleMoves.get(i).y;
-                boardView.printIcon(r, c, "PM"); // update gameView board
-            }
+        List<Point> possibleMoves = getValidMoves(board, player);
+        for (int i = 0; i < possibleMoves.size(); i++) {
+            int r = possibleMoves.get(i).x;
+            int c = possibleMoves.get(i).y;
+            boardView.printIcon(r, c, "PM"); // update gameView board
         }
     }
 
