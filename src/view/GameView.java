@@ -41,6 +41,7 @@ public class GameView  extends JFrame {
 
 
     public GameView(StateHandler stateHandler, ServerConnection serverConnection){
+        this.ai = false;
         this.gameView = this;
         this.serverConnection = serverConnection;
         this.stateHandler = stateHandler;
@@ -124,6 +125,8 @@ public class GameView  extends JFrame {
         nameInput.setPreferredSize(new Dimension(50, 20));
 
         ButtonGroup typeGroup = new ButtonGroup();
+        gameTypeTwo = (JRadioButton) findViewById(R.id.rb)
+        gameTypeTwo.
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
 
@@ -182,9 +185,9 @@ public class GameView  extends JFrame {
 
             }
             if(gameTypeOne.isSelected()){
-                this.ai = true;
-            } else if(gameTypeTwo.isSelected()){
                 this.ai = false;
+            } else if(gameTypeTwo.isSelected()){
+                this.ai = true;
             }
         });
     }
@@ -211,7 +214,7 @@ public class GameView  extends JFrame {
         modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
 
         sendCommand("login", name);
-        sendCommand("subscribe", gameValue);
+//        sendCommand("subscribe", gameValue);
     }
 
     // Sets the rules for a component destined for a GridBagLayout

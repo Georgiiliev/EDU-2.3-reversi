@@ -33,21 +33,26 @@ public class ReversiAI implements Runnable{
 
             moveController.clientMove(row, column);
         } else {
-            this.gameStatus = false;
+            this.gameStatus = false; // game is gestopt
         }
     }
 
     @Override
     public void run() {
         try {
-            Thread.sleep(4000);
+            Thread.sleep(200);
         } catch(InterruptedException e){
             e.printStackTrace();
         }
         while (gameStatus){ // thread moet altijd blijven leven wanneer er mogelijkheden zijn
+            try {
+                Thread.sleep(500);
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
             while (moveController.getAIStatus()){ // als de AI enabled is dan mag hij dingen doen.
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 }
