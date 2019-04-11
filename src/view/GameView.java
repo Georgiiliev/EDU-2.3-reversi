@@ -127,8 +127,6 @@ public class GameView  extends JFrame {
         nameInput.setPreferredSize(new Dimension(50, 20));
 
         ButtonGroup typeGroup = new ButtonGroup();
-        gameTypeTwo = (JRadioButton) findViewById(R.id.rb)
-        gameTypeTwo.
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
 
