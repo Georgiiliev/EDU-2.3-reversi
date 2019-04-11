@@ -70,13 +70,16 @@ public class GameView  extends JFrame {
 
     }
 
-    private void drawTicTacToe(BoardView b){
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
+    public void drawTicTacToe(){
+        boardView = new BoardView(3, stateHandler, this);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
     }
 
-    private void drawReversi(BoardView b) {
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
+    public void drawReversi() {
+        boardView = new BoardView(8, stateHandler, this);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
     }
+
 
     private void drawConsole() {
         JPanel console = new JPanel();
@@ -159,7 +162,7 @@ public class GameView  extends JFrame {
                 if(boardView != null){
                     GUI.remove(boardView);
                 }
-                drawTicTacToe(boardView = new BoardView(3, stateHandler, this));
+                drawTicTacToe();
                 GUI.revalidate();
                 GUI.repaint();
             }else if(gameTwo.isSelected()){
@@ -169,7 +172,7 @@ public class GameView  extends JFrame {
                 if(boardView != null){
                     GUI.remove(boardView);
                 }
-                drawReversi(boardView = new BoardView(8, stateHandler, this));
+                drawReversi();
                 GUI.revalidate();
                 GUI.repaint();
             } else{
@@ -250,6 +253,11 @@ public class GameView  extends JFrame {
             popUp.dispose();
             boardView.setVisible(false);
         });
+    }
+
+    public void acceptChallenge(String challengeNumber, String game){
+
+            sendCommand("challenge accept", challengeNumber);
     }
 
 
