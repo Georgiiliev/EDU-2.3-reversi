@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Random;
 
 public class ReversiAI implements Runnable{
-    private boolean statusAI;
     private MoveController moveController;
     private StateHandler stateHandler;
+    private boolean gameStatus;
 
     public ReversiAI(MoveController moveController, StateHandler stateHandler) {
-        statusAI = false;
         this.moveController = moveController;
         this.stateHandler = stateHandler;
+        this.gameStatus = true;
     }
 
     private void doRandomMove(){
@@ -33,35 +33,25 @@ public class ReversiAI implements Runnable{
 
             moveController.clientMove(row, column);
         } else {
-            statusAI = false;
+            this.gameStatus = false;
         }
-    }
-
-    public void disableAI(){
-        statusAI = false;
-    }
-    public void enableAI(){
-        statusAI = true;
     }
 
     @Override
     public void run() {
         try {
             Thread.sleep(4000);
-        }
-        catch(InterruptedException e){
+        } catch(InterruptedException e){
             e.printStackTrace();
         }
-        while (true){ // thread moet altijd blijven leven
-            while (statusAI){ // als de AI enabled is dan mag hij dingen doen.
+        while (gameStatus){ // thread moet altijd blijven leven wanneer er mogelijkheden zijn
+            while (moveController.getAIStatus()){ // als de AI enabled is dan mag hij dingen doen.
                 try {
                     Thread.sleep(500);
-                }
-                catch(InterruptedException e){
+                } catch(InterruptedException e){
                     e.printStackTrace();
                 }
                 if (stateHandler.getGameState() == stateHandler.getClientMove()){
-
                     doRandomMove();
                 }
             }

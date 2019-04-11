@@ -74,33 +74,9 @@ public class BoardView extends JPanel {
             moveController = MoveController.getMoveController();
 
             if(moveController != null){
-                if (moveController.clientMove(row, column)){
-//                    MovableObjectCircle c = new MovableObjectCircle();
-//                    btn.setOpaque(false);
-//                    btn.setBackground(Color.black);
-//                    btn.setIcon(c);
-//                    System.out.println("column: " + row + ", row: " + column);
-
-//                    positieOmzetten(gameView.getGameValue(), row, column);
-                }
+                moveController.clientMove(row, column);
             }
         }
-    }
-
-    public void positieOmzetten(String type, int row, int column) {
-        int size = 0;
-        if(type == "Reversi"){
-            size = 8;
-        } else if(type == "Tic-tac-toe"){
-            size = 3;
-        }
-
-        int positie;
-
-        int resultaat = size * row;
-        positie = resultaat + column;
-
-        gameView.sendCommand("move", Integer.toString(positie));
     }
 
     public BoardView getBoardView(){
