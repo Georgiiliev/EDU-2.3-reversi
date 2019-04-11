@@ -42,6 +42,7 @@ public class GameView  extends JFrame {
 
 
     public GameView(StateHandler stateHandler, ServerConnection serverConnection){
+        this.ai = false;
         this.gameView = this;
         this.serverConnection = serverConnection;
         this.stateHandler = stateHandler;
@@ -184,9 +185,9 @@ public class GameView  extends JFrame {
 //
 //            }
             if(gameTypeOne.isSelected()){
-                this.ai = true;
-            } else if(gameTypeTwo.isSelected()){
                 this.ai = false;
+            } else if(gameTypeTwo.isSelected()){
+                this.ai = true;
             }
         });
     }
