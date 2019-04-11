@@ -83,7 +83,18 @@ public class BoardView extends JPanel {
         return boardView;
     }
 
+    public void clearIcon(){
+        for (int row = 0; row < 8; row++){
+            for (int column = 0; column < 8; column++){
+                JButton button = this.button[row][column];
+                Icon iconType = button.getIcon();
+                if (iconType instanceof SquareObject)
+                    button.setIcon(new NottingObject());
+            }
+        }
+    }
     public void printIcon(int x, int y, String i) {
+
         JButton button = this.button[x][y];
         if (i.equals("O")) {
             button.setIcon(new CircleObject(Color.black, "empty"));
