@@ -36,6 +36,7 @@ public class GameView  extends JFrame {
     private StateHandler stateHandler;
     private GameView gameView;
     private String[] players;
+    private boolean ai;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -182,7 +183,15 @@ public class GameView  extends JFrame {
                 modelConsole.addElement(error);
 
             }
+            if(gameTypeOne.isSelected()){
+                this.ai = true;
+            } else if(gameTypeTwo.isSelected()){
+                this.ai = false;
+            }
         });
+    }
+    public boolean getAI(){
+        return ai;
     }
 
     private void submitAction() {
