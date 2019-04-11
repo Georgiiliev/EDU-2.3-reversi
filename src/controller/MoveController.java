@@ -30,9 +30,10 @@ public class MoveController {
         if (size == 8) { // Als het spel reversi is dan:
             drawMiddle();
 
-//            ReversiAI reversiAI = new ReversiAI(this, this.stateHandler);
-//            Thread thread = new Thread(reversiAI);
-//            thread.start();
+            ReversiAI reversiAI = new ReversiAI(this, this.stateHandler);
+            Thread thread = new Thread(reversiAI);
+            thread.start();
+            reversiAI.enableAI();
         }
     }
 
@@ -188,7 +189,8 @@ public class MoveController {
 
     private void setSymbol (boolean firstToStart){
         if (firstToStart){
-            clientSymbol = 'O'; serverSymbol = 'X';
+            clientSymbol = 'O';
+            serverSymbol = 'X';
         }  else {
             clientSymbol = 'X';
             serverSymbol = 'O';

@@ -46,9 +46,8 @@ public class ReversiAI implements Runnable{
 
     @Override
     public void run() {
-        statusAI = true;
         try {
-            Thread.sleep(200);
+            Thread.sleep(4000);
         }
         catch(InterruptedException e){
             e.printStackTrace();
@@ -56,7 +55,7 @@ public class ReversiAI implements Runnable{
         while (true){ // thread moet altijd blijven leven
             while (statusAI){ // als de AI enabled is dan mag hij dingen doen.
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(500);
                 }
                 catch(InterruptedException e){
                     e.printStackTrace();
