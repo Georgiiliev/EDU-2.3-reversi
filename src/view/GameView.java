@@ -130,7 +130,6 @@ public class GameView  extends JFrame {
                             gameValue = "Reversi";
                         }
                         challengePlayer(selectionValues[i], gameValue);
-                        modelConsole.addElement(selectionValues[i]);
                     }
                 }
             }
@@ -281,7 +280,13 @@ public class GameView  extends JFrame {
     }
 
     private void challengePlayer(Object playerName, String game){
-        sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
+        if(userName.equals(playerName)) {
+           modelConsole.addElement("Je kan niet jezelf uitdagen...");
+        }
+        else {
+            sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
+            modelConsole.addElement("Je hebt " + playerName + " uitgedaagd!");
+        }
     }
 
 
