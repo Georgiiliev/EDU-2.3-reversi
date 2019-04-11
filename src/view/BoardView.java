@@ -93,6 +93,8 @@ public class BoardView extends JPanel {
             button.setIcon(new CircleObject(Color.black, "fill"));
         } else if (i.equals("OW")) {
             button.setIcon(new CircleObject(Color.white, "fill"));
+        } else if (i.equals("PM")) {
+            button.setIcon(new SquareObject(Color.red, ""));
         }
     }
 }
