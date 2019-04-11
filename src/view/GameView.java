@@ -99,6 +99,17 @@ public class GameView  extends JFrame {
         JList list = new JList(playerList);
         JScrollPane scrollableList = new JScrollPane(list);
         setListPanel.add(scrollableList);
+
+        Box gameBox = Box.createVerticalBox();
+        ButtonGroup gameGroup = new ButtonGroup();
+        gameGroup.add(gameOne);
+        gameGroup.add(gameTwo);
+
+        gameBox.add(nameGame);
+        gameBox.add(Box.createRigidArea(new Dimension(20, 5)));
+        gameBox.add(gameOne);
+        gameBox.add(gameTwo);
+        gameBox.add(setListPanel);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
@@ -125,7 +136,7 @@ public class GameView  extends JFrame {
             }
         };
         list.addListSelectionListener(listSelectionListener);
-        addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        addComp(GUI, gameBox, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -136,14 +147,6 @@ public class GameView  extends JFrame {
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
 
-        ButtonGroup gameGroup = new ButtonGroup();
-        gameGroup.add(gameOne);
-        gameGroup.add(gameTwo);
-
-        box.add(nameGame);
-        box.add(Box.createRigidArea(new Dimension(20, 5)));
-        box.add(gameOne);
-        box.add(gameTwo);
 
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(nameGameType);
