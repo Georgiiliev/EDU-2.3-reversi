@@ -114,7 +114,7 @@ public class CommandHandler implements Runnable{
                             String challenger = (String) stringToHashMap(receive).get("CHALLENGER");
                             String challengeNumber = (String) stringToHashMap(receive).get("CHALLENGENUMBER");
                             String game = (String) stringToHashMap(receive).get("GAMETYPE");
-                            gameView.acceptChallenge(challengeNumber, game);
+                            gameView.challengePopUp(challenger, challengeNumber, game);
 
                         }
                     }
