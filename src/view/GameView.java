@@ -15,6 +15,7 @@ public class GameView  extends JFrame {
     private JButton submit = new JButton("Submit");
     private JButton restart = new JButton("Go back to lobby");
     private JButton accept = new JButton("Accept match");
+    private JButton challengeReceived = new JButton();
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JRadioButton gameTypeOne = new JRadioButton("Human");
@@ -35,11 +36,13 @@ public class GameView  extends JFrame {
     private StateHandler stateHandler;
     private GameView gameView;
     private String[] players;
+    private boolean ai;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
     public GameView(StateHandler stateHandler, ServerConnection serverConnection){
+        this.ai = false;
         this.gameView = this;
         this.serverConnection = serverConnection;
         this.stateHandler = stateHandler;
@@ -70,13 +73,16 @@ public class GameView  extends JFrame {
 
     }
 
-    private void drawTicTacToe(BoardView b){
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
+    public void drawTicTacToe(){
+        boardView = new BoardView(3, stateHandler, this);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
     }
 
-    private void drawReversi(BoardView b) {
-        addComp(GUI, b, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE);
+    public void drawReversi() {
+        boardView = new BoardView(8, stateHandler, this);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
     }
+
 
     private void drawConsole() {
         JPanel console = new JPanel();
@@ -93,6 +99,17 @@ public class GameView  extends JFrame {
         JList list = new JList(playerList);
         JScrollPane scrollableList = new JScrollPane(list);
         setListPanel.add(scrollableList);
+
+        Box gameBox = Box.createVerticalBox();
+        ButtonGroup gameGroup = new ButtonGroup();
+        gameGroup.add(gameOne);
+        gameGroup.add(gameTwo);
+
+        gameBox.add(nameGame);
+        gameBox.add(Box.createRigidArea(new Dimension(20, 5)));
+        gameBox.add(gameOne);
+        gameBox.add(gameTwo);
+        gameBox.add(setListPanel);
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
@@ -106,13 +123,19 @@ public class GameView  extends JFrame {
                         if (i == 0) {
                             System.out.println(" Selections: ");
                         }
-                        modelConsole.addElement(selectionValues[i]);
+                        if(gameOne.isSelected()) {
+                            gameValue = "Tic-tac-toe";
+
+                        } else if(gameTwo.isSelected()) {
+                            gameValue = "Reversi";
+                        }
+                        challengePlayer(selectionValues[i], gameValue);
                     }
                 }
             }
         };
         list.addListSelectionListener(listSelectionListener);
-        addComp(GUI, setListPanel, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        addComp(GUI, gameBox, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
     }
 
     private void drawBox(){
@@ -122,15 +145,7 @@ public class GameView  extends JFrame {
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(gameTypeOne);
         typeGroup.add(gameTypeTwo);
-
-        ButtonGroup gameGroup = new ButtonGroup();
-        gameGroup.add(gameOne);
-        gameGroup.add(gameTwo);
-
-        box.add(nameGame);
-        box.add(Box.createRigidArea(new Dimension(20, 5)));
-        box.add(gameOne);
-        box.add(gameTwo);
+        gameTypeOne.setSelected(true);
 
         box.add(Box.createRigidArea(new Dimension(20, 20)));
         box.add(nameGameType);
@@ -155,38 +170,34 @@ public class GameView  extends JFrame {
         submit.addActionListener( (e)-> {
             submitAction();
             sendCommand("get", "playerlist");
-            if(gameOne.isSelected()){
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                drawTicTacToe(boardView = new BoardView(3, stateHandler, this));
-                GUI.revalidate();
-                GUI.repaint();
-            }else if(gameTwo.isSelected()){
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                if(boardView != null){
-                    GUI.remove(boardView);
-                }
-                drawReversi(boardView = new BoardView(8, stateHandler, this));
-                GUI.revalidate();
-                GUI.repaint();
-            } else{
-                String error = "Select a game";
-                modelConsole.addElement(error);
-
+//            if(gameOne.isSelected()){
+//                if(boardView != null){
+//                    GUI.remove(boardView);
+//                }
+//                drawTicTacToe();
+//                GUI.revalidate();
+//                GUI.repaint();
+//            }else if(gameTwo.isSelected()){
+//                if(boardView != null){
+//                    GUI.remove(boardView);
+//                }
+//                drawReversi();
+//                GUI.revalidate();
+//                GUI.repaint();
+//
+//            }
+            if(gameTypeOne.isSelected()){
+                this.ai = false;
+            } else if(gameTypeTwo.isSelected()){
+                this.ai = true;
             }
         });
     }
+    public boolean getAI(){
+        return ai;
+    }
 
     private void submitAction() {
-        if(gameOne.isSelected()) {
-            gameValue = "Tic-tac-toe";
-
-        } else if(gameTwo.isSelected()) {
-            gameValue = "Reversi";
-        }
 
         // You can do some validation here before assign the text to the variable
         String name = nameInput.getText();
@@ -196,10 +207,9 @@ public class GameView  extends JFrame {
         }
         modelConsole.clear();
         modelConsole.insertElementAt("Er is ingelogt met de naam: "  + userName, 0);
-        modelConsole.insertElementAt("Jou gekozen spel is: " + gameValue, 1);
 
         sendCommand("login", name);
-        sendCommand("subscribe", gameValue);
+//        sendCommand("subscribe", gameValue);
     }
 
     // Sets the rules for a component destined for a GridBagLayout
@@ -250,6 +260,33 @@ public class GameView  extends JFrame {
             popUp.dispose();
             boardView.setVisible(false);
         });
+    }
+    public void challengePopUp(String challenger, String challengeNumber, String game){
+        String text = "You have been challenged for " + game + " by " + challenger;
+        popUp = new JFrame("Challenged!");
+        popUp.setSize(500,100);
+        challengeReceived.setText(text);
+        popUp.getContentPane().add(challengeReceived);
+        popUp.setVisible(true);
+        popUp.setLocationRelativeTo(null);
+        acceptChallenge(challengeNumber, game);
+    }
+
+    public void acceptChallenge(String challengeNumber, String game){
+        challengeReceived.addActionListener( (e)-> {
+            sendCommand("challenge accept", challengeNumber);
+            popUp.dispose();
+        });
+    }
+
+    private void challengePlayer(Object playerName, String game){
+        if(userName.equals(playerName)) {
+           modelConsole.addElement("Je kan niet jezelf uitdagen...");
+        }
+        else {
+            sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
+            modelConsole.addElement("Je hebt " + playerName + " uitgedaagd!");
+        }
     }
 
 

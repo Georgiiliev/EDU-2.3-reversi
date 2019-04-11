@@ -1,4 +1,5 @@
 package controller;
+import AI.controller.ReversiAI;
 import model.StateHandler;
 import view.BoardView;
 import view.GameView;
@@ -17,6 +18,7 @@ public class MoveController {
     private char clientSymbol;
     private char serverSymbol;
     private static GameView gameView;
+    private ReversiAI reversiAI;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
         this.moveController = this;
@@ -26,8 +28,13 @@ public class MoveController {
         setupBoard(size);
         setSymbol(firstToStart);
 
-        if (size == 8) // Als het spel reversi is dan:
+        if (size == 8) { // Als het spel reversi is dan:
             drawMiddle();
+
+            this.reversiAI = new ReversiAI(this, this.stateHandler);
+            Thread thread = new Thread(this.reversiAI);
+            thread.start();
+        }
     }
 
     public boolean clientMove(int row, int column){
@@ -41,6 +48,7 @@ public class MoveController {
                 return false;
 
         updateBoard(row, column, clientSymbol);
+        sendMoveToServer(row,column);
         return true;
     }
 
@@ -50,16 +58,26 @@ public class MoveController {
             if (size == 8)
                 reversiDoMove(row, column, serverSymbol);
             updateBoard(row, column, serverSymbol);
+            printAvalableMoves(clientSymbol);
+        }
+    }
+    private void printAvalableMoves(char player){
+        boardView.clearIcon();
+
+        List<Point> possibleMoves = getValidMoves(board, player);
+        for (int i = 0; i < possibleMoves.size(); i++) {
+            int r = possibleMoves.get(i).x;
+            int c = possibleMoves.get(i).y;
+            boardView.printIcon(r, c, "PM"); // update gameView board
         }
     }
 
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
-    public boolean reversiDoMove(int row, int column, char player){
+    private boolean reversiDoMove(int row, int column, char player){
         boolean goodMove = false;
 
         List<Point> possibleMoves = getValidMoves(board, player); // haalt nieuwe lijst op met beschikbare moves.
-        for (int i = 0; i < directions.length; i++){
-        }
+
         for (int i = 0; i < possibleMoves.size(); i++){ // doorloopt de lijst moves
             int r = possibleMoves.get(i).x;
             int c = possibleMoves.get(i).y;
@@ -72,7 +90,7 @@ public class MoveController {
         }
         return goodMove;
     }
-    private List<Point> getValidMoves(char[][] board, char player) {
+    public List<Point> getValidMoves(char[][] board, char player) {
         int i = 0;
         directions = new int[32][2];
 
@@ -99,7 +117,7 @@ public class MoveController {
         return points;
     }
 
-    public Point checkDir(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
+    private Point checkDir(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
         boolean inProgress = false;
         while (true) {
             row += dirRow;
@@ -154,7 +172,7 @@ public class MoveController {
         }
     }
 
-    public boolean inBounds(int row, int col) {
+    private boolean inBounds(int row, int col) {
         return row < size && col < size && row >= 0 && col >= 0;
     }
 
@@ -171,13 +189,26 @@ public class MoveController {
         boardView.printIcon(row, column, player); // update gameView board
     }
 
+    public char[][] getBoard() {
+        return board;
+    }
+
+    public char getClientSymbol() {
+        return clientSymbol;
+    }
+
     private void setSymbol (boolean firstToStart){
         if (firstToStart){
-            clientSymbol = 'O'; serverSymbol = 'X';
+            clientSymbol = 'O';
+            serverSymbol = 'X';
         }  else {
             clientSymbol = 'X';
             serverSymbol = 'O';
         }
+    }
+
+    public boolean getAIStatus(){
+        return gameView.getAI();
     }
 
     private void drawMiddle(){
@@ -208,6 +239,14 @@ public class MoveController {
                 System.out.print(board[r][c]);
             System.out.println();
         }
+    }
+    public void sendMoveToServer(int row, int column) {
+        int positie;
+
+        int resultaat = size * row;
+        positie = resultaat + column;
+
+        gameView.sendCommand("move", Integer.toString(positie));
     }
 
     public static MoveController getMoveController (){

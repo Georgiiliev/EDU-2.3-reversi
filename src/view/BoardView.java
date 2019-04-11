@@ -74,40 +74,27 @@ public class BoardView extends JPanel {
             moveController = MoveController.getMoveController();
 
             if(moveController != null){
-                if (moveController.clientMove(row, column)){
-//                    MovableObjectCircle c = new MovableObjectCircle();
-//                    btn.setOpaque(false);
-//                    btn.setBackground(Color.black);
-//                    btn.setIcon(c);
-//                    System.out.println("column: " + row + ", row: " + column);
-
-                    positieOmzetten(gameView.getGameValue(), row, column);
-                }
+                moveController.clientMove(row, column);
             }
         }
-    }
-
-    public void positieOmzetten(String type, int row, int column) {
-        int size = 0;
-        if(type == "Reversi"){
-            size = 8;
-        } else if(type == "Tic-tac-toe"){
-            size = 3;
-        }
-
-        int positie;
-
-        int resultaat = size * row;
-        positie = resultaat + column;
-
-        gameView.sendCommand("move", Integer.toString(positie));
     }
 
     public BoardView getBoardView(){
         return boardView;
     }
 
+    public void clearIcon(){
+        for (int row = 0; row < 8; row++){
+            for (int column = 0; column < 8; column++){
+                JButton button = this.button[row][column];
+                Icon iconType = button.getIcon();
+                if (iconType instanceof SquareObject)
+                    button.setIcon(new NottingObject());
+            }
+        }
+    }
     public void printIcon(int x, int y, String i) {
+
         JButton button = this.button[x][y];
         if (i.equals("O")) {
             button.setIcon(new CircleObject(Color.black, "empty"));
@@ -117,6 +104,8 @@ public class BoardView extends JPanel {
             button.setIcon(new CircleObject(Color.black, "fill"));
         } else if (i.equals("OW")) {
             button.setIcon(new CircleObject(Color.white, "fill"));
+        } else if (i.equals("PM")) {
+            button.setIcon(new SquareObject(Color.red, ""));
         }
     }
 }

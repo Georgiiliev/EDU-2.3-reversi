@@ -56,9 +56,11 @@ public class CommandHandler implements Runnable{
 
                             System.out.println("Er is een match gevonden!");
                             if (gameType.equals("Reversi")){
+                                gameView.drawReversi();
                                 moveController = new MoveController(8, stateHandler, start, gameView);
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
+                                gameView.drawTicTacToe();
                                 moveController = new MoveController(3, stateHandler, start,gameView);
                             }
                             stateHandler.setGameState(stateHandler.getServerMove());
@@ -108,6 +110,11 @@ public class CommandHandler implements Runnable{
                         }
 
                         else if(receive.startsWith("CHALLENGE")){
+                            receive = receive.substring(10);
+                            String challenger = (String) stringToHashMap(receive).get("CHALLENGER");
+                            String challengeNumber = (String) stringToHashMap(receive).get("CHALLENGENUMBER");
+                            String game = (String) stringToHashMap(receive).get("GAMETYPE");
+                            gameView.challengePopUp(challenger, challengeNumber, game);
 
                         }
                     }

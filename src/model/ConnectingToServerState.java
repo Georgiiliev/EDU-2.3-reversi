@@ -52,7 +52,7 @@ public class ConnectingToServerState implements I_GameState {
         ServerConnection connect = new ServerConnection(stateHandler);
 
         if (connect.connectionSucceed()) {
-            GameView gameView = new GameView(stateHandler,connect);
+            GameView gameView = new GameView(stateHandler, connect);
             CommandHandler commandHandler = new CommandHandler(connect, stateHandler, gameView);
 
             Thread thread = new Thread(commandHandler);
