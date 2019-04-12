@@ -162,7 +162,7 @@ public class GameView  extends JFrame {
 
 
     private void drawTextInput() {
-        addToConsole("Enter your name in the text box above.");
+        addToConsole("Enter your name in the text box on the left.");
         addToConsole("Then click on the Submit button.");
 
         submit.addActionListener( (e)-> {
@@ -190,7 +190,7 @@ public class GameView  extends JFrame {
         }
         modelConsole.clear();
         addToConsole("Logged in with the name: "  + userName);
-        addToConsole("To challenge an opponent, choose a game and click on your opponent's name.");
+        addToConsole("To challenge an opponent, choose a game on the right and click on your opponent's name.");
 
         sendCommand("login", name);
 //        sendCommand("subscribe", gameValue);
@@ -249,12 +249,16 @@ public class GameView  extends JFrame {
     }
 
     private void challengePlayer(Object playerName, String game){
-        if(userName.equals(playerName)) {
-            addToConsole("You cannot challenge yourself...");
+        if(userName.isEmpty()){
+            addToConsole("Log in before you challenge an opponent");
         }
-        else {
-            sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
-            addToConsole("You challenged " + playerName);
+        else{
+            if (userName.equals(playerName)) {
+                addToConsole("You cannot challenge yourself...");
+            } else {
+                sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
+                addToConsole("You challenged " + playerName);
+            }
         }
     }
 
