@@ -1,5 +1,7 @@
 package model;
 
+import view.GameView;
+
 public class GameLoseState implements I_GameState {
     private StateHandler stateHandler;
 
@@ -14,7 +16,6 @@ public class GameLoseState implements I_GameState {
 
     @Override
     public void endGameLoss() {
-        System.out.print("Game already finished");
     }
 
     @Override
@@ -23,9 +24,7 @@ public class GameLoseState implements I_GameState {
     }
 
     @Override
-    public void gameStart() {
-        System.out.print("Game already started");
-    }
+    public void gameStart(GameView gameView, String gameType) { }
 
     @Override
     public void gameIdle() {

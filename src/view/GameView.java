@@ -49,7 +49,6 @@ public class GameView  extends JFrame {
 
         this.stateHandler.setGameState(this.stateHandler.getIdle());
         this.stateHandler.gameIdle();
-
         drawGui();
     }
 
@@ -254,7 +253,7 @@ public class GameView  extends JFrame {
         }
     }
 
-    private void restartGame(){
+    public void restartGame(){
         restart.addActionListener( (e)-> {
             System.out.println("Go back to lobby");
             popUp.dispose();

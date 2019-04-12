@@ -1,7 +1,11 @@
 package model;
 
+import view.GameView;
+
 public class GameWinState implements I_GameState {
     private StateHandler stateHandler;
+    private GameView gameView;
+
     public GameWinState(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
     }
@@ -17,12 +21,10 @@ public class GameWinState implements I_GameState {
     }
 
     @Override
-    public void endGameWin() {
-        System.out.print("Game hasn't started");
-    }
+    public void endGameWin() { }
 
     @Override
-    public void gameStart() {
+    public void gameStart(GameView gameView, String gameType) {
         System.out.print("Game is starting...");
     }
 
@@ -44,5 +46,9 @@ public class GameWinState implements I_GameState {
     @Override
     public void establishConnection() {
         System.out.print("Already connected");
+    }
+
+    public void setGameView(GameView gameView){
+        this.gameView = gameView;
     }
 }

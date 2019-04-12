@@ -12,7 +12,7 @@ public class ServerConnection implements Runnable{
     private StateHandler stateHandler;
 
     private static final int port = 7789;
-    private String host = "localhost";
+    private String host = "gameserver.edu.janyksteenbeek.nl";
 
     private Socket socket;
     private Scanner in;

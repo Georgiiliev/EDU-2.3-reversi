@@ -52,7 +52,7 @@ public class ReversiAI implements Runnable{
             }
             while (moveController.getAIStatus()){ // als de AI enabled is dan mag hij dingen doen.
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(550);
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 }
