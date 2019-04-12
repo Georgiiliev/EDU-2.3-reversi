@@ -13,8 +13,6 @@ public class GameView  extends JFrame {
 
     private final JPanel GUI = new JPanel();
     private JButton submit = new JButton("Submit");
-    private JButton restart = new JButton("Go back to lobby");
-    private JButton accept = new JButton("Accept match");
     private JButton challengeReceived = new JButton();
     private JRadioButton gameOne = new JRadioButton("Tic-Tac-Toe");
     private JRadioButton gameTwo = new JRadioButton("Reversi");
@@ -235,14 +233,6 @@ public class GameView  extends JFrame {
         serverConnection.send(action,value);
     }
 
-    public void endGamePopUp(String text){
-        popUp = new JFrame(text);
-        popUp.setSize(300,100);
-        popUp.getContentPane().add(restart);
-        popUp.setVisible(true);
-        popUp.setLocationRelativeTo(null);
-        restartGame();
-    }
 
     public void setPlayerListFromServer(String[] players){
         playerList.clear();
@@ -253,13 +243,6 @@ public class GameView  extends JFrame {
         }
     }
 
-    public void restartGame(){
-        restart.addActionListener( (e)-> {
-            System.out.println("Go back to lobby");
-            popUp.dispose();
-            boardView.setVisible(false);
-        });
-    }
     public void challengePopUp(String challenger, String challengeNumber, String game){
         String text = "You have been challenged for " + game + " by " + challenger;
         popUp = new JFrame("Challenged!");
@@ -280,14 +263,23 @@ public class GameView  extends JFrame {
 
     private void challengePlayer(Object playerName, String game){
         if(userName.equals(playerName)) {
-           modelConsole.addElement("Je kan niet jezelf uitdagen...");
+            addToConsole("Je kan niet jezelf uitdagen...");
         }
         else {
             sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
-            modelConsole.addElement("Je hebt " + playerName + " uitgedaagd!");
+            addToConsole("Je hebt " + playerName + " uitgedaagd!");
         }
     }
 
+    public void addToConsole(String value){
+        modelConsole.addElement(value);
+    }
+
+    public void removeGameBoard(){
+        GUI.remove(boardView);
+        GUI.revalidate();
+        GUI.repaint();
+    }
 
     public String getGameValue(){
         return gameValue;

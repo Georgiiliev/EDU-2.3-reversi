@@ -19,6 +19,15 @@ public class CommandHandler implements Runnable{
     private int interval;
     private Timer timer;
 
+    private String opponentName = "";
+    private String opponentScore = "";
+
+    private String playerName = "";
+    private String playerScore = "";
+
+    private String comment = "";
+    private boolean start = false;
+
     public CommandHandler(ServerConnection connect, StateHandler stateHandler, GameView gameView) {
         this.gameView = gameView;
         this.connect = connect;
@@ -46,12 +55,14 @@ public class CommandHandler implements Runnable{
 
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
                             String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
+                            opponentName = (String) stringToHashMap(receive).get("OPPONENT");
 
-                            boolean start = false;
+                            start = false;
 
-                            String name = gameView.getUserName();
-                            if (name.equals(firstToStart)){
+                            playerName = gameView.getUserName();
+                            if (playerName.equals(firstToStart)){
                                 start = true;
+
                             }
 
                             System.out.println("Er is een match gevonden!");
@@ -69,6 +80,7 @@ public class CommandHandler implements Runnable{
 //                                gameView.drawTicTacToe();
                                 moveController = new MoveController(3, stateHandler, start,gameView);
                             }
+
                             stateHandler.setGameState(stateHandler.getServerMove());
                         }
 
@@ -97,27 +109,41 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
+                            fetchScore(receive);
+
+                            gameView.addToConsole("You have lost the game!");
+                            gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
+                            gameView.addToConsole("Comment: " + comment);
+
+                            gameView.removeGameBoard();
                             stateHandler.setGameState(stateHandler.getGameEndedLoss());
                             stateHandler.endGameLoss();
-                            gameView.restartGame();
-                            gameView.endGamePopUp("You have lost the game!");
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
+                            fetchScore(receive);
+
+                            gameView.addToConsole("You have won the game!");
+                            gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
+                            gameView.addToConsole("Comment: "+ comment);
+
+                            gameView.removeGameBoard();
                             stateHandler.setGameState(stateHandler.getGameEndedWin());
                             stateHandler.endGameWin();
-                            gameView.restartGame();
-                            gameView.endGamePopUp("You have won the game!");
-
                         }
 
                         else if(receive.startsWith("DRAW")){
                             // state = game ended win
+                            fetchScore(receive);
+
+                            gameView.addToConsole("You have won the game!");
+                            gameView.addToConsole("Your score: " + playerScore +" | "+opponentName+"'s score : "+opponentScore);
+                            gameView.addToConsole("Comment: "+ comment);
+
+                            gameView.removeGameBoard();
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
                             stateHandler.endGameDraw();
-                            gameView.restartGame();
-                            gameView.endGamePopUp("You have tied the game!");
                         }
 
                         else if(receive.startsWith("CHALLENGE")){
@@ -145,6 +171,18 @@ public class CommandHandler implements Runnable{
                     System.out.println("Dit is een nieuwe commando: " + receive);
                 }
             }
+        }
+    }
+
+    private void fetchScore(String receive){
+        receive = receive.substring(5);
+
+        if(start){
+            playerScore = (String) stringToHashMap(receive).get("PLAYERONESCORE");
+            opponentScore = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");
+        } else {
+            playerScore = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");
+            opponentScore = (String) stringToHashMap(receive).get("PLAYERONESCORE");
         }
     }
     private HashMap stringToHashMap(String hashMap){
