@@ -30,6 +30,7 @@ public class MoveController {
 
         if (size == 8) { // Als het spel reversi is dan:
             drawMiddle();
+            printAvalableMoves(clientSymbol);
 
             this.reversiAI = new ReversiAI(this, this.stateHandler);
             Thread thread = new Thread(this.reversiAI);
@@ -37,7 +38,7 @@ public class MoveController {
         }
     }
 
-    public boolean clientMove(int row, int column){
+    public synchronized boolean clientMove(int row, int column){
         this.boardView = gameView.getBoardView();
         if(board[row][column] != '-') // check if vakje is leeg
             return false;
@@ -49,10 +50,11 @@ public class MoveController {
 
         updateBoard(row, column, clientSymbol);
         sendMoveToServer(row,column);
+        boardView.clearIcon();
         return true;
     }
 
-    public void serverMove(int row, int column){
+    public synchronized void serverMove(int row, int column){
         this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             if (size == 8)
@@ -73,7 +75,7 @@ public class MoveController {
     }
 
     // Bron: https://www.reddit.com/r/dailyprogrammer/comments/468pvf/20160217_challenge_254_intermediate_finding_legal/
-    private boolean reversiDoMove(int row, int column, char player){
+    private synchronized boolean reversiDoMove(int row, int column, char player){
         boolean goodMove = false;
 
         List<Point> possibleMoves = getValidMoves(board, player); // haalt nieuwe lijst op met beschikbare moves.
@@ -90,7 +92,7 @@ public class MoveController {
         }
         return goodMove;
     }
-    public List<Point> getValidMoves(char[][] board, char player) {
+    public synchronized List<Point> getValidMoves(char[][] board, char player) {
         int i = 0;
         directions = new int[32][2];
 
@@ -176,7 +178,7 @@ public class MoveController {
         return row < size && col < size && row >= 0 && col >= 0;
     }
 
-    public void updateBoard(int row, int column, char type){
+    public synchronized void updateBoard(int row, int column, char type){
         board[row][column] = type;                              // update local board
         this.boardView = gameView.getBoardView();               // get current board
         String player = String.valueOf(type);
@@ -189,7 +191,7 @@ public class MoveController {
         boardView.printIcon(row, column, player); // update gameView board
     }
 
-    public char[][] getBoard() {
+    public synchronized char[][] getBoard() {
         return board;
     }
 

@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import connection.ServerConnection;
 import model.StateHandler;
 import view.GameView;
@@ -30,6 +31,7 @@ public class CommandHandler implements Runnable{
 
     public void start(){
         while (true){
+
             while (connect.hasNext()){
                 String receive = connect.receive();
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
@@ -46,6 +48,7 @@ public class CommandHandler implements Runnable{
 
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
                             String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
+
 
                             boolean start = false;
 
@@ -68,6 +71,7 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
                             receive = receive.substring(5);
+                            System.out.println(receive);
                             HashMap hashMap = stringToHashMap(receive);
 
                             String name = gameView.getUserName();
@@ -93,12 +97,14 @@ public class CommandHandler implements Runnable{
                             // state = game ended loss
                             stateHandler.setGameState(stateHandler.getGameEndedLoss());
                             gameView.endGamePopUp("You have lost the game!");
+                            System.out.println(receive);
                         }
 
                         else if(receive.startsWith("WIN")){
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedWin());
                             gameView.endGamePopUp("You have won the game!");
+                            System.out.println(receive);
 
                         }
 
@@ -106,7 +112,7 @@ public class CommandHandler implements Runnable{
                             // state = game ended win
                             stateHandler.setGameState(stateHandler.getGameEndedDraw());
                             gameView.endGamePopUp("You have tied the game!");
-
+                            System.out.println(receive);
                         }
 
                         else if(receive.startsWith("CHALLENGE")){
