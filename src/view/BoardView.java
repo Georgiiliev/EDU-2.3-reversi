@@ -89,7 +89,7 @@ public class BoardView extends JPanel {
                 JButton button = this.button[row][column];
                 Icon iconType = button.getIcon();
                 if (iconType instanceof SquareObject)
-                    button.setIcon(new NottingObject());
+                    button.setIcon(null);
             }
         }
     }

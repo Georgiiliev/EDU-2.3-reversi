@@ -27,7 +27,7 @@ public class ConnectingToServerState implements I_GameState {
     }
 
     @Override
-    public void gameStart() {
+    public void gameStart(GameView gameView, String gameType) {
         stateHandler.setGameState(stateHandler.getGameStarted());
     }
 

@@ -1,7 +1,11 @@
 package model;
 
+import view.GameView;
+
 public class GameStartedState implements I_GameState {
     private StateHandler stateHandler;
+    private GameView gameView;
+    private String gameType;
 
     public GameStartedState(StateHandler stateHandler) {
         this.stateHandler = stateHandler;
@@ -23,8 +27,12 @@ public class GameStartedState implements I_GameState {
     }
 
     @Override
-    public void gameStart() {
-        System.out.print("Game already started");
+    public void gameStart(GameView gameView, String gameType) {
+        if(gameType.equals("Reversi")){
+            gameView.drawReversi();
+        } else if(gameType.equals("Tic-tac-Toe")){
+            gameView.drawTicTacToe();
+        }
     }
 
     @Override
@@ -45,5 +53,13 @@ public class GameStartedState implements I_GameState {
     @Override
     public void establishConnection() {
         System.out.print("Already connected");
+    }
+
+    public void setGameView(GameView gameView){
+        this.gameView = gameView;
+    }
+
+    public void setGameType(String gameType){
+        this.gameType = gameType;
     }
 }

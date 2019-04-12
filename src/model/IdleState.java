@@ -1,5 +1,7 @@
 package model;
 
+import view.GameView;
+
 public class IdleState implements I_GameState {
     private StateHandler stateHandler;
 
@@ -23,7 +25,7 @@ public class IdleState implements I_GameState {
     }
 
     @Override
-    public void gameStart() {
+    public void gameStart(GameView gameView, String gameType) {
         System.out.print("Game already started");
     }
 

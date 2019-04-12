@@ -1,5 +1,7 @@
 package model;
 
+import view.GameView;
+
 public class StateHandler {
     private I_GameState clientMove;
     private I_GameState serverMove;
@@ -26,7 +28,9 @@ public class StateHandler {
     public void endGameDraw() { gameState.endGameDraw(); }
     public void endGameLoss() { gameState.endGameLoss(); }
     public void endGameWin() { gameState.endGameWin(); }
-    public void gameStart() { gameState.gameStart(); }
+    public void gameStart(GameView gameView, String gameType) {
+        gameState.gameStart(gameView, gameType);
+    }
     public void gameIdle() { gameState.gameIdle(); }
     public void waitForMoveServer() { gameState.moveServer(); }
     public void waitForMoveClient() { gameState.moveClient(); }

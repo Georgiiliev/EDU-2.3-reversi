@@ -1,5 +1,7 @@
 package model;
 
+import view.GameView;
+
 public class ClientMoveState implements I_GameState {
     private StateHandler stateHandler;
     public ClientMoveState(StateHandler stateHandler) {
@@ -8,21 +10,21 @@ public class ClientMoveState implements I_GameState {
 
     @Override
     public void endGameDraw() {
-        stateHandler.setGameState(stateHandler.getGameEndedDraw());
+        //stateHandler.setGameState(stateHandler.getGameEndedDraw());
     }
 
     @Override
     public void endGameLoss() {
-        stateHandler.setGameState(stateHandler.getGameEndedLoss());
+        //stateHandler.setGameState(stateHandler.getGameEndedLoss());
     }
 
     @Override
     public void endGameWin() {
-        stateHandler.setGameState(stateHandler.getGameEndedWin());
+        //stateHandler.setGameState(stateHandler.getGameEndedWin());
     }
 
     @Override
-    public void gameStart() {
+    public void gameStart(GameView gameView, String gameType) {
         System.out.print("Game already started");
     }
 
