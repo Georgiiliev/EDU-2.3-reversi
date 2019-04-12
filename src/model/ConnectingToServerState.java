@@ -49,6 +49,7 @@ public class ConnectingToServerState implements I_GameState {
     @Override
     public void establishConnection() {
         System.out.println("Connecting to the server...");
+
         ServerConnection connect = new ServerConnection(stateHandler);
 
         if (connect.connectionSucceed()) {
