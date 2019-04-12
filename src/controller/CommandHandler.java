@@ -39,6 +39,7 @@ public class CommandHandler implements Runnable{
 
     public void start(){
         while (true){
+
             while (connect.hasNext()){
                 String receive = connect.receive();
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
@@ -56,9 +57,7 @@ public class CommandHandler implements Runnable{
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
                             String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
                             opponentName = (String) stringToHashMap(receive).get("OPPONENT");
-
                             start = false;
-
                             playerName = gameView.getUserName();
                             if (playerName.equals(firstToStart)){
                                 start = true;
@@ -86,6 +85,7 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
                             receive = receive.substring(5);
+                            System.out.println(receive);
                             HashMap hashMap = stringToHashMap(receive);
 
                             String name = gameView.getUserName();
