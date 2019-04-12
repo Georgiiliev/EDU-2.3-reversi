@@ -122,11 +122,13 @@ public class GameView  extends JFrame {
                         }
                         if(gameOne.isSelected()) {
                             gameValue = "Tic-tac-toe";
-
+                            challengePlayer(selectionValues[i], gameValue);
                         } else if(gameTwo.isSelected()) {
                             gameValue = "Reversi";
+                            challengePlayer(selectionValues[i], gameValue);
+                        } else{
+                            addToConsole("Select a game to challenge an opponent.");
                         }
-                        challengePlayer(selectionValues[i], gameValue);
                     }
                 }
             }
@@ -160,29 +162,13 @@ public class GameView  extends JFrame {
 
 
     private void drawTextInput() {
-        modelConsole.addElement("Geef je naam op in het text vak hierboven.");
-        modelConsole.addElement("Selecteer het spel aan dat je wilt spelen.");
-        modelConsole.addElement("Klik vervolgens op de knop Submit.");
+        addToConsole("Enter your name in the text box above.");
+        addToConsole("Then click on the Submit button.");
 
         submit.addActionListener( (e)-> {
             submitAction();
             sendCommand("get", "playerlist");
-//            if(gameOne.isSelected()){
-//                if(boardView != null){
-//                    GUI.remove(boardView);
-//                }
-//                drawTicTacToe();
-//                GUI.revalidate();
-//                GUI.repaint();
-//            }else if(gameTwo.isSelected()){
-//                if(boardView != null){
-//                    GUI.remove(boardView);
-//                }
-//                drawReversi();
-//                GUI.revalidate();
-//                GUI.repaint();
-//
-//            }
+
             if(gameTypeOne.isSelected()){
                 this.ai = false;
             } else if(gameTypeTwo.isSelected()){
@@ -203,7 +189,8 @@ public class GameView  extends JFrame {
             userName = name;
         }
         modelConsole.clear();
-        modelConsole.insertElementAt("Er is ingelogt met de naam: "  + userName, 0);
+        addToConsole("Logged in with the name: "  + userName);
+        addToConsole("To challenge an opponent, choose a game and click on your opponent's name.");
 
         sendCommand("login", name);
 //        sendCommand("subscribe", gameValue);
@@ -263,11 +250,11 @@ public class GameView  extends JFrame {
 
     private void challengePlayer(Object playerName, String game){
         if(userName.equals(playerName)) {
-            addToConsole("Je kan niet jezelf uitdagen...");
+            addToConsole("You cannot challenge yourself...");
         }
         else {
             sendCommand("challenge", "\"" + playerName + "\" \"" + game + "\"");
-            addToConsole("Je hebt " + playerName + " uitgedaagd!");
+            addToConsole("You challenged " + playerName);
         }
     }
 
