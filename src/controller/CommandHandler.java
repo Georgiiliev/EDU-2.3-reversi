@@ -59,24 +59,21 @@ public class CommandHandler implements Runnable{
                             opponentName = (String) stringToHashMap(receive).get("OPPONENT");
                             start = false;
                             playerName = gameView.getUserName();
+                            gameView.addToConsole("Your opponent is " + opponentName);
                             if (playerName.equals(firstToStart)){
                                 start = true;
 
                             }
 
-                            System.out.println("Er is een match gevonden!");
+                            System.out.println("A match has been found!");
                             if (gameType.equals("Reversi")){
                                 stateHandler.setGameState(stateHandler.getGameStarted());
                                 stateHandler.gameStart(gameView, gameType);
-
-//                                gameView.drawReversi();
                                 moveController = new MoveController(8, stateHandler, start, gameView);
                             }
                             else if ( gameType.equals("Tic-tac-toe")){
                                 stateHandler.setGameState(stateHandler.getGameStarted());
                                 stateHandler.gameStart(gameView, gameType);
-
-//                                gameView.drawTicTacToe();
                                 moveController = new MoveController(3, stateHandler, start,gameView);
                             }
 
@@ -85,7 +82,6 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
                             receive = receive.substring(5);
-                            System.out.println(receive);
                             HashMap hashMap = stringToHashMap(receive);
 
                             String name = gameView.getUserName();
@@ -164,11 +160,11 @@ public class CommandHandler implements Runnable{
                 }
 
                 else if (receive.startsWith("ERR")){ // heeft GEEN gevolgen op het spel
-                    System.out.println("Error gevonden: " + receive.substring(4));
+                    System.out.println("Error found: " + receive.substring(4));
                 }
 
                 else{
-                    System.out.println("Dit is een nieuwe commando: " + receive);
+                    System.out.println("This is a new command: " + receive);
                 }
             }
         }
