@@ -172,6 +172,14 @@ public class GameView  extends JFrame {
                 this.ai = true;
             }
         });
+
+        gameTypeOne.addActionListener( (e)-> {
+            this.ai = false;
+        });
+
+        gameTypeTwo.addActionListener( (e)-> {
+            this.ai = true;
+        });
     }
     public boolean getAI(){
         return ai;
