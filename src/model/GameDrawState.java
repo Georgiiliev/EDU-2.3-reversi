@@ -1,5 +1,6 @@
 package model;
 
+import AI.controller.ReversiAI;
 import view.GameView;
 
 public class GameDrawState implements I_GameState {
@@ -11,7 +12,7 @@ public class GameDrawState implements I_GameState {
 
     @Override
     public void endGameDraw() {
-        System.out.print("Game already finished");
+        ReversiAI.disableThread();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package model;
 
+import AI.controller.ReversiAI;
 import view.GameView;
 
 public class GameLoseState implements I_GameState {
@@ -16,6 +17,7 @@ public class GameLoseState implements I_GameState {
 
     @Override
     public void endGameLoss() {
+        ReversiAI.disableThread();
     }
 
     @Override

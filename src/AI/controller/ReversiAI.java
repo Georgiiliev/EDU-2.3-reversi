@@ -10,7 +10,7 @@ import java.util.Random;
 public class ReversiAI implements Runnable{
     private MoveController moveController;
     private StateHandler stateHandler;
-    private boolean gameStatus;
+    private static boolean gameStatus;
 
     public ReversiAI(MoveController moveController, StateHandler stateHandler) {
         this.moveController = moveController;
@@ -22,18 +22,6 @@ public class ReversiAI implements Runnable{
         char[][] board = moveController.getBoard();
         char clientSymbol = moveController.getClientSymbol();
         List<Point> possibleMoves = moveController.getValidMoves(board, clientSymbol);
-//        int i = 0;
-//        while (possibleMoves.size() == 0){
-//            possibleMoves = moveController.getValidMoves2(board, clientSymbol);
-//            i++;
-//            System.out.println(i);
-//            try {
-//                Thread.sleep(10000);
-//            } catch(InterruptedException e){
-//                e.printStackTrace();
-//            }
-//        }
-//        System.out.printf("%d legal moves for %c%n", possibleMoves.size(), clientSymbol);
 
         Random randomGenerator = new Random();
         if (possibleMoves.size() != 0){
@@ -47,37 +35,27 @@ public class ReversiAI implements Runnable{
             this.gameStatus = false; // game is gestopt
         }
     }
+    public static void disableThread(){
+        gameStatus = false;
+    }
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(200);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        while (gameStatus ){ // thread moet altijd blijven leven wanneer er mogelijkheden zijn
+        while (gameStatus){ // thread moet altijd blijven leven wanneer er mogelijkheden zijn
             try {
                 Thread.sleep(50);
             } catch(InterruptedException e){
                 e.printStackTrace();
             }
-            if (moveController.canWeMove()){
+            if (moveController.getAIStatus()){ // als de AI enabled is dan mag hij dingen doen.
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 }
-                if (moveController.getAIStatus()){ // als de AI enabled is dan mag hij dingen doen.
-//                try {
-//                    Thread.sleep(100);
-//                } catch(InterruptedException e){
-//                    e.printStackTrace();
-//                }
-                    if (stateHandler.getGameState() == stateHandler.getClientMove()){
-                        doRandomMove();
-                    }
+                if (stateHandler.getGameState() == stateHandler.getClientMove()){
+                    doRandomMove();
                 }
-
             }
         }
     }

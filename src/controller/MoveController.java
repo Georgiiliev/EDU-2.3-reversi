@@ -21,7 +21,6 @@ public class MoveController {
     private char serverSymbol;
     private static GameView gameView;
     private ReversiAI reversiAI;
-    private boolean move = false;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
         this.moveController = this;
@@ -35,19 +34,14 @@ public class MoveController {
             drawMiddle();
             if (firstToStart){
                 printAvalableMoves(clientSymbol);
-                move = true;
             }
             this.reversiAI = new ReversiAI(this, this.stateHandler);
             Thread thread = new Thread(this.reversiAI);
             thread.start();
         }
     }
-    public boolean canWeMove(){
-        return move;
-    }
 
     public synchronized boolean clientMove(int row, int column){
-        move = false;
         this.boardView = gameView.getBoardView();
         if(board[row][column] != '-') // check if vakje is leeg
             return false;
@@ -60,6 +54,7 @@ public class MoveController {
         updateBoard(row, column, clientSymbol);
         sendMoveToServer(row,column);
         boardView.clearIcon();
+        stateHandler.setGameState(stateHandler.getServerMove());
         return true;
     }
 
@@ -71,7 +66,6 @@ public class MoveController {
             }
             updateBoard(row, column, serverSymbol);
             printAvalableMoves(clientSymbol);
-            move = true;
         }
     }
     private void printAvalableMoves(char player){
@@ -98,8 +92,6 @@ public class MoveController {
                 reversiUpdate(row, column, player, directions[i][0], directions[i][1]);
                 goodMove = true;
             }
-//            board[r][c] = '*';
-//            System.out.println("X=" + possibleMoves.get(i).x + " Y=" + possibleMoves.get(i).y);
         }
         return goodMove;
     }
@@ -225,12 +217,6 @@ public class MoveController {
     }
 
     private void drawMiddle(){
-        try {
-            Thread.sleep(100);
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
         updateBoard(3, 3, 'X');
         updateBoard(4, 4, 'X');
         updateBoard(3, 4, 'O');
@@ -264,57 +250,5 @@ public class MoveController {
 
     public static MoveController getMoveController (){
         return moveController;
-    }
-    public synchronized List<Point> getValidMoves2(char[][] board, char player) {
-        int i = 0;
-        directions = new int[32][2];
-
-        List<Point> points = new ArrayList<>();
-        int[][] dirs = new int[][] {
-                new int[] {0, 1}, new int[] {1, 1}, new int[] {1, 0}, new int[] {1, -1},
-                new int[] {0, -1}, new int[] {-1, -1}, new int[] {-1, 0}, new int[] {-1, 1}
-        };
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                if (board[r][c] != player) // als vakje tegenstander is dan:
-                    continue;           // deze zorgt dat hij stopt en verder met vorige for loop gaat
-                for (int[] dir : dirs) {
-                    dir[0] *= -1;
-                    dir[1] *= -1;
-                    Point p = checkDir2(board, player, r, c, dir[0], dir[1]);
-//                    System.out.println("Row=" + r + " Column=" + c + " dir0=" +dir[0]+ " dir1=" + dir[1]);
-                    if (p != null) {
-                        System.out.println("move gevonden");
-                        points.add(p);
-                        directions[i][0] = dir[0];
-                        directions[i][1] = dir[1];
-                        i++;
-                    }
-                }
-            }
-        }
-        return points;
-    }
-
-    private synchronized Point checkDir2(char[][] board, char player, int row, int column, int dirRow, int dirColumn) {
-        boolean inProgress = false;
-        while (true) {
-            row += dirRow;
-            column += dirColumn;
-            if (!inBounds(row, column))
-                return null;
-            if (!inProgress) {
-                if (board[row][column] == '-' || board[row][column] == player)
-                    return null;
-                inProgress = true;
-            }
-            else {
-//                System.out.println("Row=" + row + " Column=" + column + " dir0=" +dirRow+ " dir1=" + dirColumn);
-                if (board[row][column] == player)
-                    return null;
-                else if (board[row][column] == '-')
-                    return new Point(row, column);
-            }
-        }
     }
 }

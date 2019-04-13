@@ -117,9 +117,6 @@ public class GameView  extends JFrame {
                     int selections[] = list.getSelectedIndices();
                     Object selectionValues[] = list.getSelectedValues();
                     for (int i = 0, n = selections.length; i < n; i++) {
-                        if (i == 0) {
-                            System.out.println(" Selections: ");
-                        }
                         if(gameOne.isSelected()) {
                             gameValue = "Tic-tac-toe";
                             challengePlayer(selectionValues[i], gameValue);
@@ -193,7 +190,6 @@ public class GameView  extends JFrame {
         addToConsole("To challenge an opponent, choose a game on the right and click on your opponent's name.");
 
         sendCommand("login", name);
-//        sendCommand("subscribe", gameValue);
     }
 
     // Sets the rules for a component destined for a GridBagLayout

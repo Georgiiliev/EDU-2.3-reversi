@@ -49,7 +49,7 @@ public class StateHandler {
         return gameState;
     }
 
-    public void setGameState(I_GameState gameState) {
+    public synchronized void setGameState(I_GameState gameState) {
         this.gameState = gameState;
     }
 }

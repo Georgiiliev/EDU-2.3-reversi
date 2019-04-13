@@ -91,15 +91,16 @@ public class CommandHandler implements Runnable{
                                 int[] a = serverIntToLocal(move); // zet move naar onze spel
 
                                 moveController.serverMove(a[0], a[1]);
-                                stateHandler.setGameState(stateHandler.getClientMove());
-                            }
-                            else{
-                                stateHandler.setGameState(stateHandler.getServerMove());
                             }
                         }
 
                         else if(receive.startsWith("YOURTURN")){
-                            // state = doe een zet.
+                            // sleep om laatst binnen gekomen move eerst te verwerken.
+                            try {
+                                Thread.sleep(100);
+                            } catch(InterruptedException e){
+                                e.printStackTrace();
+                            }
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
