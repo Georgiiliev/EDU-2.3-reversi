@@ -19,8 +19,10 @@ public class GameView  extends JFrame {
     private JRadioButton gameTypeOne = new JRadioButton("Human");
     private JRadioButton gameTypeTwo = new JRadioButton("AI");
     private JTextField nameInput = new JTextField();
-    private JLabel nameGame = new JLabel("Game");
-    private JLabel nameGameType = new JLabel("Gametype");
+    private JLabel nameGame = new JLabel("GameType");
+    private JLabel nameGameType = new JLabel("GameMode");
+    private JLabel playerOne = new JLabel("PLAYERNAME1");
+    private JLabel playerTwo = new JLabel("PLAYERNAME2");
     private JFrame popUp;
 
     private DefaultListModel playerList = new DefaultListModel();
@@ -35,22 +37,19 @@ public class GameView  extends JFrame {
     private String[] players;
     private boolean ai;
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
 
     public GameView(StateHandler stateHandler, ServerConnection serverConnection){
         this.ai = false;
         this.gameView = this;
         this.serverConnection = serverConnection;
         this.stateHandler = stateHandler;
-
         this.stateHandler.setGameState(this.stateHandler.getIdle());
         this.stateHandler.gameIdle();
         drawGui();
     }
 
     public void drawGui(){
-        this.setSize(screenSize.width, screenSize.height);
+        this.setSize(1000, 750);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Game Engine - Groep 4");
@@ -66,17 +65,16 @@ public class GameView  extends JFrame {
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
-
     }
 
     public void drawTicTacToe(){
         boardView = new BoardView(3, stateHandler, this);
-        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, 5);
     }
 
     public void drawReversi() {
         boardView = new BoardView(8, stateHandler, this);
-        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, 50);
     }
 
 
@@ -85,9 +83,10 @@ public class GameView  extends JFrame {
         JList consoleList = new JList(modelConsole);
         JScrollPane scrollableConsoleList = new JScrollPane(consoleList);
         console.add(scrollableConsoleList);
-        consoleList.setFixedCellWidth(900);
+        console.add(Box.createRigidArea(new Dimension(15, 0)));
+        consoleList.setFixedCellWidth(740);
         consoleList.setFixedCellHeight(20);
-        addComp(GUI, console, 0, 0, 1, 1, GridBagConstraints.SOUTH, GridBagConstraints.NONE);
+        addComp(GUI, console, 0, 0, 1, 1, GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 5);
     }
 
     private void drawPlayerList() {
@@ -98,14 +97,23 @@ public class GameView  extends JFrame {
 
         Box gameBox = Box.createVerticalBox();
         ButtonGroup gameGroup = new ButtonGroup();
+        gameOne.setFont(new Font("Verdana", Font.BOLD, 14));
         gameGroup.add(gameOne);
+        gameTwo.setFont(new Font("Verdana", Font.BOLD, 14));
         gameGroup.add(gameTwo);
 
+        nameGame.setFont(new Font("Verdana", Font.BOLD, 25));
+        nameGame.setForeground(Color.darkGray);
+        gameBox.add(Box.createRigidArea(new Dimension(0, 20)));
         gameBox.add(nameGame);
-        gameBox.add(Box.createRigidArea(new Dimension(20, 5)));
+
+        gameBox.add(Box.createRigidArea(new Dimension(0, 20)));
         gameBox.add(gameOne);
         gameBox.add(gameTwo);
+
+        gameBox.add(Box.createRigidArea(new Dimension(0, 20)));
         gameBox.add(setListPanel);
+
         list.setFixedCellHeight(47);
         list.setFixedCellWidth(190);
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
@@ -130,12 +138,12 @@ public class GameView  extends JFrame {
             }
         };
         list.addListSelectionListener(listSelectionListener);
-        addComp(GUI, gameBox, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
+        addComp(GUI, gameBox, 0, 0, 1, 1, GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, 5);
     }
 
     private void drawBox(){
         Box box = Box.createVerticalBox();
-        nameInput.setPreferredSize(new Dimension(100, 20));
+        nameInput.setPreferredSize(new Dimension(0, 20));
         new GhostText(nameInput, "Enter your name..");
 
         ButtonGroup typeGroup = new ButtonGroup();
@@ -143,18 +151,33 @@ public class GameView  extends JFrame {
         typeGroup.add(gameTypeTwo);
         gameTypeOne.setSelected(true);
 
+        submit.setBackground(new Color(59, 89, 182));
+        submit.setForeground(Color.WHITE);
+        submit.setFocusPainted(false);
+        submit.setFont(new Font("Verdana", Font.BOLD, 16));
+
         box.add(Box.createRigidArea(new Dimension(20, 20)));
+
+        nameGameType.setFont(new Font("Verdana", Font.BOLD, 25));
+        nameGameType.setForeground(Color.darkGray);
         box.add(nameGameType);
-        box.add(Box.createRigidArea(new Dimension(20, 5)));
+
+        box.add(Box.createRigidArea(new Dimension(20, 20)));
+
+        gameTypeOne.setFont(new Font("Verdana", Font.BOLD, 14));
         box.add(gameTypeOne);
+
+        gameTypeTwo.setFont(new Font("Verdana", Font.BOLD, 14));
         box.add(gameTypeTwo);
 
-        box.add(Box.createRigidArea(new Dimension(20, 20)));
+        box.add(Box.createRigidArea(new Dimension(0, 20)));
         box.add(nameInput);
-        box.add(Box.createRigidArea(new Dimension(20, 20)));
+        box.add(Box.createRigidArea(new Dimension(0, 20)));
         box.add(submit);
-        addComp(GUI, box, 0,0,3,1,GridBagConstraints.WEST,GridBagConstraints.NONE);
 
+        //TODO Game status.
+
+        addComp(GUI, box, 0,0,1,1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 5);
     }
 
 
@@ -198,8 +221,8 @@ public class GameView  extends JFrame {
     // Sets the rules for a component destined for a GridBagLayout
     // and then adds it
 
-    private void addComp(JPanel thePanel, JComponent comp, int xPos, int yPos, int compWidth, int compHeight, int place, int stretch){
-
+    private void addComp(JPanel thePanel, JComponent comp, int xPos, int yPos, int compWidth, int compHeight,
+                         int place, int stretch, int x){
         GridBagConstraints gridConstraints = new GridBagConstraints();
 
         gridConstraints.gridx = xPos;
@@ -208,7 +231,7 @@ public class GameView  extends JFrame {
         gridConstraints.gridheight = compHeight;
         gridConstraints.weightx = 100;
         gridConstraints.weighty = 100;
-        gridConstraints.insets = new Insets(5,5,5,5);
+        gridConstraints.insets = new Insets(5, 5,5,x);
         gridConstraints.anchor = place;
         gridConstraints.fill = stretch;
 
@@ -223,6 +246,8 @@ public class GameView  extends JFrame {
     public void setPlayerListFromServer(String[] players){
         playerList.clear();
         this.players = players;
+
+
 
         for(int i = 0; i < this.players.length; i++){
             playerList.addElement(this.players[i]);
