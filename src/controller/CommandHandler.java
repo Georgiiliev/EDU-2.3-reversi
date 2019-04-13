@@ -15,20 +15,18 @@ public class CommandHandler implements Runnable{
     private StateHandler stateHandler;
     private GameView gameView;
     private MoveController moveController;
+    private String receive;
 
     private int interval;
     private Timer timer;
 
-    private String opponentName = "";
-    private String opponentScore = "";
-
-    private String playerName = "";
-    private String playerScore = "";
-
-    private String comment = "";
-    private boolean start = false;
+    private String opponentName;
+    private String playerName;
+    private boolean start;
 
     public CommandHandler(ServerConnection connect, StateHandler stateHandler, GameView gameView) {
+        opponentName = "";
+        playerName = "";
         this.gameView = gameView;
         this.connect = connect;
         this.stateHandler = stateHandler;
@@ -41,18 +39,18 @@ public class CommandHandler implements Runnable{
         while (true){
 
             while (connect.hasNext()){
-                String receive = connect.receive();
+                receive = connect.receive();
                 if (receive.startsWith("OK")){ // Ingevoerde commando is goed gegaan.
                     //Doe niets. Goed!
                 }
                 else if (receive.startsWith("SVR")){
-                    receive = receive.substring(4);
+                    removeFirstSpace(receive);
 
                     if (receive.startsWith("GAME")){
-                        receive = receive.substring(5);
+                        removeFirstSpace(receive);
 
                         if (receive.startsWith("MATCH")){ // Er is een match gestart
-                            receive = receive.substring(6);
+                            removeFirstSpace(receive);
 
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
                             String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
@@ -62,7 +60,6 @@ public class CommandHandler implements Runnable{
                             gameView.addToConsole("Your opponent is " + opponentName);
                             if (playerName.equals(firstToStart)){
                                 start = true;
-
                             }
 
                             System.out.println("A match has been found!");
@@ -81,7 +78,7 @@ public class CommandHandler implements Runnable{
                         }
 
                         else if(receive.startsWith("MOVE")){ // move is gezet door 1 van bijde spelers.
-                            receive = receive.substring(5);
+                            removeFirstSpace(receive);
                             HashMap hashMap = stringToHashMap(receive);
 
                             String name = gameView.getUserName();
@@ -106,45 +103,19 @@ public class CommandHandler implements Runnable{
 
                         else if(receive.startsWith("LOSS")){
                             // state = game ended loss
-                            fetchScore(receive);
-
-                            gameView.addToConsole("You have lost the game!");
-                            gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
-                            gameView.addToConsole("Comment: " + comment);
-
-                            gameView.removeGameBoard();
-                            stateHandler.setGameState(stateHandler.getGameEndedLoss());
-                            stateHandler.endGameLoss();
+                            fetchScore("LOST");
                         }
 
                         else if(receive.startsWith("WIN")){
-                            // state = game ended win
-                            fetchScore(receive);
-
-                            gameView.addToConsole("You have won the game!");
-                            gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
-                            gameView.addToConsole("Comment: "+ comment);
-
-                            gameView.removeGameBoard();
-                            stateHandler.setGameState(stateHandler.getGameEndedWin());
-                            stateHandler.endGameWin();
+                            fetchScore("WON");
                         }
 
                         else if(receive.startsWith("DRAW")){
-                            // state = game ended win
-                            fetchScore(receive);
-
-                            gameView.addToConsole("You have won the game!");
-                            gameView.addToConsole("Your score: " + playerScore +" | "+opponentName+"'s score : "+opponentScore);
-                            gameView.addToConsole("Comment: "+ comment);
-
-                            gameView.removeGameBoard();
-                            stateHandler.setGameState(stateHandler.getGameEndedDraw());
-                            stateHandler.endGameDraw();
+                            fetchScore("DRAW");
                         }
 
                         else if(receive.startsWith("CHALLENGE")){
-                            receive = receive.substring(10);
+                            removeFirstSpace(receive);
                             String challenger = (String) stringToHashMap(receive).get("CHALLENGER");
                             String challengeNumber = (String) stringToHashMap(receive).get("CHALLENGENUMBER");
                             String game = (String) stringToHashMap(receive).get("GAMETYPE");
@@ -153,7 +124,7 @@ public class CommandHandler implements Runnable{
                     }
 
                     else if (receive.startsWith("PLAYERLIST")){
-                        receive = receive.substring(11);
+                        removeFirstSpace(receive);
                         String[] players = stringToArray(receive);
 
                         gameView.setPlayerListFromServer(players);
@@ -161,7 +132,7 @@ public class CommandHandler implements Runnable{
                 }
 
                 else if (receive.startsWith("ERR")){ // heeft GEEN gevolgen op het spel
-                    System.out.println("Error found: " + receive.substring(4));
+                    System.out.println("Error found: " + receive);
                 }
 
                 else{
@@ -170,18 +141,42 @@ public class CommandHandler implements Runnable{
             }
         }
     }
+    private void fetchScore(String status){
+        removeFirstSpace(receive);
+        String playerScore;
+        String opponentScore;
+        System.out.println(receive);
 
-    private void fetchScore(String receive){
-        receive = receive.substring(5);
+        String playerOne = (String) stringToHashMap(receive).get("PLAYERONESCORE");
+        String playerTwo = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");
+        String comment = (String) stringToHashMap(receive).get("COMMENT");
 
         if(start){
-            playerScore = (String) stringToHashMap(receive).get("PLAYERONESCORE");
-            opponentScore = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");
+            playerScore = playerOne;
+            opponentScore = playerTwo;
         } else {
-            playerScore = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");
-            opponentScore = (String) stringToHashMap(receive).get("PLAYERONESCORE");
+            playerScore = playerTwo;
+            opponentScore = playerOne;
         }
+
+        gameView.addToConsole("");
+        if (!comment.equals("")){
+            gameView.addToConsole("Comment: "+ comment);
+        }
+        gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
+        gameView.addToConsole("You have " + status + " the game!");
+
+
+        gameView.removeGameBoard();
+        stateHandler.setGameState(stateHandler.getGameEndedLoss());
+        stateHandler.endGameLoss();
     }
+
+    private void removeFirstSpace(String string){
+        int spacePos = string.indexOf(" ");
+        receive = string.substring(spacePos + 1);
+    }
+
     private HashMap stringToHashMap(String hashMap){
         String cleanString = hashMap.replaceAll("(\\{|}|\")",""); // verwijdert rare items
         String[] nieuwMap = cleanString.split("[,|:]");

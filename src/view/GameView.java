@@ -18,10 +18,9 @@ public class GameView  extends JFrame {
     private JRadioButton gameTwo = new JRadioButton("Reversi");
     private JRadioButton gameTypeOne = new JRadioButton("Human");
     private JRadioButton gameTypeTwo = new JRadioButton("AI");
-    private JTextField nameInput = new JTextField(1);
+    private JTextField nameInput = new JTextField();
     private JLabel nameGame = new JLabel("Game");
     private JLabel nameGameType = new JLabel("Gametype");
-    private GhostText ghostText = new GhostText(nameInput, "Enter your name..");
     private JFrame popUp;
 
     private DefaultListModel playerList = new DefaultListModel();
@@ -136,7 +135,8 @@ public class GameView  extends JFrame {
 
     private void drawBox(){
         Box box = Box.createVerticalBox();
-        nameInput.setPreferredSize(new Dimension(50, 20));
+        nameInput.setPreferredSize(new Dimension(100, 20));
+        new GhostText(nameInput, "Enter your name..");
 
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(gameTypeOne);
@@ -172,15 +172,10 @@ public class GameView  extends JFrame {
                 this.ai = true;
             }
         });
-
-        gameTypeOne.addActionListener( (e)-> {
-            this.ai = false;
-        });
-
-        gameTypeTwo.addActionListener( (e)-> {
-            this.ai = true;
-        });
+        gameTypeOne.addActionListener( (e)-> this.ai = false );
+        gameTypeTwo.addActionListener( (e)-> this.ai = true );
     }
+
     public boolean getAI(){
         return ai;
     }
@@ -267,7 +262,8 @@ public class GameView  extends JFrame {
     }
 
     public void addToConsole(String value){
-        modelConsole.addElement(value);
+        modelConsole.insertElementAt(value, 0);
+        setForeground( Color.red );
     }
 
     public void removeGameBoard(){
