@@ -34,6 +34,7 @@ public class MoveController {
             drawMiddle();
             if (firstToStart){
                 printAvalableMoves(clientSymbol);
+                gameView.setTimer(9);
             }
             this.reversiAI = new ReversiAI(this, this.stateHandler);
             Thread thread = new Thread(this.reversiAI);
@@ -51,6 +52,7 @@ public class MoveController {
             if (!reversiDoMove(row, column, clientSymbol))
                 return false;
 
+        gameView.stopCounter();
         updateBoard(row, column, clientSymbol);
         sendMoveToServer(row,column);
         boardView.clearIcon();
@@ -63,9 +65,10 @@ public class MoveController {
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             if (size == 8) {
                 reversiDoMove(row, column, serverSymbol);
+                printAvalableMoves(clientSymbol);
             }
+            gameView.setTimer(9);
             updateBoard(row, column, serverSymbol);
-            printAvalableMoves(clientSymbol);
         }
     }
     private void printAvalableMoves(char player){

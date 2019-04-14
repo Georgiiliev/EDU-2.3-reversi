@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameView  extends JFrame {
 
@@ -23,6 +25,7 @@ public class GameView  extends JFrame {
     private JLabel nameGameType = new JLabel("GameMode");
     private JLabel playerOne = new JLabel("PLAYERNAME1");
     private JLabel playerTwo = new JLabel("PLAYERNAME2");
+    private JLabel counterCountDown = new JLabel("10");
     private JFrame popUp;
 
     private DefaultListModel playerList = new DefaultListModel();
@@ -30,6 +33,9 @@ public class GameView  extends JFrame {
     private BoardView boardView;
     private String gameValue;
     private String userName = "";
+
+    private int interval;
+    private Timer counterTimer;
 
     private ServerConnection serverConnection;
     private StateHandler stateHandler;
@@ -68,11 +74,13 @@ public class GameView  extends JFrame {
     }
 
     public void drawTicTacToe(){
+        drawCounter();
         boardView = new BoardView(3, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, 5);
     }
 
     public void drawReversi() {
+        drawCounter();
         boardView = new BoardView(8, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, 50);
     }
@@ -87,6 +95,40 @@ public class GameView  extends JFrame {
         consoleList.setFixedCellWidth(740);
         consoleList.setFixedCellHeight(20);
         addComp(GUI, console, 0, 0, 1, 1, GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 5);
+    }
+    private void drawCounter(){
+        Box counterBox = Box.createVerticalBox();
+        counterCountDown.setFont(new Font("Verdana", Font.BOLD, 60));
+        counterCountDown.setForeground(Color.red);
+        counterBox.add(counterCountDown);
+        counterBox.add(Box.createRigidArea(new Dimension(100, 60)));
+        addComp(GUI, counterBox, 0, 0, 1, 1, GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 5);
+    }
+    public void stopCounter(){
+        if (counterTimer != null){
+            counterTimer.cancel();
+        }
+    }
+
+    public void setTimer(int time) {
+        counterCountDown.setText(Integer.toString(10));
+        int delay = 900;
+        int period = 900;
+        counterTimer = new Timer();
+        interval = time;
+        counterTimer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                counterCountDown.setText(Integer.toString(interval));
+                setInterval(time);
+            }
+        }, delay, period);
+    }
+    private final int setInterval(int time) {
+        if (interval == 0) {
+            counterTimer.cancel();
+            // TODO hij is 0 dus doe een random move!
+        }
+        return --interval;
     }
 
     private void drawPlayerList() {
@@ -176,6 +218,11 @@ public class GameView  extends JFrame {
         box.add(submit);
 
         //TODO Game status.
+        box.add(Box.createRigidArea(new Dimension(20, 40)));
+        playerOne.setFont(new Font("Verdana", Font.BOLD, 15));
+        box.add(playerOne);
+        playerTwo.setFont(new Font("Verdana", Font.BOLD, 15));
+        box.add(playerTwo);
 
         addComp(GUI, box, 0,0,1,1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 5);
     }
