@@ -76,7 +76,7 @@ public class CommandHandler implements Runnable{
                             else if ( gameType.equals("Tic-tac-toe")){
                                 stateHandler.setGameState(stateHandler.getGameStarted());
                                 stateHandler.gameStart(gameView, gameType);
-                                moveController = new MoveController(3, stateHandler, start,gameView);
+                                moveController = new MoveController(3, stateHandler, start, gameView);
                             }
 
                             stateHandler.setGameState(stateHandler.getServerMove());
@@ -152,7 +152,6 @@ public class CommandHandler implements Runnable{
         removeFirstSpace(receive);
         String playerScore;
         String opponentScore;
-        System.out.println(receive);
 
         String playerOne = (String) stringToHashMap(receive).get("PLAYERONESCORE");
         String playerTwo = (String) stringToHashMap(receive).get("PLAYERTWOSCORE");

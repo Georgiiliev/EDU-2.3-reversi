@@ -15,9 +15,9 @@ public class BoardView extends JPanel {
     private StateHandler stateHandler;
     private GameView gameView;
     private BoardView boardView;
+    private int boardSize;
 
 
-    public int boardSize; // 8*8
     public JButton[][] button;
 
 
@@ -25,21 +25,21 @@ public class BoardView extends JPanel {
         this.boardView = this;
         this.stateHandler = stateHandler;
         this.gameView = gameView;
+        this.boardSize = newBoardSize;
 
-        boardSize = newBoardSize;
-        drawBoardView();
+        drawBoardView(newBoardSize);
     }
 
-    public void drawBoardView(){
+    public void drawBoardView(int boardSize){
         this.button = new JButton[boardSize][boardSize];
-        Dimension dims = new Dimension(64, 64);
+        Dimension dimension = new Dimension(64, 64);
         tiles.setLayout(new GridLayout(boardSize, boardSize));
 
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 JButton b = new JButton();
-                b.setPreferredSize(dims);
-                b.setMinimumSize(dims);
+                b.setPreferredSize(dimension);
+                b.setMinimumSize(dimension);
                 b.setBorder(BorderFactory.createLineBorder(Color.black));
                 b.setBackground(Color.green);
                 b.setOpaque(true);
@@ -51,15 +51,6 @@ public class BoardView extends JPanel {
             }
         }
         add(tiles);
-    }
-
-
-    public int getBoardSize(){
-        return boardSize;
-    }
-
-    public void setBoardSize(int size){
-        boardSize = size;
     }
 
     public class MyActionListener implements ActionListener {
@@ -77,10 +68,6 @@ public class BoardView extends JPanel {
                 moveController.clientMove(row, column);
             }
         }
-    }
-
-    public BoardView getBoardView(){
-        return boardView;
     }
 
     public void clearIcon(){
@@ -106,6 +93,7 @@ public class BoardView extends JPanel {
             button.setIcon(new CircleObject(Color.white, "fill"));
         } else if (i.equals("PM")) {
             button.setIcon(new SquareObject(Color.red, ""));
-        }
+        } else if (i.equals("")) {
+            button.setIcon(null);}
     }
 }

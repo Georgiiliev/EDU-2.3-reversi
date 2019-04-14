@@ -31,7 +31,7 @@ public class GameStartedState implements I_GameState {
         gameView.drawPlayers();
         if(gameType.equals("Reversi")){
             gameView.drawReversi();
-        } else if(gameType.equals("Tic-tac-Toe")){
+        } else if(gameType.equals("Tic-tac-toe")){
             gameView.drawTicTacToe();
         }
     }

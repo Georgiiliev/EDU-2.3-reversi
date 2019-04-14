@@ -76,11 +76,13 @@ public class GameView  extends JFrame {
     }
 
     public void drawTicTacToe(){
+        gameValue = "Tic-tac-toe";
         boardView = new BoardView(3, stateHandler, this);
-        addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, 5);
+        addComp(GUI, boardView, 0, 0, 0, 0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 5); // TODO set: center
     }
 
     public void drawReversi() {
+        gameValue = "Reversi";
         boardView = new BoardView(8, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, 50);
     }
@@ -126,7 +128,9 @@ public class GameView  extends JFrame {
     private final int setInterval() {
         if (interval == 0) {
             counterTimer.cancel();
-            ReversiAI.doRandomMove();
+            if (gameValue.equals("Reversi")){
+                ReversiAI.doRandomMove();
+            }
         }
         return --interval;
     }
@@ -169,6 +173,7 @@ public class GameView  extends JFrame {
                         if(gameOne.isSelected()) {
                             gameValue = "Tic-tac-toe";
                             challengePlayer(selectionValues[i], gameValue);
+                            System.out.println("Tic-tac-toe is opgeslagen !");
                         } else if(gameTwo.isSelected()) {
                             gameValue = "Reversi";
                             challengePlayer(selectionValues[i], gameValue);

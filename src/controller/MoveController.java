@@ -1,14 +1,12 @@
 package controller;
 import AI.controller.ReversiAI;
 import model.StateHandler;
-import sun.rmi.runtime.Log;
 import view.BoardView;
 import view.GameView;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MoveController {
     public static MoveController moveController;
@@ -23,6 +21,14 @@ public class MoveController {
     private ReversiAI reversiAI;
 
     public MoveController(int size, StateHandler stateHandler, boolean firstToStart, GameView gameView){
+        // wacht hier even zodat de boardview EERST geset is!
+        try {
+            Thread.sleep(50);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
+        this.boardView = gameView.getBoardView();
+
         this.moveController = this;
         this.gameView = gameView;
         this.size = size;
@@ -40,29 +46,32 @@ public class MoveController {
             Thread thread = new Thread(this.reversiAI);
             thread.start();
         }
+        else if (size == 3){
+            boardView.printIcon(0, 0, "O"); // zorgt voor direct een view als je nog niet aan de beurt bent
+            boardView.printIcon(0, 0, "");
+        }
     }
 
     public synchronized boolean clientMove(int row, int column){
-        this.boardView = gameView.getBoardView();
         if(board[row][column] != '-') // check if vakje is leeg
             return false;
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
         gameView.stopCounter();
-        if (size == 8)
+        if (size == 8) {
             if (!reversiDoMove(row, column, clientSymbol))
                 return false;
+            boardView.clearIcon();
+        }
 
 
         updateBoard(row, column, clientSymbol);
         sendMoveToServer(row,column);
-        boardView.clearIcon();
         stateHandler.setGameState(stateHandler.getServerMove());
         return true;
     }
 
     public synchronized void serverMove(int row, int column){
-        this.boardView = gameView.getBoardView();
         if (stateHandler.getGameState() == stateHandler.getServerMove()){
             if (size == 8) {
                 reversiDoMove(row, column, serverSymbol);
@@ -186,7 +195,6 @@ public class MoveController {
 
     public synchronized void updateBoard(int row, int column, char type){
         board[row][column] = type;                              // update local board
-        this.boardView = gameView.getBoardView();               // get current board
         String player = String.valueOf(type);
         if (size == 8)
             if (player.equals("X"))
