@@ -28,12 +28,12 @@ public class GameStartedState implements I_GameState {
 
     @Override
     public void gameStart(GameView gameView, String gameType) {
-        gameView.drawPlayers();
         if(gameType.equals("Reversi")){
             gameView.drawReversi();
         } else if(gameType.equals("Tic-tac-toe")){
             gameView.drawTicTacToe();
         }
+        gameView.drawPlayers();
     }
 
     @Override

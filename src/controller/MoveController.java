@@ -196,13 +196,30 @@ public class MoveController {
     public synchronized void updateBoard(int row, int column, char type){
         board[row][column] = type;                              // update local board
         String player = String.valueOf(type);
-        if (size == 8)
+        if (size == 8) {
+            countTiles();
             if (player.equals("X"))
                 player = "OW";
             else
                 player = player + "B";
+        }
 
         boardView.printIcon(row, column, player); // update gameView board
+    }
+    private void countTiles(){
+        int white = 0;
+        int black = 0;
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board.length; j++){
+                if (board[i][j] == 'X'){
+                    white++;
+                }
+                else if (board[i][j] == 'O'){
+                    black++;
+                }
+            }
+        }
+        gameView.setCountTiles(white, black);
     }
 
     public synchronized char[][] getBoard() {

@@ -34,6 +34,8 @@ public class GameView  extends JFrame {
     private BoardView boardView;
     private String gameValue;
     private String userName = "";
+    private JLabel blackTiles = new JLabel("");
+    private JLabel whiteTiles = new JLabel("");
 
     private int interval;
     private Timer counterTimer;
@@ -86,7 +88,6 @@ public class GameView  extends JFrame {
         boardView = new BoardView(8, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, 50);
     }
-
 
     private void drawConsole() {
         JPanel console = new JPanel();
@@ -232,19 +233,43 @@ public class GameView  extends JFrame {
 
         playerBox.add(Box.createRigidArea(new Dimension(0, 50)));
 
-        playerOne.setPreferredSize(new Dimension(25, 5));
-        playerTwo.setPreferredSize(new Dimension(25, 5));
+        playerOne.setPreferredSize(new Dimension(0, 5));
+        playerTwo.setPreferredSize(new Dimension(0, 5));
 
         playerOne.setFont(new Font("Verdana", Font.BOLD, 12));
         playerTwo.setFont(new Font("Verdana", Font.BOLD, 12));
 
         playerBox.add(playerOne);
-        playerBox.add(Box.createRigidArea(new Dimension(0, 40)));
+        playerBox.add(Box.createRigidArea(new Dimension(0, 20)));
         playerBox.add(playerTwo);
+
+
+        if (gameValue.equals("Reversi")){
+            playerBox.add(Box.createRigidArea(new Dimension(20, 60)));
+            whiteTiles.setText("");
+            blackTiles.setText("");
+
+            whiteTiles = new JLabel("White: 2");
+            blackTiles = new JLabel("Black: 2");
+
+//            whiteTiles.setPreferredSize(new Dimension(50, 5));
+//            blackTiles.setPreferredSize(new Dimension(50, 5));
+
+            whiteTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
+            blackTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
+
+            playerBox.add(whiteTiles);
+            playerBox.add(blackTiles);
+        }
 
         playerBox.add(Box.createRigidArea(new Dimension(0, 5)));
 
         addComp(GUI, playerBox, 0,0,1,1, GridBagConstraints.WEST, GridBagConstraints.NONE, 5);
+    }
+
+    public void setCountTiles(int whiteTiles, int blackTiles){
+        this.whiteTiles.setText("White: " + whiteTiles);
+        this.blackTiles.setText("Black: " + blackTiles);
     }
 
     public void setPLayerNames(String playerOne, String playerTwo, String gameType){
