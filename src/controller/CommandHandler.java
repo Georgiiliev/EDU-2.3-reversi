@@ -1,5 +1,6 @@
 package controller;
 
+import AI.controller.ReversiAI;
 import connection.ServerConnection;
 import model.StateHandler;
 import view.GameView;
@@ -53,16 +54,20 @@ public class CommandHandler implements Runnable{
                             removeFirstSpace(receive);
 
                             gameType = (String) stringToHashMap(receive).get("GAMETYPE");
-                            String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
                             opponentName = (String) stringToHashMap(receive).get("OPPONENT");
+                            String firstToStart = (String) stringToHashMap(receive).get("PLAYERTOMOVE");
+
                             start = false;
                             playerName = gameView.getUserName();
                             gameView.addToConsole("Your opponent is " + opponentName);
+
                             if (playerName.equals(firstToStart)){
                                 start = true;
-                            }
+                                gameView.setPLayerNames(playerName, opponentName, gameType);
+                            } else
+                                gameView.setPLayerNames(opponentName, playerName, gameType);
 
-                            System.out.println("A match has been found!");
+                            System.out.println(" A match has been found!");
                             if (gameType.equals("Reversi")){
                                 stateHandler.setGameState(stateHandler.getGameStarted());
                                 stateHandler.gameStart(gameView, gameType);
@@ -98,6 +103,8 @@ public class CommandHandler implements Runnable{
                             } catch(InterruptedException e){
                                 e.printStackTrace();
                             }
+                            gameView.stopCounter();
+                            gameView.setTimer(9);
                             stateHandler.setGameState(stateHandler.getClientMove());
                         }
 
@@ -166,10 +173,9 @@ public class CommandHandler implements Runnable{
         gameView.addToConsole("Your score: " + playerScore +" | "+" Opponent score: "+opponentScore);
         gameView.addToConsole("You have " + status + " the game!");
 
-
         gameView.removeGameBoard();
         stateHandler.setGameState(stateHandler.getGameEndedLoss());
-        stateHandler.endGameLoss();
+        ReversiAI.disableThread();
     }
 
     private void removeFirstSpace(String string){

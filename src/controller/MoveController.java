@@ -48,11 +48,12 @@ public class MoveController {
             return false;
         if (stateHandler.getGameState() != stateHandler.getClientMove())
             return false;
+        gameView.stopCounter();
         if (size == 8)
             if (!reversiDoMove(row, column, clientSymbol))
                 return false;
 
-        gameView.stopCounter();
+
         updateBoard(row, column, clientSymbol);
         sendMoveToServer(row,column);
         boardView.clearIcon();
@@ -67,7 +68,6 @@ public class MoveController {
                 reversiDoMove(row, column, serverSymbol);
                 printAvalableMoves(clientSymbol);
             }
-            gameView.setTimer(9);
             updateBoard(row, column, serverSymbol);
         }
     }

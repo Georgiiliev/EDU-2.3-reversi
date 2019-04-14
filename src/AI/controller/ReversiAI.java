@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ReversiAI implements Runnable{
-    private MoveController moveController;
+    private static MoveController moveController;
     private StateHandler stateHandler;
     private static boolean gameStatus;
 
@@ -18,7 +18,7 @@ public class ReversiAI implements Runnable{
         this.gameStatus = true;
     }
 
-    private synchronized void doRandomMove(){
+    public synchronized static void doRandomMove(){
         char[][] board = moveController.getBoard();
         char clientSymbol = moveController.getClientSymbol();
         List<Point> possibleMoves = moveController.getValidMoves(board, clientSymbol);
@@ -32,7 +32,7 @@ public class ReversiAI implements Runnable{
 
             moveController.clientMove(row, column);
         } else {
-            this.gameStatus = false; // game is gestopt
+            gameStatus = false; // game is gestopt
         }
     }
     public static void disableThread(){

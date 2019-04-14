@@ -1,5 +1,6 @@
 package view;
 
+import AI.controller.ReversiAI;
 import connection.ServerConnection;
 import model.StateHandler;
 import view.GUI.GhostText;
@@ -23,8 +24,8 @@ public class GameView  extends JFrame {
     private JTextField nameInput = new JTextField();
     private JLabel nameGame = new JLabel("GameType");
     private JLabel nameGameType = new JLabel("GameMode");
-    private JLabel playerOne = new JLabel("PLAYERNAME1");
-    private JLabel playerTwo = new JLabel("PLAYERNAME2");
+    private JLabel playerOne = new JLabel("");
+    private JLabel playerTwo = new JLabel("");
     private JLabel counterCountDown = new JLabel("10");
     private JFrame popUp;
 
@@ -52,6 +53,7 @@ public class GameView  extends JFrame {
         this.stateHandler.setGameState(this.stateHandler.getIdle());
         this.stateHandler.gameIdle();
         drawGui();
+        gameView.drawCounter();
     }
 
     public void drawGui(){
@@ -74,13 +76,11 @@ public class GameView  extends JFrame {
     }
 
     public void drawTicTacToe(){
-        drawCounter();
         boardView = new BoardView(3, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, 5);
     }
 
     public void drawReversi() {
-        drawCounter();
         boardView = new BoardView(8, stateHandler, this);
         addComp(GUI, boardView, 0, 0, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.NONE, 50);
     }
@@ -96,7 +96,7 @@ public class GameView  extends JFrame {
         consoleList.setFixedCellHeight(20);
         addComp(GUI, console, 0, 0, 1, 1, GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 5);
     }
-    private void drawCounter(){
+    public void drawCounter(){
         Box counterBox = Box.createVerticalBox();
         counterCountDown.setFont(new Font("Verdana", Font.BOLD, 60));
         counterCountDown.setForeground(Color.red);
@@ -110,7 +110,7 @@ public class GameView  extends JFrame {
         }
     }
 
-    public void setTimer(int time) {
+    public synchronized void setTimer(int time) {
         counterCountDown.setText(Integer.toString(10));
         int delay = 900;
         int period = 900;
@@ -119,14 +119,14 @@ public class GameView  extends JFrame {
         counterTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 counterCountDown.setText(Integer.toString(interval));
-                setInterval(time);
+                setInterval();
             }
         }, delay, period);
     }
-    private final int setInterval(int time) {
+    private final int setInterval() {
         if (interval == 0) {
             counterTimer.cancel();
-            // TODO hij is 0 dus doe een random move!
+            ReversiAI.doRandomMove();
         }
         return --interval;
     }
@@ -186,7 +186,7 @@ public class GameView  extends JFrame {
     private void drawBox(){
         Box box = Box.createVerticalBox();
         nameInput.setPreferredSize(new Dimension(0, 20));
-        new GhostText(nameInput, "Enter your name..");
+        new GhostText(nameInput, "Enter your name...");
 
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(gameTypeOne);
@@ -215,18 +215,43 @@ public class GameView  extends JFrame {
         box.add(Box.createRigidArea(new Dimension(0, 20)));
         box.add(nameInput);
         box.add(Box.createRigidArea(new Dimension(0, 20)));
-        box.add(submit);
+        box.add(submit, BorderLayout.EAST);
 
         //TODO Game status.
-        box.add(Box.createRigidArea(new Dimension(20, 40)));
-        playerOne.setFont(new Font("Verdana", Font.BOLD, 15));
-        box.add(playerOne);
-        playerTwo.setFont(new Font("Verdana", Font.BOLD, 15));
-        box.add(playerTwo);
 
         addComp(GUI, box, 0,0,1,1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 5);
     }
+    public void drawPlayers(){
+        Box playerBox = Box.createVerticalBox();
+        playerBox.setPreferredSize(new Dimension(200, 200));
 
+        playerBox.add(Box.createRigidArea(new Dimension(0, 50)));
+
+        playerOne.setPreferredSize(new Dimension(25, 5));
+        playerTwo.setPreferredSize(new Dimension(25, 5));
+
+        playerOne.setFont(new Font("Verdana", Font.BOLD, 12));
+        playerTwo.setFont(new Font("Verdana", Font.BOLD, 12));
+
+        playerBox.add(playerOne);
+        playerBox.add(Box.createRigidArea(new Dimension(0, 40)));
+        playerBox.add(playerTwo);
+
+        playerBox.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        addComp(GUI, playerBox, 0,0,1,1, GridBagConstraints.WEST, GridBagConstraints.NONE, 5);
+    }
+
+    public void setPLayerNames(String playerOne, String playerTwo, String gameType){
+        if (gameType.equals("Reversi")){
+            this.playerOne.setText("BLACK: " + playerOne);
+            this.playerTwo.setText("WHITE: " + playerTwo);
+        }
+        else if (gameType.equals("Tic-tac-toe")){
+            this.playerOne.setText("CIRCLE: " + playerOne);
+            this.playerTwo.setText("CROSS: " + playerTwo);
+        }
+    }
 
     private void drawTextInput() {
         addToConsole("Enter your name in the text box on the left.");
@@ -289,7 +314,6 @@ public class GameView  extends JFrame {
         serverConnection.send(action,value);
     }
 
-
     public void setPlayerListFromServer(String[] players){
         playerList.clear();
         this.players = players;
@@ -339,9 +363,13 @@ public class GameView  extends JFrame {
     }
 
     public void removeGameBoard(){
+        stopCounter();
         GUI.remove(boardView);
         GUI.revalidate();
         GUI.repaint();
+        playerOne.setText("");
+        playerTwo.setText("");
+        counterCountDown.setText("");
     }
 
     public String getGameValue(){
