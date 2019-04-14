@@ -252,9 +252,6 @@ public class GameView  extends JFrame {
             whiteTiles = new JLabel("White: 2");
             blackTiles = new JLabel("Black: 2");
 
-//            whiteTiles.setPreferredSize(new Dimension(50, 5));
-//            blackTiles.setPreferredSize(new Dimension(50, 5));
-
             whiteTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
             blackTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
 
