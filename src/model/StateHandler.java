@@ -34,7 +34,8 @@ public class StateHandler {
     public void gameIdle() { gameState.gameIdle(); }
     public void waitForMoveServer() { gameState.moveServer(); }
     public void waitForMoveClient() { gameState.moveClient(); }
-    public void establishConnection() { gameState.establishConnection(); }
+    public void establishConnection(String host, int port) {
+        gameState.establishConnection(host, port); }
 
     public I_GameState getGameEndedDraw() { return gameEndedDraw; }
     public I_GameState getGameEndedLoss() { return gameEndedLoss; }

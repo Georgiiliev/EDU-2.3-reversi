@@ -11,7 +11,7 @@ public class ServerConnection implements Runnable{
     private ServerConnection serverConnection;
     private StateHandler stateHandler;
 
-    private static final int port = 7789;
+    private int port = 7789;
     private String host = "localhost";
     // gameserver.edu.janyksteenbeek.nl
 
@@ -20,10 +20,12 @@ public class ServerConnection implements Runnable{
     private PrintWriter out;
     private boolean connection;
 
-    public ServerConnection(StateHandler stateHandler) {
+    public ServerConnection(StateHandler stateHandler, String host, int port) {
         connection = false;
         serverConnection = this;
         this.stateHandler = stateHandler;
+        this.host = host;
+        this.port = port;
         connect();
     }
 

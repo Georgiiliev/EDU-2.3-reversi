@@ -47,10 +47,10 @@ public class ConnectingToServerState implements I_GameState {
     }
 
     @Override
-    public void establishConnection() {
+    public void establishConnection(String host, int port) {
         System.out.println("Connecting to the server...");
 
-        ServerConnection connect = new ServerConnection(stateHandler);
+        ServerConnection connect = new ServerConnection(stateHandler, host, port);
 
         if (connect.connectionSucceed()) {
             GameView gameView = new GameView(stateHandler, connect);

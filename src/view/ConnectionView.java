@@ -1,5 +1,7 @@
 package view;
 
+import model.StateHandler;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,8 +12,10 @@ public class ConnectionView extends JFrame {
     JTextField hostField = new JTextField(30);
     JTextField portField = new JTextField(30);
     JButton submit = new JButton("Submit");
+    private StateHandler stateHandler;
 
-    public ConnectionView() {
+    public ConnectionView(StateHandler stateHandler) {
+        this.stateHandler = stateHandler;
         drawView();
     }
 
@@ -44,8 +48,11 @@ public class ConnectionView extends JFrame {
 
 
         submit.addActionListener( (e)-> {
-            System.out.println("gedrukt");
+            String port = portField.getText();
+            String host = hostField.getText();
 
+            stateHandler.setGameState(stateHandler.getConnectingToServer());
+            stateHandler.establishConnection(host, Integer.parseInt(port));
         });
     }
 

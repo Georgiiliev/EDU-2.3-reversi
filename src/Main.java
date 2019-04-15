@@ -1,9 +1,9 @@
 import model.StateHandler;
+import view.ConnectionView;
 
 public class Main {
     public static void main(String[] args) {
         StateHandler stateHandler = new StateHandler();
-        stateHandler.setGameState(stateHandler.getConnectingToServer());
-        stateHandler.establishConnection();
+        ConnectionView connectionView = new ConnectionView(stateHandler);
     }
 }

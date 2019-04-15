@@ -12,6 +12,6 @@ public interface I_GameState {
     void moveServer();
     void moveClient();
 
-    void establishConnection();
+    void establishConnection(String host, int port);
 
 }

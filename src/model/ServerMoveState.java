@@ -45,7 +45,7 @@ public class ServerMoveState implements I_GameState {
     }
 
     @Override
-    public void establishConnection() {
+    public void establishConnection(String host, int port) {
         System.out.print("Already connected");
     }
 }
