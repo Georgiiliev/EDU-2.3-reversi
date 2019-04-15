@@ -1,6 +1,7 @@
 package view;
 
 import model.StateHandler;
+import view.GUI.GhostText;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +29,17 @@ public class ConnectionView extends JFrame {
         JPanel jPanel = new JPanel();
 
         jPanel.setLayout(new GridBagLayout());
+
+        hostName.setFont(new Font("Verdana", Font.BOLD, 14));
+        portName.setFont(new Font("Verdana", Font.BOLD, 14));
+
+        new GhostText(hostField,"localhost");
+        new GhostText(portField,"7789");
+
+        submit.setBackground(new Color(59, 89, 182));
+        submit.setForeground(Color.WHITE);
+        submit.setFocusPainted(false);
+        submit.setFont(new Font("Verdana", Font.BOLD, 14));
 
         addComp(jPanel, hostName, 0, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
         addComp(jPanel, hostField, 1, 0, 2, 1, GridBagConstraints.WEST, GridBagConstraints.NONE);
