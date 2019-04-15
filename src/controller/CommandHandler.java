@@ -175,6 +175,7 @@ public class CommandHandler implements Runnable{
         gameView.removeGameBoard();
         stateHandler.setGameState(stateHandler.getGameEndedLoss());
         ReversiAI.disableThread();
+//        connect.send("subscribe", "Reversi"); // Reversi loop
     }
 
     private void removeFirstSpace(String string){
