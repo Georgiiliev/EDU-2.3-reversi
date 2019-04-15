@@ -59,6 +59,7 @@ public class CommandHandler implements Runnable{
 
                             start = false;
                             playerName = gameView.getUserName();
+                            gameView.addToConsole("");
                             gameView.addToConsole("Your opponent is " + opponentName);
 
                             if (playerName.equals(firstToStart)){
@@ -165,7 +166,6 @@ public class CommandHandler implements Runnable{
             opponentScore = playerOne;
         }
 
-        gameView.addToConsole("");
         if (!comment.equals("")){
             gameView.addToConsole("Comment: "+ comment);
         }
@@ -175,6 +175,7 @@ public class CommandHandler implements Runnable{
         gameView.removeGameBoard();
         stateHandler.setGameState(stateHandler.getGameEndedLoss());
         ReversiAI.disableThread();
+//        connect.send("subscribe", "Reversi"); // Reversi loop
     }
 
     private void removeFirstSpace(String string){

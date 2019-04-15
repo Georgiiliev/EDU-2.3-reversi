@@ -80,7 +80,7 @@ public class GameView  extends JFrame {
     public void drawTicTacToe(){
         gameValue = "Tic-tac-toe";
         boardView = new BoardView(3, stateHandler, this);
-        addComp(GUI, boardView, 0, 0, 0, 0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 5); // TODO set: center
+        addComp(GUI, boardView, 0, 0, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 5); //
     }
 
     public void drawReversi() {
@@ -223,8 +223,6 @@ public class GameView  extends JFrame {
         box.add(Box.createRigidArea(new Dimension(0, 20)));
         box.add(submit, BorderLayout.EAST);
 
-        //TODO Game status.
-
         addComp(GUI, box, 0,0,1,1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 5);
     }
     public void drawPlayers(){
@@ -255,8 +253,8 @@ public class GameView  extends JFrame {
             whiteTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
             blackTiles.setFont(new Font("Verdana", Font.PLAIN, 14));
 
-            playerBox.add(whiteTiles);
             playerBox.add(blackTiles);
+            playerBox.add(whiteTiles);
         }
 
         playerBox.add(Box.createRigidArea(new Dimension(0, 5)));
