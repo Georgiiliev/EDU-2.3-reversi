@@ -54,7 +54,6 @@ public class ConnectionView extends JFrame {
         this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.dispose();
     }
 
     private void myActionListener() {
@@ -66,6 +65,7 @@ public class ConnectionView extends JFrame {
 
             stateHandler.setGameState(stateHandler.getConnectingToServer());
             stateHandler.establishConnection(host, Integer.parseInt(port));
+            this.dispose();
         });
     }
 
