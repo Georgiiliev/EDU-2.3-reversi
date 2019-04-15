@@ -109,7 +109,7 @@ public class MoveController {
     }
     public synchronized List<Point> getValidMoves(char[][] board, char player) {
         int i = 0;
-        directions = new int[32][2];
+        directions = new int[80][2];
 
         List<Point> points = new ArrayList<>();
         int[][] dirs = new int[][] {

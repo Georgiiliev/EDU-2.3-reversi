@@ -35,6 +35,23 @@ public class ReversiAI implements Runnable{
             gameStatus = false; // game is gestopt
         }
     }
+//    public void pickMostCommenMove(){
+//        char[][] board = moveController.getBoard();
+//        char clientSymbol = moveController.getClientSymbol();
+//        List<Point> possibleMoves = moveController.getValidMoves(board, clientSymbol);
+//
+//        int[][] countMoves = new int[64][3];
+//
+//        for (int i = 0; i < possibleMoves.size(); i++){
+//            if (possibleMoves.get(i).x == 5 && possibleMoves.get(i).y == 3){
+//                //we hebben een match
+//            }
+//            for(int j = 0; j < countMoves.length; j++){
+//
+//            }
+//        }
+//    }
+
     public static void disableThread(){
         gameStatus = false;
     }
